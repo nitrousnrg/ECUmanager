@@ -1,0 +1,18 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource>
+      <file>editcopy.xpm</file>
+      <file>editcut.xpm</file>
+      <file>filenew.xpm</file>
+      <file>fileopen.xpm</file>
+      <file>editpaste.xpm</file>
+      <file>filesave.xpm</file>
+      <file>amarok_play.png</file>
+      <file>amarok_pause.png</file>
+      <file>amarok_configure.png</file>
+      <file>amarok_visualizations.png</file>
+      <file>amarok_album.png</file>
+      <file>amarok_burn.png</file>
+      <file>network-wired.png</file>
+      <file>step_response.png</file>
+</qresource>
+</RCC>

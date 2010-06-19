@@ -1,0 +1,4 @@
+Added complete qextserialport library -not included in qmake project, but in QExtSerialPort directory.
+Almost fully multhithreaded communications.
+Window resize problem not fixed.
+Fixed README

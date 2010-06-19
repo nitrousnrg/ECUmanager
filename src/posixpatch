@@ -1,0 +1,3 @@
+LIBS          += -lqextserialport
+
+-D_TTY_POSIX_ 

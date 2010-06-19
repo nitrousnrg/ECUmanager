@@ -1,0 +1,10 @@
+#Ignore the following files
+
+#binary:
+qt4application
+
+#backups:
+*~
+
+#objects:
+*.o

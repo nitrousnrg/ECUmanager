@@ -1,0 +1,6 @@
+ECUmanager uses Qt4, so you need to have installed libqt4-dev and libqt4-opengl-dev in order to compile it under gnu/linux.
+If you use QtCreator, just open qt4application.pro, and enjoy.
+For a command line compiling, you are a "make" away.
+In both cases, make some coffe, or take a shower... it needs some time to compile the first time.
+
+If you have any question, mail me at marcus.chaparro[at]gmail[dot]com
