@@ -52,14 +52,14 @@ Oxygen sensor type:
 Narrowband
 
 Temperature correction table (°C vs enrich %)
--10	0.125
-0	0.3
-10	0.258333
-20	0.2
-30	0.138889
-40	0.0972222
-50	0.0583333
-60	0.0305556
+-10	0.355556
+0	0.333333
+10	0.286111
+20	0.222222
+30	0.152778
+40	0.105556
+50	0.0638889
+60	0.0333333
 70	0.0111111
 80	0.00277778
 90	0
@@ -84,7 +84,7 @@ Extra Fuel (ms)	3.5
 Ign Retard:	6.2
 
 Accel enrichment
-Source:		TPS
-Treshold:	20
-Decay:		80
-Amplifier:	150
+Source:		MAP
+Treshold:	9
+Decay:		9
+Amplifier:	9

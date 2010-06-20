@@ -22,10 +22,9 @@
 
  upgrade::upgrade (QextSerialPort *serialreferenced,const QString *fileName)
 {
-	QTimer * timer = new QTimer();
-
 	serial = serialreferenced;
 	serial->setRts(1);
+        fileName = 0;
 }
 
 void upgrade::loadFlashData(int data)

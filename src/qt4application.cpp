@@ -37,6 +37,8 @@ qt4application::qt4application()
 	playMenu = NULL; //QPlayer
 	serialThread = NULL;
 
+        oxygenSensor = (char*)malloc(16);
+
 	for(int row = 0;row<12;++row)
 	{
 		for(int column = 0;column<21;++column)
@@ -838,7 +840,7 @@ void qt4application::process_line(QByteArray line,int i)
 	if(i==49)
 		sscanf(line,"%d",&(confParameter.deadTime));
 	if(i==51)
-		sscanf(line,"%s",&(oxygenSensor));
+                sscanf(line,"%s",oxygenSensor);
 
 	if(i>=54 && i <=66)	//64?
 	{int nada;
@@ -892,15 +894,15 @@ void qt4application::process_line(QByteArray line,int i)
 	}
 	if(i==87)
 	{	char rockandrollnenene[15];
-		sscanf(line,"%[^\t]%d",rockandrollnenene,&(confParameter.accel_pump_treshold));
+                sscanf(line,"%[^\t]%c",rockandrollnenene,&(confParameter.accel_pump_treshold));
 	}
 	if(i==88)
 	{	char rockandrollnenene[15];
-		sscanf(line,"%[^\t]%d",rockandrollnenene,&(confParameter.accel_pump_decay));
+                sscanf(line,"%[^\t]%c",rockandrollnenene,&(confParameter.accel_pump_decay));
 	}
 	if(i==89)
 	{	char rockandrollnenene[15];
-		sscanf(line,"%[^\t]%d",rockandrollnenene,&(confParameter.accel_pump_enrich_factor));
+                sscanf(line,"%[^\t]%c",rockandrollnenene,&(confParameter.accel_pump_enrich_factor));
 	}
 
 

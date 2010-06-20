@@ -287,7 +287,7 @@ private:
 	float duty,Dwell;
 	int byteCounter;	//para la programación
 
-	char oxygenSensor[16];	//wb, nb, none
+        char *oxygenSensor;	//wb, nb, none
 
 	struct estructura
 	{

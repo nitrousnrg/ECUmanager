@@ -187,7 +187,9 @@ QColor PlotArea::getFontColor()
 {	return penColor;	}
 
 QColor PlotArea::getChannelColor(int atChannel)
-{	return channel1Color;	}
+{
+    atChannel=1;
+    return channel1Color;	}
 
 void PlotArea::setPoints(float newValue,int size)
 {

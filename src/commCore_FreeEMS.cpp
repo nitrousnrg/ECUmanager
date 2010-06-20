@@ -304,9 +304,6 @@ void qt4application::debugFreeEMS()
         QLabel *flow1 = new QLabel(tr("Extra fuel (ms)"));
         QLabel *retard1 = new QLabel(tr("Ignition retard"));
 
-        QLabel *flow2 = new QLabel(tr("Extra fuel (ms)"));
-        QLabel *retard2 = new QLabel(tr("Ignition retard"));
-
         /*  conditions  */
         editNitrousRPM = new QLineEdit(string1.setNum(confParameter.nitrousRPM));
         editNitrousMAP = new QLineEdit(string1.setNum(confParameter.nitrousMAP));

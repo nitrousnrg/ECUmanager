@@ -484,15 +484,15 @@ void commThread::process_line(QByteArray line,int i)
 	}
 	if(i==87)
 	{	char rockandrollnenene[15];
-		sscanf(line,"%[^\t]%d",rockandrollnenene,&(confParameter.accel_pump_treshold));
+                sscanf(line,"%[^\t]%c",(char*)rockandrollnenene,&(confParameter.accel_pump_treshold));
 	}
 	if(i==88)
 	{	char rockandrollnenene[15];
-		sscanf(line,"%[^\t]%d",rockandrollnenene,&(confParameter.accel_pump_decay));
+                sscanf(line,"%[^\t]%c",(char*)rockandrollnenene,&(confParameter.accel_pump_decay));
 	}
 	if(i==89)
 	{	char rockandrollnenene[15];
-		sscanf(line,"%[^\t]%d",rockandrollnenene,&(confParameter.accel_pump_enrich_factor));
+                sscanf(line,"%[^\t]%c",(char*)rockandrollnenene,&(confParameter.accel_pump_enrich_factor));
 	}
 }
 

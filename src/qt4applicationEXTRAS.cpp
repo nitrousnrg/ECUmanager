@@ -107,7 +107,7 @@ void qt4application::injectorTestDialog()
 		tester->show();
 	}
 	else
-		qDebug("fuck you %d",serialThread->getQextSerialPort());
+                qDebug("hi, i'm a useless inj. test debug dialog' %d",(int)serialThread->getQextSerialPort());
 }
 
 void qt4application::quickTune()
@@ -473,7 +473,7 @@ void qt4application::nitrousDialog()
 
 void qt4application::readSettings()
 {
-	QSettings settings("MyEnterprise", "ECU manager");
+        QSettings settings("FreeEMS", "ECU manager");
 	serialPort = settings.value("Serial Port",QString("/dev/ttyUSB0")).toString();
 	hardwareTarget = settings.value("Hardware Target",QString("ePIC project")).toString();
 	confFile = settings.value("default File",QString()).toString();
@@ -487,7 +487,7 @@ void qt4application::readSettings()
 
 void qt4application::writeSettings()
 {
-	QSettings settings("MyEnterprise", "ECU manager");
+        QSettings settings("FreeEMS", "ECU manager");
 	settings.setValue("Serial Port",serialPort);
 	settings.setValue("Hardware Target",hardwareTarget);
 	settings.setValue("pos", pos());
