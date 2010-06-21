@@ -6,5 +6,8 @@ qt4application
 #backups:
 *~
 
+#mocs
+moc_*.cpp
+
 #objects:
 *.o

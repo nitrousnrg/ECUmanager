@@ -151,10 +151,10 @@ QColor QSubViewer::getChannelColor(int i)
 
 QSize QSubViewer::minimumSizeHint() const
 {
-	return QSize(30, 30);
+        return QSize(100, 100);
 }
 
 QSize QSubViewer::sizeHint() const
 {
-	return QSize(50, 50);
+        return QSize(150, 150);
 }

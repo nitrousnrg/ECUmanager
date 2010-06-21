@@ -23,7 +23,7 @@
  PlotArea::PlotArea(QWidget *parent)     : QWidget(parent)
  {
 	setBackgroundRole(QPalette::Base);
-
+        setMinimumSize(100,100);
 	setAutoFillBackground(true);
 	BackColor.setRgb(255, 255, 255);
 	penColor.setRgb(150, 150, 150);
@@ -83,7 +83,7 @@
 
  QSize PlotArea::minimumSizeHint() const
  {
-     return QSize(30, 30);
+     return QSize(180, 180);
  }
 
  QSize PlotArea::sizeHint() const

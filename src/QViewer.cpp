@@ -92,7 +92,7 @@ void QViewer::createDisplay()
 
 QSize QViewer::minimumSizeHint() const
 {
-	return QSize(100, 200);
+        return QSize(200, 200);
 }
 
 QSize QViewer::sizeHint() const
