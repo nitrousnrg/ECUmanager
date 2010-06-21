@@ -22,7 +22,21 @@
  
  PlotArea::PlotArea(QWidget *parent)     : QWidget(parent)
  {
-	setBackgroundRole(QPalette::Base);
+
+         LambdaBox	= new QCheckBox(tr("Lambda"));
+         RPMBox          = new QCheckBox(tr("RPM"));
+         VEBox		= new QCheckBox(tr("VE"));
+         MAPBox          = new QCheckBox(tr("MAP"));
+         airTempBox	= new QCheckBox(tr("Air Temp"));
+         waterTempBox	= new QCheckBox(tr("Water Temp"));
+         ignAdvanceBox	= new QCheckBox(tr("Ignition Advance"));
+         fuelAdvBox	= new QCheckBox(tr("Fuel Advance"));
+         dutyBox 	= new QCheckBox(tr("Duty %"));
+         injTimeBox	= new QCheckBox(tr("Inj Time"));
+         throttleBox	= new QCheckBox(tr("Throttle pos"));
+
+         readSettings();
+        setBackgroundRole(QPalette::Base);
         setMinimumSize(100,100);
 	setAutoFillBackground(true);
 	BackColor.setRgb(255, 255, 255);
@@ -58,14 +72,10 @@
 
 	menu = new QMenu;
 
-	addAct = new QAction(tr("Add channel"), this);
-	connect(addAct, SIGNAL(triggered()), this, SLOT(chooseDialog()));
+        selectChannelAct = new QAction(tr("Select channels"), this);
+        connect(selectChannelAct, SIGNAL(triggered()), this, SLOT(chooseDialog()));
 
-	removeAct = new QAction(tr("Remove channel"), this);
-//	connect(addAct, SIGNAL(triggered()), this, SLOT(chooseDialog()));
-
-	menu->addAction(addAct);
-	menu->addAction(removeAct);
+        menu->addAction(selectChannelAct);
 	colors = menu->addMenu("Colors");
 	backColorAct = colors->addAction(tr("Background"));
 	fontColorAct = colors->addAction(tr("Font Color"));
@@ -278,6 +288,32 @@ void PlotArea::setScaleFactorY(float scale)
 
 	}
 
+        // mark which channels it is plotting
+        if( MAPBox->isChecked() )
+            painter.drawText(width()-30, 14, QString(tr("MAP")));
+        if( LambdaBox->isChecked() )
+            painter.drawText(width()-30, 24, QString("Lambda"));
+        if( RPMBox->isChecked() )
+            painter.drawText(width()-30, 34, QString("RPM"));
+        if( VEBox->isChecked() )
+            painter.drawText(width()-30, 44, QString("VE"));
+        if( airTempBox->isChecked() )
+            painter.drawText(width()-30, 54, QString(tr("Air Temp")));
+        if( waterTempBox->isChecked() )
+            painter.drawText(width()-30, 64, QString(tr("Water Temp")));
+        if( ignAdvanceBox->isChecked() )
+            painter.drawText(width()-30, 74, QString(tr("Ign Adv")));
+        if( fuelAdvBox->isChecked() )
+            painter.drawText(width()-30, 84, QString(tr("Fuel Adv")));
+        if( dutyBox->isChecked() )
+            painter.drawText(width()-30, 84, QString(tr("Duty")));
+        if( injTimeBox->isChecked() )
+            painter.drawText(width()-30, 84, QString(tr("Inj Time")));
+        if( throttleBox->isChecked() )
+            painter.drawText(width()-30, 84, QString(tr("Throttle")));
+
+
+
 	painter.setRenderHint(QPainter::Antialiasing);
 	painter.setPen(channel1Color);
 
@@ -293,6 +329,38 @@ void PlotArea::mouseReleaseEvent(QMouseEvent *event)
 	}
  }
 
+void PlotArea::readSettings()
+{
+    QSettings settings("FreeEMS", "Moving plot settings");
+    VEBox->         setChecked(settings.value("Show VE",false).toBool());
+    MAPBox->        setChecked(settings.value("Show MAP",true).toBool());
+    airTempBox->    setChecked(settings.value("Show Air Temp",false).toBool());
+    waterTempBox->  setChecked(settings.value("Show Water Temp",false).toBool());
+    LambdaBox->     setChecked(settings.value("Show Air/fuel",false).toBool());
+    RPMBox->        setChecked(settings.value("Show RPM",false).toBool());
+    ignAdvanceBox-> setChecked(settings.value("Show Ign advance",false).toBool());
+    fuelAdvBox->    setChecked(settings.value("Show Fuel advance",false).toBool());
+    dutyBox->       setChecked(settings.value("Show Duty Cycle",false).toBool());
+    injTimeBox->    setChecked(settings.value("Show Injection Time",false).toBool());
+    throttleBox->   setChecked(settings.value("Show throttle",false).toBool());
+}
+
+void PlotArea::writeSettings()
+{
+    QSettings settings("FreeEMS", "Moving plot settings");
+    settings.setValue("Show VE",            VEBox->isChecked());
+    settings.setValue("Show MAP",           MAPBox->isChecked());
+    settings.setValue("Show Air Temp",      airTempBox->isChecked());
+    settings.setValue("Show Water Temp",    waterTempBox->isChecked());
+    settings.setValue("Show Air/fuel",      LambdaBox->isChecked());
+    settings.setValue("Show RPM",           RPMBox->isChecked());
+    settings.setValue("Show Ign advance",   ignAdvanceBox->isChecked());
+    settings.setValue("Show Fuel advance",  fuelAdvBox->isChecked());
+    settings.setValue("Show Duty Cycle",    dutyBox->isChecked());
+    settings.setValue("Show Injection Time",injTimeBox->isChecked());
+    settings.setValue("Show throttle",      throttleBox->isChecked());
+}
+
 void PlotArea::chooseDialog()
 {
 
@@ -304,52 +372,40 @@ void PlotArea::chooseDialog()
 
 	QGridLayout *grid = new QGridLayout;
 
-	LambdaRadio	= new QRadioButton(tr("Lambda"));
-	RPMradio	= new QRadioButton(tr("RPM"));
-	VEradio		= new QRadioButton(tr("VE"));
-	MAPradio	= new QRadioButton(tr("MAP"));
-	airTempRadio	= new QRadioButton(tr("Air Temp"));
-	waterTempRadio	= new QRadioButton(tr("Water Temp"));
-	ignAdvanceRadio	= new QRadioButton(tr("Ignition Advance"));
-	fuelAdvRadio	= new QRadioButton(tr("Fuel Advance"));
-	dutyRadio	= new QRadioButton(tr("Duty %"));
-	injTimeRadio	= new QRadioButton(tr("Inj Time"));
-	throttleRadio	= new QRadioButton(tr("Throttle pos"));
-
 	switch(channel)
 	{
 		case 0:
-			LambdaRadio->setChecked(true);
+                        LambdaBox->setChecked(true);
 			break;
 		case 1:
-			RPMradio->setChecked(true);
+                        RPMBox->setChecked(true);
 			break;
 		case 2:
-			VEradio->setChecked(true);
+                        VEBox->setChecked(true);
 			break;
 		case 3:
-			MAPradio->setChecked(true);
+                        MAPBox->setChecked(true);
 			break;
 		case 4:
-			airTempRadio->setChecked(true);
+                        airTempBox->setChecked(true);
 			break;
 		case 5:
-			waterTempRadio->setChecked(true);
+                        waterTempBox->setChecked(true);
 			break;
 		case 6:
-			ignAdvanceRadio->setChecked(true);
+                        ignAdvanceBox->setChecked(true);
 			break;
 		case 7:
-			fuelAdvRadio->setChecked(true);
+                        fuelAdvBox->setChecked(true);
 			break;
 		case 8:
-			dutyRadio->setChecked(true);
+                        dutyBox->setChecked(true);
 			break;
 		case 9:
-			injTimeRadio->setChecked(true);
+                        injTimeBox->setChecked(true);
 			break;
 		case 10:
-			throttleRadio->setChecked(true);
+                        throttleBox->setChecked(true);
 			break;
 
 	}
@@ -363,17 +419,17 @@ void PlotArea::chooseDialog()
 	QGroupBox *groupBox1 = new QGroupBox(tr("Channels:"));
 	QGridLayout *vbox = new QGridLayout;
 
-	vbox->addWidget(LambdaRadio,1,0);
-	vbox->addWidget(RPMradio,2,0);
-	vbox->addWidget(VEradio,3,0);
-	vbox->addWidget(MAPradio,4,0);
-	vbox->addWidget(airTempRadio,5,0);
-	vbox->addWidget(waterTempRadio,6,0);
-	vbox->addWidget(ignAdvanceRadio,7,0);
-	vbox->addWidget(fuelAdvRadio,8,0);
-	vbox->addWidget(dutyRadio,9,0);
-	vbox->addWidget(injTimeRadio,10,0);
-	vbox->addWidget(throttleRadio,11,0);
+        vbox->addWidget(LambdaBox,1,0);
+        vbox->addWidget(RPMBox,2,0);
+        vbox->addWidget(VEBox,3,0);
+        vbox->addWidget(MAPBox,4,0);
+        vbox->addWidget(airTempBox,5,0);
+        vbox->addWidget(waterTempBox,6,0);
+        vbox->addWidget(ignAdvanceBox,7,0);
+        vbox->addWidget(fuelAdvBox,8,0);
+        vbox->addWidget(dutyBox,9,0);
+        vbox->addWidget(injTimeBox,10,0);
+        vbox->addWidget(throttleBox,11,0);
 	groupBox1->setLayout(vbox);
 
 	grid->addWidget(groupBox1,1,0,1,2);
@@ -386,17 +442,19 @@ void PlotArea::chooseDialog()
 
 void PlotArea::acceptDialog()
 {
-	if( LambdaRadio->isChecked() )		channel = 0;
-	if( RPMradio->isChecked() )		channel = 1;
-	if( VEradio->isChecked() )		channel = 2;
-	if( MAPradio->isChecked() )		channel = 3;
-	if( airTempRadio->isChecked() )		channel = 4;
-	if( waterTempRadio->isChecked() )	channel = 5;
-	if( ignAdvanceRadio->isChecked() )	channel = 6;
-	if( fuelAdvRadio->isChecked() )		channel = 7;
-	if( dutyRadio->isChecked() )		channel = 8;
-	if( injTimeRadio->isChecked() )		channel = 9;
-	if( throttleRadio->isChecked() )	channel = 10;
+        if( LambdaBox->isChecked() )        channel = 0;
+        if( RPMBox->isChecked() )           channel = 1;
+        if( VEBox->isChecked() )            channel = 2;
+        if( MAPBox->isChecked() )           channel = 3;
+        if( airTempBox->isChecked() )       channel = 4;
+        if( waterTempBox->isChecked() )     channel = 5;
+        if( ignAdvanceBox->isChecked() )    channel = 6;
+        if( fuelAdvBox->isChecked() )       channel = 7;
+        if( dutyBox->isChecked() )          channel = 8;
+        if( injTimeBox->isChecked() )       channel = 9;
+        if( throttleBox->isChecked() )      channel = 10;
+
+        writeSettings();
 
 	dialog->accept();
 	clear();

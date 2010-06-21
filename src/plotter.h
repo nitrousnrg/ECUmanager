@@ -27,7 +27,7 @@
  class QPen;
  class QWidget;
  class QMenu;
- class QRadioButton;
+ class QCheckBox;
 
  enum dataStyle {HistogramStyle,PlotStyle};
 
@@ -56,7 +56,9 @@
 	void setScaleFactorX(float,bool reversed);
 	void setScaleFactorY(float);
 	void setSize(int,int);
-	enum channels {lambda,RPM,VE,MAP,airTemp,waterTemp,ignAdv,injAdv,duty,injTime,throttle};
+        void readSettings();
+        void writeSettings();
+        enum channels {lambda,RPM,VE,MAP,airTemp,waterTemp,ignAdv,injAdv,duty,injTime,throttle};
 
 
 protected:
@@ -88,23 +90,22 @@ private slots:
 	QPen pen;
 	QBrush brush;
 	QString num;
-	QRadioButton *LambdaRadio;
-	QRadioButton *RPMradio;
-	QRadioButton *VEradio;
-	QRadioButton *MAPradio;
-	QRadioButton *airTempRadio;
-	QRadioButton *waterTempRadio;
-	QRadioButton *ignAdvanceRadio;
-	QRadioButton *fuelAdvRadio;
-	QRadioButton *dutyRadio;
-	QRadioButton *injTimeRadio;
-	QRadioButton *throttleRadio;
+        QCheckBox *LambdaBox;
+        QCheckBox *RPMBox;
+        QCheckBox *VEBox;
+        QCheckBox *MAPBox;
+        QCheckBox *airTempBox;
+        QCheckBox *waterTempBox;
+        QCheckBox *ignAdvanceBox;
+        QCheckBox *fuelAdvBox;
+        QCheckBox *dutyBox;
+        QCheckBox *injTimeBox;
+        QCheckBox *throttleBox;
 	QMenu *menu;
 	QMenu *colors;
 	QPalette palette;
 	QAction *chooseAct;
-	QAction *addAct;
-	QAction *removeAct;
+        QAction *selectChannelAct;
 	QAction *backColorAct;
 	QAction *fontColorAct;
 	QAction *chan1ColorAct;

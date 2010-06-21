@@ -132,11 +132,6 @@ qt4application::qt4application()
 
 	createLayout();
 	readSettings();
-
-  //    connect(textEdit->document(), SIGNAL(contentsChanged()),
-    //        this, SLOT(documentWasModified()));
-      
-    //  setCurrentFile("");
 }
 
 void qt4application::refresh()		//Here every data (bars, gauges, plots) is updated every 100msec
@@ -463,8 +458,6 @@ void qt4application::showFuel()
 		fuelAdvTable->hide();
 
 		VE_table_ON = true;
-
-                //tablesLabels->setText("VE map");
 	}
 }
 
