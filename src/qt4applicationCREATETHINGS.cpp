@@ -306,6 +306,7 @@ void qt4application::createActions()
 	connect(adjustAlarmsAct, SIGNAL(triggered()),this,SLOT(alarmsDialog()));
 
 	adjustBoostCtrlAct = new QAction(tr("Boost Ctrl"), this);
+        adjustBoostCtrlAct->setDisabled(true);
 	adjustBoostCtrlAct->setStatusTip(tr("Shows dialog for calibration"));
 	connect(adjustBoostCtrlAct, SIGNAL(triggered()),this,SLOT(boostDialog()));
 
@@ -314,14 +315,17 @@ void qt4application::createActions()
 	connect(adjustNitrousAct, SIGNAL(triggered()),this,SLOT(nitrousDialog()));
 
 	adjustPWM1 = new QAction(tr("PWM 1"), this);
+        adjustPWM1->setDisabled(true);
 	adjustPWM1->setStatusTip(tr("Shows dialog for output 1 calibration"));
 	connect(adjustPWM1, SIGNAL(triggered()),this,SLOT(nitrousDialog()));
 
 	adjustPWM2 = new QAction(tr("PWM 2"), this);
-	adjustPWM2->setStatusTip(tr("Shows dialog for output 2 calibration"));
+        adjustPWM2->setDisabled(true);
+        adjustPWM2->setStatusTip(tr("Shows dialog for output 2 calibration"));
 	connect(adjustPWM2, SIGNAL(triggered()),this,SLOT(nitrousDialog()));
 
 	view1Act = new QAction(tr("Std Arrange"), this);
+        view1Act->setDisabled(true);
 	view1Act->setStatusTip(tr("Recommended Layout"));
 	connect(view1Act, SIGNAL(triggered()),this,SLOT(nitrousDialog()));
 

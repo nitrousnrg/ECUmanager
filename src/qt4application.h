@@ -201,8 +201,6 @@ private:
 	QLabel *AirFuellabel;
 	QLabel *InyTimelabel;
 	QLabel *Dutylabel;
-	QLabel *tablesLabels;
-//	QLabel *Ignmaplabel;
 
 	QLineEdit * serialPortEdit;
 	QLineEdit *enrichFactorEdit;	//accel pump

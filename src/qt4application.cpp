@@ -498,8 +498,6 @@ void qt4application::showIgnition()
 		fuelAdvTable->hide();
 
 		Ign_table_ON = true;
-
-		tablesLabels->setText("Ign map");
 	}
 }
 
