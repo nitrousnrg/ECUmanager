@@ -57,8 +57,7 @@
 	painter.setPen(BackColor);
 	painter.scale((float)width() / (20*columns), height() / 200.0);
 
-	QFont newFont("Times", 6, QFont::Normal);// = font();
-	//newFont.setPixelSize(7);
+        QFont newFont("Times", 6, QFont::Normal);
 	setFont(newFont);
 	QString num;
 	for(int i=0;i<(columns-1);++i)
@@ -81,10 +80,6 @@
 	}
 	painter.drawLine(20*columns-0.5,0,20*columns-0.5,180);
 	painter.drawLine(20,180,20*columns,180);
-	//if(scribbling)
-	//	{num.setNum(sacareso);
-//painter.drawText(100,100,num);
-//}
 
 	painter.setRenderHint(QPainter::Antialiasing);
 	painter.setPen(pen);
@@ -136,21 +131,21 @@ void graph2D::setColumns(int col)
 
 void graph2D::mousePressEvent(QMouseEvent *event)
  {
-     if (event->button() == Qt::LeftButton) {
-         //lastPoint = event->pos();
+    if (event->button() == Qt::LeftButton)
          scribbling = true;
-     }
  }
 
  void graph2D::mouseMoveEvent(QMouseEvent *event)
  {
 	if ((event->buttons() & Qt::LeftButton) && scribbling)
 	{
-
 		if(event->x() >= 10 && event->y() < height())
 		{
 			int index = (event->x()-10)*columns/width();
-			punto1[index].setX(index*20 + 20);
+                        
+                        if(index>20)    //I don't have more than 20 columns
+                            return;
+                        punto1[index].setX(index*20 + 20);
 			if(event->y()*200/height() < 180)
 				punto1[index].setY(event->y()*200/height());
 			else
@@ -160,8 +155,6 @@ void graph2D::mousePressEvent(QMouseEvent *event)
 			update();
 		}
 	}
-
-		//drawLineTo(event->pos());
  }
 void graph2D::mouseReleaseEvent(QMouseEvent *event)
  {

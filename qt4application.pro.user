@@ -241,7 +241,6 @@
     <value type="QString">KDE_SESSION_UID=1000</value>
     <value type="QString">KDE_SESSION_VERSION=4</value>
     <value type="QString">LANG=en_US.UTF-8</value>
-    <value type="QString">LANGUAGE=</value>
     <value type="QString">LD_LIBRARY_PATH=/usr/lib/qtcreator:</value>
     <value type="QString">LOGNAME=marcos</value>
     <value type="QString">PATH=/usr/bin:/home/marcos/Microchip/mbed/codesourcery/bin:/home/marcos/Microchip/gcc-arm/bin:/usr/local/bin:/usr/bin:/bin:/usr/games</value>
@@ -290,7 +289,6 @@
     <value type="QString">KDE_SESSION_UID=1000</value>
     <value type="QString">KDE_SESSION_VERSION=4</value>
     <value type="QString">LANG=en_US.UTF-8</value>
-    <value type="QString">LANGUAGE=</value>
     <value type="QString">LD_LIBRARY_PATH=/usr/lib/qtcreator:</value>
     <value type="QString">LOGNAME=marcos</value>
     <value type="QString">PATH=/usr/bin:/home/marcos/Microchip/mbed/codesourcery/bin:/home/marcos/Microchip/gcc-arm/bin:/usr/local/bin:/usr/bin:/bin:/usr/games</value>

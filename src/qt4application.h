@@ -113,8 +113,6 @@ private slots:
 
 
 private:
-//	void mandoVE_x_filas( char );
-//	void mandoVE_x_col( char );
 	void createVEtable();
 	void createLinearTable();
 	void createBars();

@@ -503,36 +503,6 @@ void qt4application::showIgnition()
 	}
 }
 
-/*
-void qt4application::mandoVE_x_filas(char address)
-{
-	int row = address/21;
-	int column = address - row*21;
-	QByteArray string;
-
-	for(int i=0;i<8;i+=2)
-	{
-		string[i] = VEtable[row][column + i/2].byte[1];
-		string[i+1] = VEtable[row][column + i/2].byte[0];
-	}
-	serial->write(string,8);
-}
-
-void qt4application::mandoVE_x_col(char address)
-{
-	int row = address/21;
-	int column = address - row*21;
-	QByteArray string;
-
-	for(int i=0;i<8;i+=2)
-	{
-		string[i] = VEtable[row + i/2][column].byte[1];
-		string[i+1] = VEtable[row + i/2][column].byte[0];
-	}
-	serial->write(string,8);
-}
-*/
-
 void qt4application::openECU()
 {
 	serial = new QextSerialPort(serialPort);

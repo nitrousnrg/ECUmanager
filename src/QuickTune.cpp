@@ -60,21 +60,23 @@ QuickTune::QuickTune(QWidget *parent) : QWidget(parent)
 
 void QuickTune::MAPvalueChanged(int index)
 {
-	for(int i=0;i<12;++i)
-		;//confParameter.tempCorr[i] = (float)tempCorrGraph->getPoint(i)/360;
-	emit QTuneChange(MAP,index); //0
+    if(index<12)   //number of columns limit
+        emit QTuneChange(MAP,index); //0
 }
 void QuickTune::RPMvalueChanged(int index)
 {
-	emit QTuneChange(RPM,index); //0
+    if(index<21)   //number of columns limit
+        emit QTuneChange(RPM,index); //0
 }
 
 int QuickTune::getMAP(int index)
 {
+    if(index<12)   //number of columns limit
 	return tableMAP->getPoint(index);
 }
 int QuickTune::getRPM(int index)
 {
-	return tableRPM->getPoint(index);
+    if(index<21)   //number of columns limit
+        return tableRPM->getPoint(index);
 }
 
