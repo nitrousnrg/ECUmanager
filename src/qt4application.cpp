@@ -131,7 +131,6 @@ qt4application::qt4application()
 	plot->setScaleFactorY(14);
 
 	createLayout();
-
 	readSettings();
 
   //    connect(textEdit->document(), SIGNAL(contentsChanged()),
@@ -474,12 +473,11 @@ void qt4application::showFuelTiming()
 {
 	if( !fuel_adv_ON )
 	{	VE_table->hide();
-		fuelAdvTable->show();
+                fuelAdvTable->show();
 	}
-	fuel_adv_ON = true;
+        fuel_adv_ON = true;
 	Ign_table_ON = false;
 	VE_table_ON = false;
-	tablesLabels->setText("Fuel timing");
 }
 
 void qt4application::showIgnition()
@@ -725,7 +723,7 @@ void qt4application::process_line(QByteArray line,int i)
 	{
 		VE_table_ON = false;
 		for(int row = 0;row<12;++row)
-			for(int column = 0;column<12;++column)
+                        for(int column = 0;column<21;++column)
 			{
                              qDebug("VEtable fill: row: %d col: %d",row,column);
                                 qDebug("VEtable = %f",(float)(VEtable[row][column].entero)/10 );

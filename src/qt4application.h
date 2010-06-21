@@ -160,7 +160,6 @@ private:
 	QuickTune *QTune;
 	upgrade *newFirmware;
 	PlotArea *plot;
-	PlotArea *plotET;
 	graph2D *tempCorrGraph;
 	graph2D *tempSensorGraph;
         RenderArea *renderArea;     //bad name for the tacho
@@ -232,7 +231,6 @@ private:
 	QProgressBar *sendingBar;
 	QString string1;
 	QString serialPort;
-    //char buf[1024];
  
 	QAction *connectAct;
 	QAction *disconnectAct;

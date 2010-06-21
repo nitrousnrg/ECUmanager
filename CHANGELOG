@@ -4,3 +4,4 @@ Almost fully multhithreaded communications.
 2010-06-20
 *Warnings removed
 *First-time configuration don't need color settings.
+*Resize issues fixed
