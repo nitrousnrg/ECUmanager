@@ -1,6 +1,17 @@
-ECUmanager uses Qt4, so you need to have installed libqt4-dev and libqt4-opengl-dev in order to compile it under gnu/linux.
-If you use QtCreator, just open qt4application.pro, and enjoy.
-For a command line compiling, you are a "make" away.
-In both cases, make some coffe, or take a shower... it needs some time to compile the first time.
+ECUmanager uses Qt4, so you need to have installed libqt4-dev in order to compile it under gnu/linux.
 
-If you have any question, mail me at marcus.chaparro[at]gmail[dot]com
+apt-get install qt4-qmake
+apt-get install libqt4-dev
+
+If you use QtCreator, just open qt4application.pro, and enjoy.
+To give it a try:
+apt-get install qtcreator
+
+For a command line compiling, you are a "make" away.
+In both cases, make some coffe, or take a shower... it needs some time to compile the first time -between one and five min-.
+
+/DataExamples/Fiat Palio FIRE lean.txt is the config file I use in my car. Try it (File->Open)
+
+Doubts? Issues?
+Post them here:
+http://www.diyefi.org/forum/viewforum.php?f=33  -or mail me-.

@@ -5,3 +5,7 @@ Almost fully multhithreaded communications.
 *Warnings removed
 *First-time configuration don't need color settings.
 *Resize issues fixed
+
+2010-06-21
+*quicktune hangs fixed.
+*README updated

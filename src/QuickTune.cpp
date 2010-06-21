@@ -65,7 +65,6 @@ void QuickTune::MAPvalueChanged(int index)
 }
 void QuickTune::RPMvalueChanged(int index)
 {
-    if(index<21)   //number of columns limit
         emit QTuneChange(RPM,index); //0
 }
 
@@ -73,10 +72,10 @@ int QuickTune::getMAP(int index)
 {
     if(index<12)   //number of columns limit
 	return tableMAP->getPoint(index);
+    return 0;
 }
 int QuickTune::getRPM(int index)
 {
-    if(index<21)   //number of columns limit
         return tableRPM->getPoint(index);
 }
 

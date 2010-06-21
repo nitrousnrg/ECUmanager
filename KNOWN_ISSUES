@@ -1,2 +1,3 @@
-Problems compiling opengl under windows.
-Can't playback a datalog file if it isn't connected to the device.
+*Can't playback a datalog file if it isn't connected to the device.
+*quicktune doesn't update the table colours and 3D surface
+*Problems compiling opengl under Windows.
