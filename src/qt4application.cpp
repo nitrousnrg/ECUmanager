@@ -320,17 +320,6 @@ void qt4application::saveAs()
 
 void qt4application::connectECU()
 {
-
-
-        sendfileAct->setDisabled(false);
-	upgradeFirmwareAct->setDisabled(false);
-	startLogAct->setDisabled(false);
-	fetchAct->setDisabled(false);
-	injectorTestAct->setDisabled(false);
-	connectAct->setDisabled(true);
-	disconnectAct->setDisabled(false);
-	refreshTimer->start();
-
 	serialThread = new commThread();
 	serialThread->setPort(serialPort);
 	serialThread->setTarget(hardwareTarget);
@@ -338,16 +327,23 @@ void qt4application::connectECU()
 //	serialThread->setPort(serialPort);
 
            /* FreeEMS stuff */
-//connect the signal emitted when a packet is sent or received
-        if(connect(serialThread,SIGNAL(packetArrived(QByteArray)),this,SLOT(showPacket(QByteArray)))  )
-            qDebug("seniales conectadas -connectECU()-");
+        //connect the signal emitted when a packet is sent or received
+        connect(serialThread,SIGNAL(packetArrived(QByteArray)),this,SLOT(showPacket(QByteArray)));
+
 
         connect(getInterfaceVersionAct, SIGNAL(triggered()), serialThread, SLOT(getInterfaceVersion()));
-        connect(getFirmwareVersionAct, SIGNAL(triggered()), serialThread, SLOT(getFirmwareVersion()));
-        qDebug("seniales conectadas -connectECU()-");
+        connect(getFirmwareVersionAct,  SIGNAL(triggered()), serialThread, SLOT(getFirmwareVersion()));
 
 	if(serialThread->isOnline())
 	{
+                sendfileAct->setDisabled(false);
+                upgradeFirmwareAct->setDisabled(false);
+                startLogAct->setDisabled(false);
+                fetchAct->setDisabled(false);
+                injectorTestAct->setDisabled(false);
+                connectAct->setDisabled(true);
+                disconnectAct->setDisabled(false);
+
 		connectedECU = TRUE;
 		refreshTimer->start();
 		statusBar()->showMessage(tr("Connected"),6);

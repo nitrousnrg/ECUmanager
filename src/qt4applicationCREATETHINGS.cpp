@@ -260,7 +260,7 @@ void qt4application::createActions()
 
 	fetchAct = new QAction(tr("Open ECU"), this);
 	fetchAct->setStatusTip(tr("Reads config file from ECU"));
-	fetchAct->setDisabled(false);
+        fetchAct->setDisabled(true);
 	connect(fetchAct, SIGNAL(triggered()), this, SLOT(openECU()));
 
 	sendfileAct = new QAction(QIcon(":/amarok_burn.png"),tr("Send File"),this);

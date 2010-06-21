@@ -193,7 +193,7 @@ void Plot3D::paintGL()
 		legend_.draw();
 	}
 	title_.setRelPosition(titlerel_, titleanchor_);
-	title_.draw();
+        //title_.draw();    //Horrible bug appears here
 	
 	Triple beg = coordinates_p.first();
 	Triple end = coordinates_p.second();

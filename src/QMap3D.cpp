@@ -62,25 +62,16 @@
 			dataTable[row][col]=0;
 	//loadFromData(dataTable,12,21,0,21,0,12);
 
-        RGBA rgb = Qt2GL(QColor(223,223,223));
+        RGBA rgb = Qt2GL(QColor(210,209,208));
 	setBackgroundColor(rgb);
-        //setTitle("VE");
+        setTitle("VE");
         //coordinates()->axes[X1].setLabelString("MAP");
         //coordinates()->axes[Y1].setLabelString("RPM");
 
-	/*
-	Rosenbrock rosenbrock(*this);
-	
-	rosenbrock.setMesh(12,21);
-	rosenbrock.setDomain(0,21,0,22);
-	rosenbrock.setMinZ(0);
-	
-	rosenbrock.create();
-	*/
-	setRotation(30,0,-55);
-	setScale(1,1,1);
-	setShift(0.15,0,0);
-	setZoom(1.0);
+        setRotation(30,0,-55);
+        setScale(1,1,1);
+        setShift(0.15,0,0);
+        setZoom(1.0);
 	
 /*	for (unsigned i=0; i!=coordinates()->axes.size(); ++i)
 	{

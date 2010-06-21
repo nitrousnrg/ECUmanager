@@ -413,13 +413,13 @@ bool SurfacePlot::loadFromData(double** data, unsigned int columns, unsigned int
   actualData_p = actualDataG_;
   
   actualDataG_->setPeriodic(false,false);
-	actualDataG_->setSize(columns,rows);
-	readIn(*actualDataG_,data,columns,rows,minx,maxx,miny,maxy);
-  calcNormals(*actualDataG_);  
-	
+  actualDataG_->setSize(columns,rows);
+  readIn(*actualDataG_,data,columns,rows,minx,maxx,miny,maxy);
+  calcNormals(*actualDataG_);
+
 	updateData();
 	updateNormals();
-	createCoordinateSystem();
+        createCoordinateSystem();
 
 	return true;
 }	

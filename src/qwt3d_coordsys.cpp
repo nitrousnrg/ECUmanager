@@ -105,10 +105,11 @@ void CoordinateSystem::draw()
 	if (!lineSmooth())
 		sb.turnOff();
 		
+/* axis are buggy, so I remove them
 
 	if (autoDecoration())
-		chooseAxes();
-	
+                chooseAxes();
+*/
 	Drawable::draw();
 
 	if( style_ == NOCOORD)
