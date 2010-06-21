@@ -149,9 +149,6 @@ private:
         bool debugEnabledFlag;
  	QString strippedName(const QString &fullFileName);
 
-  //    QTextEdit *textEdit;
- //     QString curFile;
-
 	QWidget *window;
 	QWidget *QmainLayout;
 	QextSerialPort *serial;
@@ -166,7 +163,7 @@ private:
 	PlotArea *plotET;
 	graph2D *tempCorrGraph;
 	graph2D *tempSensorGraph;
-	RenderArea *renderArea;
+        RenderArea *renderArea;     //bad name for the tacho
 	QPlayer *playMenu;
 	QInjTester *tester;
 	QTimer *sendTimer;
@@ -339,7 +336,6 @@ private:
 		char plain[504];
 	}plaindataVE,plaindataIgn;
 
-unsigned char noooooo[80];
 
 	FILE *f;
 	QString confFile;

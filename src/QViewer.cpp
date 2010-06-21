@@ -356,22 +356,22 @@ bool QViewer::exportCsv()
 
 void QViewer::readSettings()
 {
-	QSettings settings("MyEnterprise", "QViewer");
+        QSettings settings("FreeEMS", "QViewer");
 	QPoint pos = settings.value("pos", QPoint(200, 400)).toPoint();
 	QSize size = settings.value("size", QSize(400, 400)).toSize();
 	fileName = settings.value("defaultFile",QString()).toString();
 
-	display->setBackColor( settings.value("plotBackground Color. Display 1").value<QColor>() );
-	display->setFontColor( settings.value("plotFont Color. Display 1").value<QColor>() );
-	display->setChannel1Color( settings.value("plotChannel 1 Color. Display 1").value<QColor>() );
+        display->setBackColor( settings.value("plotBackground Color. Display 1",Qt::black).value<QColor>() );
+        display->setFontColor( settings.value("plotFont Color. Display 1",Qt::gray).value<QColor>() );
+        display->setChannel1Color( settings.value("plotChannel 1 Color. Display 1",Qt::blue).value<QColor>() );
 
-	(display+1)->setBackColor( settings.value("plotBackground Color. Display 2").value<QColor>() );
-	(display+1)->setFontColor( settings.value("plotFont Color. Display 2").value<QColor>() );
-	(display+1)->setChannel1Color( settings.value("plotChannel 1 Color. Display 2").value<QColor>() );
+        (display+1)->setBackColor( settings.value("plotBackground Color. Display 2",Qt::black).value<QColor>() );
+        (display+1)->setFontColor( settings.value("plotFont Color. Display 2",Qt::gray).value<QColor>() );
+        (display+1)->setChannel1Color( settings.value("plotChannel 1 Color. Display 2",Qt::red).value<QColor>() );
 
-	(display+2)->setBackColor( settings.value("plotBackground Color. Display 3").value<QColor>() );
-	(display+2)->setFontColor( settings.value("plotFont Color. Display 3").value<QColor>() );
-	(display+2)->setChannel1Color( settings.value("plotChannel 1 Color. Display 3").value<QColor>() );
+        (display+2)->setBackColor( settings.value("plotBackground Color. Display 3",Qt::black).value<QColor>() );
+        (display+2)->setFontColor( settings.value("plotFont Color. Display 3",Qt::gray).value<QColor>() );
+        (display+2)->setChannel1Color( settings.value("plotChannel 1 Color. Display 3",Qt::green).value<QColor>() );
 
 	resize(size);
 	move(pos);
@@ -379,7 +379,7 @@ void QViewer::readSettings()
 
 void QViewer::writeSettings()
 {
-	QSettings settings("MyEnterprise", "QViewer");
+        QSettings settings("FreeEMS", "QViewer");
 	settings.setValue("pos", pos());
 	settings.setValue("size", size());
 	settings.setValue("defaultFile",fileName);

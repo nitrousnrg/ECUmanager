@@ -124,7 +124,7 @@ qt4application::qt4application()
 	createToolBars();
 	createStatusBar();
 
-	renderArea = new RenderArea;
+        renderArea = new RenderArea;
 	renderArea->setValue(0);
 
 	plot = new PlotArea;
@@ -606,9 +606,6 @@ void qt4application::openECUslot()
 		++i;
 	// Leavanto EEPROM
 
-
-		for(int j = 0;j<80;++j,++i)
-		noooooo[j] = dataBurst[i];
 		Dwell = dataBurst[i] / 10;
 		++i;
 		for(int j=0;j<12;++j,i+=2)

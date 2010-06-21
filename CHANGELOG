@@ -1,4 +1,6 @@
 Added complete qextserialport library -not included in qmake project, but in QExtSerialPort directory.
 Almost fully multhithreaded communications.
-Window resize problem not fixed.
-Fixed README
+
+2010-06-20
+*Warnings removed
+*First-time configuration don't need color settings.
