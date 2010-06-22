@@ -1,3 +1,0 @@
-This is a kdevelop project, ready to compile ECUmanager on a linux system.
-
-It includes the first approach to multithreading, and an extension to make it work with a PIC based fuel injecton, or the freeEMS project.

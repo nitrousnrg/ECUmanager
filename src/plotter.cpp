@@ -455,7 +455,7 @@ void PlotArea::acceptDialog()
         if( throttleBox->isChecked() )      channel = 10;
 
         writeSettings();
-
+        update();
 	dialog->accept();
 	clear();
 }

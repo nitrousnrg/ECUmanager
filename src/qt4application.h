@@ -87,8 +87,9 @@ private slots:
 	void putTempCalibration();
 	void boostDialog();
 	void nitrousDialog();
-	void parametersDialog();
-	void alarmsDialog();
+        void parametersDialog();
+        void setMainTableSize();
+        void alarmsDialog();
 	void printDialog();
 	void acceptDialog();
 	void rejectDialog();
@@ -132,8 +133,9 @@ private:
 
 	bool connectedECU;
 	bool fileopened;
-	bool parametersDialogOpen;
-	bool tempDialogOpen;
+        bool parametersDialogOpen;
+        bool setMainTableSizeDialogOpen;
+        bool tempDialogOpen;
 	bool accelEnrichDialogOpen;
 	bool alarmDialogOpen;
 	bool configDialogOpen;
@@ -177,7 +179,11 @@ private:
         QTableWidgetItem VEtableItem[16][25];
 	QTableWidgetItem ignTableItem[12][21];
 	QTableWidgetItem fuelAdvTableItem[12];
+        QTableWidget *headerTableRPM;
+        QTableWidget *headerTableMAP;
         QTableWidgetItem *packetTableItem;
+        QTableWidgetItem *headerContentsRPM;
+        QTableWidgetItem *headerContentsMAP;
         QHBoxLayout *horizontaLayout;
 	QDialog *dialog;
 	QMenu *fileMenu;
@@ -282,7 +288,9 @@ private:
 
 	struct estructura
 	{
-		unsigned int cylinders;
+                unsigned int headerRPM[21];     //defines table size
+                unsigned int headerMAP[21];
+                unsigned int cylinders;
 		unsigned int displacement;	//cm³
 		unsigned int fuelCut;		//rpm
 		unsigned int idleRPM;

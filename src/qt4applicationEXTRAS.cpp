@@ -158,6 +158,43 @@ void qt4application::configureECUmanager()
 	dialog->show();
 }
 
+void qt4application::setMainTableSize()
+{
+    setMainTableSizeDialogOpen = true;
+
+    dialog = new QDialog(this);
+    QFormLayout *formLayout = new QFormLayout;
+    QString num;
+    connect(dialog, SIGNAL(rejected()), this, SLOT(acceptDialog()));
+
+    headerTableRPM->setRowHeight(0,18);
+    for(int i=0; i<21; ++i)
+    {
+        headerContentsRPM[i].setText(num.setNum(confParameter.headerRPM[i]));
+        headerTableRPM->setItem(0,i,&(headerContentsRPM[i]));
+        headerTableRPM->setColumnWidth(i,47);
+    }
+
+    headerTableMAP->setRowHeight(0,18);
+    for(int i=0; i<21; ++i)
+    {
+        headerContentsMAP[i].setText(num.setNum(confParameter.headerMAP[i]));
+        headerTableMAP->setItem(0,i,&(headerContentsMAP[i]));
+        headerTableMAP->setColumnWidth(i,47);
+    }
+
+    dialog->setModal(true);
+    dialog->setSizeGripEnabled(false);
+    dialog->resize(1100,50);
+    dialog->setWindowTitle(tr("Configure table headers"));
+    formLayout->addRow(tr("RPM"), headerTableRPM);
+    formLayout->addRow(tr("MAP"), headerTableMAP);
+    dialog->setLayout(formLayout);
+    dialog->show();
+
+}
+
+
 void qt4application::injectorTestDialog()
 {
 	if(serialThread->getQextSerialPort())

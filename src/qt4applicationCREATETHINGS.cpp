@@ -23,27 +23,34 @@
 /* create() members	*/
 
 void qt4application::createVEtable()
-{	int i;
-	VE_table = new QTableWidget(12, 21, this);
+{
+        int i;
+
+        QStringList RPMheader;
+        QStringList MAPheader;
+        QString num;
+        headerTableRPM = new QTableWidget(1,21);
+        headerTableMAP = new QTableWidget(1,21);
+        headerContentsRPM = new QTableWidgetItem[21];
+        headerContentsMAP = new QTableWidgetItem[21];	VE_table = new QTableWidget(12, 21, this);
+        VE_table->setContextMenuPolicy(Qt::CustomContextMenu);      //This enables the right click pop up
 	VE_table_ON = true;
-    /*	for(int row = 0;row<12;++row)
-		for(int column = 0;column<21;++column)
-		{
-			VEtableItem[row][column].setTextAlignment(Qt::AlignVCenter);
-			VEtableItem[row][column].setData(0, QVariant( ( (float)(VEtable[row][column].entero)/10 ) ));
-			VE_table->setItem(row,column,&(VEtableItem[row][column]));
-		}
-        */for(i=0;i<12;++i)
-		VE_table->setRowHeight(i,19);
-	for(i=0;i<21;++i)
-		VE_table->setColumnWidth(i,48);
-	QStringList Hheader,Vheader;
-	Hheader<<"0"<<"500"<<"1000"<<"1500"<<"2000"<<"2500"<<"3000"<<"3500"<<"4000"<<"4500"<<"5000"<<
-		"5500"<<"6000"<<"6500"<<"7000"<<"7500"<<"8000"<<"8500"<<"9000"<<"9500"<<"10000";
-	VE_table->setHorizontalHeaderLabels ( Hheader );
-	Vheader<<"130"<<"120"<<"110"<<"100"<<"90"<<"80"<<"70"<<"60"<<"50"<<"40"<<"30"<<"20";
-	VE_table->setVerticalHeaderLabels ( Vheader );
-	VE_table->setMaximumHeight( 275 );
+        connect(VE_table,SIGNAL(customContextMenuRequested(QPoint)),this,SLOT(setMainTableSize()));
+
+        for(i=0;i<12;++i)
+        {
+            VE_table->setRowHeight(i,19);
+            MAPheader.prepend(num.setNum(confParameter.headerMAP[i]));
+        }
+        for(i=0;i<21;++i)
+        {
+            VE_table->setColumnWidth(i,45);
+            RPMheader.append(num.setNum(confParameter.headerRPM[i]));
+        }
+
+        VE_table->setHorizontalHeaderLabels ( RPMheader );
+        VE_table->setVerticalHeaderLabels ( MAPheader );
+        VE_table->setMaximumHeight( 275 );
 
 	connect(VE_table,SIGNAL(itemChanged(QTableWidgetItem * )),this, SLOT(checkChange(QTableWidgetItem *)));
 }

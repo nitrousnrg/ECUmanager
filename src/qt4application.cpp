@@ -61,6 +61,12 @@ qt4application::qt4application()
 	for(int i=0;i<13;++i)
 		confParameter.tempCorr[i] = 0;
 
+        for(int i=0; i<21; ++i)
+            confParameter.headerRPM[i] = 500*i;
+        for(int i=0; i<12; ++i)
+            confParameter.headerMAP[i] = 10*i+20;
+
+
 	confParameter.accel_pump_treshold = 100;
 	confParameter.accel_pump_enrich_factor = 0;
 	confParameter.accel_pump_decay = 0;
@@ -83,6 +89,7 @@ qt4application::qt4application()
 	logFileName = "noName";
 	//Dialog flags. There is only one dialog object, but it is used in many forms
 	parametersDialogOpen = false;
+        setMainTableSizeDialogOpen = false;
 	tempDialogOpen = false;
 	accelEnrichDialogOpen = false;
 	nitrousDialogOpen = false;
@@ -448,11 +455,10 @@ void qt4application::showFuel()
 				VEtableItem[row][column].setTextAlignment(Qt::AlignVCenter);
 				VEtableItem[row][column].setData(0, QVariant( ( (float)(VEtable[row][column].entero)/10 ) ));
 				VE_table->setItem(row,column,&(VEtableItem[row][column]));
-				VE_table->update();
 			}
+                VE_table->update();             
 		VE_table->show();
 		fuelAdvTable->hide();
-
 		VE_table_ON = true;
 	}
 }
@@ -483,6 +489,7 @@ void qt4application::showIgnition()
 				VEtableItem[row][column].setData(0, QVariant( ( (float)(IgnTable[row][column].angle) ) ));
 				VE_table->setItem(row,column,&(VEtableItem[row][column]));
 			}
+                VE_table->update();
 		VE_table->show();
 		fuelAdvTable->hide();
 
@@ -650,10 +657,36 @@ void qt4application::loadFile(const QString &fileName)
 }
 void qt4application::process_line(QByteArray line,int i)
 {
-	qDebug("reading line #%d",i);
+    if(i==1)    //read the RPM header
+    {
+        sscanf(line,"%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d",
+                                                                                &(confParameter.headerRPM[0]),
+                                                                                &(confParameter.headerRPM[1]),
+                                                                                &(confParameter.headerRPM[2]),
+                                                                                &(confParameter.headerRPM[3]),
+                                                                                &(confParameter.headerRPM[4]),
+                                                                                &(confParameter.headerRPM[5]),
+                                                                                &(confParameter.headerRPM[6]),
+                                                                                &(confParameter.headerRPM[7]),
+                                                                                &(confParameter.headerRPM[8]),
+                                                                                &(confParameter.headerRPM[9]),
+                                                                                &(confParameter.headerRPM[10]),
+                                                                                &(confParameter.headerRPM[11]),
+                                                                                &(confParameter.headerRPM[12]),
+                                                                                &(confParameter.headerRPM[13]),
+                                                                                &(confParameter.headerRPM[14]),
+                                                                                &(confParameter.headerRPM[15]),
+                                                                                &(confParameter.headerRPM[16]),
+                                                                                &(confParameter.headerRPM[17]),
+                                                                                &(confParameter.headerRPM[18]),
+                                                                                &(confParameter.headerRPM[18]),
+                                                                                &(confParameter.headerRPM[19]));
+    }
+
 	if(i>=2 && i<14)
 	{
-		sscanf(line,"%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d",
+                sscanf(line,"%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d",
+                                                                                        &(confParameter.headerMAP[i-2]),
 											&(VEtable[i-2][0].entero),
 											&(VEtable[i-2][1].entero),
 											&(VEtable[i-2][2].entero),
@@ -675,16 +708,27 @@ void qt4application::process_line(QByteArray line,int i)
 											&(VEtable[i-2][18].entero),
 											&(VEtable[i-2][19].entero),
 											&(VEtable[i-2][20].entero));
+
 	}
 	if( (i==13) && (VE_table_ON == true) ) //mal
-	{
+        {
+            QStringList RPMheader;
+            QStringList MAPheader;
+            QString num;
+
+            for(int i=0; i<12; ++i)
+                MAPheader.append(num.setNum(confParameter.headerMAP[i]));
+            for(int i=0; i<21; ++i)
+                RPMheader.append(num.setNum(confParameter.headerRPM[i]));
+
+            VE_table->setHorizontalHeaderLabels ( RPMheader );
+            VE_table->setVerticalHeaderLabels ( MAPheader );
+
 		VE_table_ON = false;
 		for(int row = 0;row<12;++row)
                         for(int column = 0;column<21;++column)
 			{
-                             qDebug("VEtable fill: row: %d col: %d",row,column);
-                                qDebug("VEtable = %f",(float)(VEtable[row][column].entero)/10 );
-				VEtableItem[row][column].setTextAlignment(Qt::AlignVCenter);
+        			VEtableItem[row][column].setTextAlignment(Qt::AlignVCenter);
                                 VEtableItem[row][column].setData(0, QVariant( (float)(VEtable[row][column].entero)/10  ));
 
                                 QColor cellColor;
@@ -872,16 +916,24 @@ bool qt4application::saveFile(const QString &fileName)
 		return false;
 	}
 
-	file.write("\tFuel Map\n\n");
+        file.write("\tFuel Map\n\t");
+        for(int column = 0; column<21; ++column)
+        {
+            array.setNum(confParameter.headerRPM[column]);
+            file.write(array + "\t");
+        }
+        file.write("\n");
 
 	for(int row = 0;row<12;++row)
 	{
-		for(int column = 0;column<21;++column)
-		{
-			array.setNum(VEtable[row][column].entero);
-			file.write(array + "\t");
-		}
-		file.write("\n");
+            array.setNum(confParameter.headerMAP[row]);
+            file.write(array + "\t");
+            for(int column = 0;column<21;++column)
+            {
+                array.setNum(VEtable[row][column].entero);
+                file.write( array + "\t");
+            }
+            file.write("\n");
 	}
 
 	file.write("\n\tIgn Map (°BTDC)\n\n");
@@ -993,6 +1045,28 @@ void qt4application::acceptDialog()
 		confParameter.deadTime = string1.toUInt();
 		parametersDialogOpen = false;
 	}
+
+        if(setMainTableSizeDialogOpen)
+        {
+            QStringList RPMheader;
+            QStringList MAPheader;
+            QString num;
+
+            for(int i=0; i<21; ++i)
+            {
+                confParameter.headerRPM[i] = headerContentsRPM[i].text().toUInt();
+                RPMheader.append(num.setNum(confParameter.headerRPM[i]));
+            }
+            VE_table->setHorizontalHeaderLabels ( RPMheader );
+
+            for(int i=0; i<12; ++i)
+            {
+                confParameter.headerMAP[i] = headerContentsMAP[i].text().toUInt();
+                MAPheader.append(num.setNum(confParameter.headerMAP[i]));
+            }
+            VE_table->setVerticalHeaderLabels ( MAPheader );
+            setMainTableSizeDialogOpen = false;
+        }
 	if(tempDialogOpen)
 	{
 		for(int i=0;i<13;++i)
