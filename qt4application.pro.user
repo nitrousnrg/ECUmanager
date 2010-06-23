@@ -227,7 +227,7 @@
   <valuemap type="QVariantMap">
    <value key="ProjectExplorer.BuildConfiguration.DisplayName" type="QString">release</value>
    <valuelist key="abstractProcess.Environment" type="QVariantList">
-    <value type="QString">DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-cpx5WVAVmz,guid=7ac8913f4fb500a894066b8200000022</value>
+    <value type="QString">DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-aBu3sAaIr8,guid=eb38375d6ad96b5fd4674faf00000022</value>
     <value type="QString">DESKTOP_SESSION=default</value>
     <value type="QString">DISPLAY=:0.0</value>
     <value type="QString">DM_CONTROL=/var/run/xdmctl</value>
@@ -250,13 +250,13 @@
     <value type="QString">SESSION_MANAGER=local/nitrousPresario:@/tmp/.ICE-unix/2417,unix/nitrousPresario:/tmp/.ICE-unix/2417</value>
     <value type="QString">SHELL=/bin/bash</value>
     <value type="QString">SHLVL=1</value>
-    <value type="QString">SSH_AGENT_PID=1902</value>
-    <value type="QString">SSH_AUTH_SOCK=/tmp/ssh-KpjpLQ1857/agent.1857</value>
+    <value type="QString">SSH_AGENT_PID=1917</value>
+    <value type="QString">SSH_AUTH_SOCK=/tmp/ssh-BXCnaQ1862/agent.1862</value>
     <value type="QString">USER=marcos</value>
     <value type="QString">WINDOWPATH=7</value>
     <value type="QString">XCURSOR_THEME=Oxygen_Black</value>
     <value type="QString">XDG_DATA_DIRS=/usr/share:/usr/share:/usr/local/share</value>
-    <value type="QString">XDG_SESSION_COOKIE=977ac3cb50f6d27e6a2b2e6549a3f549-1277245283.952684-1571679651</value>
+    <value type="QString">XDG_SESSION_COOKIE=977ac3cb50f6d27e6a2b2e6549a3f549-1277292747.993818-466547385</value>
     <value type="QString">XDM_MANAGED=method=classic,auto</value>
    </valuelist>
    <valuelist key="abstractProcess.arguments" type="QVariantList">
@@ -275,7 +275,7 @@
   <valuemap type="QVariantMap">
    <value key="ProjectExplorer.BuildConfiguration.DisplayName" type="QString">release</value>
    <valuelist key="abstractProcess.Environment" type="QVariantList">
-    <value type="QString">DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-cpx5WVAVmz,guid=7ac8913f4fb500a894066b8200000022</value>
+    <value type="QString">DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-aBu3sAaIr8,guid=eb38375d6ad96b5fd4674faf00000022</value>
     <value type="QString">DESKTOP_SESSION=default</value>
     <value type="QString">DISPLAY=:0.0</value>
     <value type="QString">DM_CONTROL=/var/run/xdmctl</value>
@@ -298,13 +298,13 @@
     <value type="QString">SESSION_MANAGER=local/nitrousPresario:@/tmp/.ICE-unix/2417,unix/nitrousPresario:/tmp/.ICE-unix/2417</value>
     <value type="QString">SHELL=/bin/bash</value>
     <value type="QString">SHLVL=1</value>
-    <value type="QString">SSH_AGENT_PID=1902</value>
-    <value type="QString">SSH_AUTH_SOCK=/tmp/ssh-KpjpLQ1857/agent.1857</value>
+    <value type="QString">SSH_AGENT_PID=1917</value>
+    <value type="QString">SSH_AUTH_SOCK=/tmp/ssh-BXCnaQ1862/agent.1862</value>
     <value type="QString">USER=marcos</value>
     <value type="QString">WINDOWPATH=7</value>
     <value type="QString">XCURSOR_THEME=Oxygen_Black</value>
     <value type="QString">XDG_DATA_DIRS=/usr/share:/usr/share:/usr/local/share</value>
-    <value type="QString">XDG_SESSION_COOKIE=977ac3cb50f6d27e6a2b2e6549a3f549-1277245283.952684-1571679651</value>
+    <value type="QString">XDG_SESSION_COOKIE=977ac3cb50f6d27e6a2b2e6549a3f549-1277292747.993818-466547385</value>
     <value type="QString">XDM_MANAGED=method=classic,auto</value>
    </valuelist>
    <value key="abstractProcess.IgnoreReturnValue" type="bool">false</value>

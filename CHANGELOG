@@ -10,3 +10,6 @@ Almost fully multhithreaded communications.
 *quicktune hangs fixed.
 *README updated
 *3d surface fixed
+
+2010-06-23
+*Added configurable main table headers

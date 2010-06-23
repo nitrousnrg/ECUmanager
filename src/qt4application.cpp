@@ -526,6 +526,7 @@ void qt4application::openECU()
 }
 void qt4application::openECUslot()
 {
+    /*probably the only comm not handled yet by serialThread */
 	qDebug("processing");
 	const qint64 available = serial->bytesAvailable();
 	if(available > 900)
@@ -579,8 +580,9 @@ void qt4application::openECUslot()
 
 			fuelAdvTableItem[j].setTextAlignment(Qt::AlignVCenter);
 			fuelAdvTableItem[j].setData(0, QVariant( fuelAdv[j].angle ));
-			fuelAdvTable->setItem(0,j,&(fuelAdvTableItem[j]));
-			fuelAdvTable->setColumnWidth(j,48);
+                        fuelAdvTable->takeItem(0,j);
+                        fuelAdvTable->setItem(0,j,&(fuelAdvTableItem[j]));
+                        fuelAdvTable->setColumnWidth(j,48);
 
 		}
 		
@@ -613,27 +615,10 @@ void qt4application::sendFilesInit()	//programar!
 	serialThread->burnFlash(QFileDialog::getOpenFileName(this, tr("Open File"),confFile,tr("Logged Data(*.log)")));
 }
 
-/*bool qt4application::maybeSave()
-{
-      if (textEdit->document()->isModified()) {
-            int ret = QMessageBox::warning(this, tr("Application"),
-                        tr("The document has been modified.\n"
-                        "Do you want to save your changes?"),
-                        QMessageBox::Yes | QMessageBox::Default,
-                        QMessageBox::No,
-                        QMessageBox::Cancel | QMessageBox::Escape);
-            if (ret == QMessageBox::Yes)
-            return save();
-            else if (ret == QMessageBox::Cancel)
-            return false;
-      }
-      return true;
-}*/
-
-
 void qt4application::loadFile(const QString &fileName)
 {
-	QFile file(fileName);
+        QApplication::setOverrideCursor(Qt::WaitCursor);
+        QFile file(fileName);
 	if (!file.open(QFile::ReadOnly | QFile::Text)) 
 	{
 		QMessageBox::warning(this, tr("Application"),tr("Cannot read file %1:\n%2.").arg(fileName).arg(file.errorString()));
@@ -648,11 +633,7 @@ void qt4application::loadFile(const QString &fileName)
 		process_line(line,i);
 		++i;
 	}
-//      QApplication::setOverrideCursor(Qt::WaitCursor);
-     // textEdit->setPlainText(in.readAll());
       QApplication::restoreOverrideCursor();
-
-    //  setCurrentFile(fileName);
       statusBar()->showMessage(tr("File loaded"), 2000);
 }
 void qt4application::process_line(QByteArray line,int i)
@@ -807,8 +788,9 @@ void qt4application::process_line(QByteArray line,int i)
 		{
 			fuelAdvTableItem[column].setTextAlignment(Qt::AlignVCenter);
 			fuelAdvTableItem[column].setData(0, QVariant( fuelAdv[column].angle ));
-			fuelAdvTable->setItem(0,column,&(fuelAdvTableItem[column]));
-			fuelAdvTable->setColumnWidth(column,48);
+                        fuelAdvTable->takeItem(0,column);
+                        fuelAdvTable->setItem(0,column,&(fuelAdvTableItem[column]));
+                        fuelAdvTable->setColumnWidth(column,48);
 
 			fuelAdv[column].byte[1] = (unsigned char)(fuelAdv[column].angle/6);
 			fuelAdv[column].byte[0] = (unsigned char)((fuelAdv[column].angle/6 - fuelAdv[column].byte[1])*256);

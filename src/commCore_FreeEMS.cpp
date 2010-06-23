@@ -233,8 +233,8 @@ void commThread::readFreeEMS()
 
     if( buffer.contains(0xCC) )     //there is an end char in the buffer (we have a full packet here!)
     {
-        int start = buffer.indexOf(0xAA);    //this is where the end of my packet is located
-        int end = buffer.indexOf(0xCC);    //this is where the end of my packet is located
+        int start = buffer.indexOf(0xAA);    //this is where the start of my packet is
+        int end = buffer.indexOf(0xCC);    //this is where the end of my packet is
         QByteArray auxBuffer = buffer;
         auxBuffer.remove(0, start);                     //remove first chunk
         auxBuffer.remove(end, auxBuffer.size()-1);      //remove last chunk
@@ -257,7 +257,6 @@ void qt4application::showPacket(QByteArray dataArray)
     data.unpreparePacket();
     qDebug(data.getPacket().data());
 
-    qDebug("nooo");
     if(debugEnabledFlag)
     {
         QTime time = QTime::currentTime();
@@ -285,11 +284,10 @@ void qt4application::showPacket(QByteArray dataArray)
 
 void qt4application::debugFreeEMS()
 {
-    if( serialThread )
+   // if( serialThread )
     {
         dialog = new QDialog(this);
         dialog->setModal(false);
-        nitrousDialogOpen = true;
         dialog->setSizeGripEnabled(false);
         dialog->resize(728,560);
         dialog->setWindowTitle(tr("Debug"));
@@ -301,34 +299,15 @@ void qt4application::debugFreeEMS()
         connect(accept, SIGNAL(accepted()), this, SLOT(acceptDialog()));
         connect(accept, SIGNAL(rejected()), this, SLOT(rejectDialog()));
 
-        QLabel *flow1 = new QLabel(tr("Extra fuel (ms)"));
-        QLabel *retard1 = new QLabel(tr("Ignition retard"));
-
-        /*  conditions  */
-        editNitrousRPM = new QLineEdit(string1.setNum(confParameter.nitrousRPM));
-        editNitrousMAP = new QLineEdit(string1.setNum(confParameter.nitrousMAP));
-        editNitrousTPS = new QLineEdit(string1.setNum(confParameter.nitrousTPS));
-
-        editNitrousFlow1 = new QLineEdit(string1.setNum(confParameter.nitrousStage1Flow));
-        editNitrousFlow2 = new QLineEdit(string1.setNum(confParameter.nitrousStage2Flow));
-        editNitrousRetard1 = new QLineEdit(string1.setNum(confParameter.nitrousStage1Retard));
-        editNitrousRetard2 = new QLineEdit(string1.setNum(confParameter.nitrousStage2Retard));
-
-        editNitrousRPM->setAlignment(Qt::AlignRight);
-        editNitrousMAP->setAlignment(Qt::AlignRight);
-        editNitrousTPS->setAlignment(Qt::AlignRight);
-        editNitrousFlow1->setAlignment(Qt::AlignRight);
-        editNitrousFlow2->setAlignment(Qt::AlignRight);
-        editNitrousRetard1->setAlignment(Qt::AlignRight);
-        editNitrousRetard2->setAlignment(Qt::AlignRight);
-
-       /* table that holds every packet send/received */
+         /* table that holds every packet sent/received */
 
         packetTable= new QTableWidget(1, 4, this);
 
         QStringList headerLabels;
         headerLabels << "Time" << "Header" << "PayloadID"<<"Payload";
         packetTable->setHorizontalHeaderLabels(headerLabels);
+        packetTable->setColumnWidth(3,360);
+        packetTable->setRowHeight(0,20);
 
         QGridLayout *vbox1 = new QGridLayout;
         vbox1->addWidget(packetTable,0,1);
@@ -336,18 +315,18 @@ void qt4application::debugFreeEMS()
 
         /*  stage 1  */
         QGridLayout *vbox2 = new QGridLayout;
-        vbox2->addWidget(flow1,0,0);
+/*        vbox2->addWidget(flow1,0,0);
         vbox2->addWidget(editNitrousFlow1,0,1);
         vbox2->addWidget(retard1,1,0);
         vbox2->addWidget(editNitrousRetard1,1,1);
-
+*/
         QTabWidget *tabBar = new QTabWidget();
         QWidget *conditions = new QWidget();
         conditions->setLayout(vbox1);
-        QWidget *stage1 = new QWidget();
-        stage1->setLayout(vbox2);
+        QWidget *tests = new QWidget();
+        tests->setLayout(vbox2);
         tabBar->addTab(conditions,"Packets");
-        tabBar->addTab(stage1,"Tests");
+        tabBar->addTab(tests,"Tests");
 
         //tabBar->setLayout(vbox);
 

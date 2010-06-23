@@ -137,9 +137,9 @@ void commThread::readSerialPort()
         if(hardwareTarget == "freeEMS project")
 	{
 	//	qDebug("freeEMS!!");
-		//readFromfreeEMS();
+                //read_FreeEMS_data();
 	}
-        if(hardwareTarget == "core28")          //real time linux-based controller
+        if(hardwareTarget == "core28")          //rt linux-based controller
         {
              //  read_core28_data();
         }
@@ -272,7 +272,11 @@ if(enable)
 	}
 	buffer.clear();
 }
-void commThread::read_FreeEMS_data(){}
+
+// This is the biggest TODO: Create the interface between packet reception and the GUI
+void commThread::read_FreeEMS_data()
+{
+}
 
 int commThread::getChannel(int address)		//puede acceder a todos los datos recibidos desde aqui
 {	return channel[address].toInt();}
@@ -280,8 +284,7 @@ int commThread::getChannel(int address)		//puede acceder a todos los datos recib
 double commThread::getFChannel(int address)		//member added for convenience
 {	return channel[address].toDouble();}
 
-	// upload configuration to flash
-
+// upload configuration to flash
 bool commThread::burnFlash(QString fileName)
 {
 	QFile file(fileName);
