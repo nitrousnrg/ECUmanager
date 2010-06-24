@@ -8,14 +8,16 @@ GridMapping::GridMapping()
 	plotwidget_p = 0;
 	setMesh(0,0);
 	setDomain(0,0,0,0);
-  restrictRange(ParallelEpiped(Triple(-DBL_MAX,-DBL_MAX,-DBL_MAX),Triple(DBL_MAX,DBL_MAX,DBL_MAX)));
+	restrictRange(ParallelEpiped(Triple(-DBL_MAX,-DBL_MAX,-DBL_MAX),Triple(DBL_MAX,DBL_MAX,DBL_MAX)));
 }
+
 
 void GridMapping::setMesh(unsigned int columns,unsigned int rows)
 {
 	umesh_p = columns;
 	vmesh_p = rows;
 }
+
 
 void GridMapping::setDomain(double minu, double maxu, double minv, double maxv)
 {
@@ -25,8 +27,8 @@ void GridMapping::setDomain(double minu, double maxu, double minv, double maxv)
 	maxv_p = maxv;
 }
 
+
 void GridMapping::restrictRange(Qwt3D::ParallelEpiped const& p)
 {
 	range_p = p;
 }
-

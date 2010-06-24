@@ -16,15 +16,15 @@
 #define QextBaseType Win_QextSerialPort
 #endif
 
-class QextSerialPort: public QextBaseType {
-public:
-    QextSerialPort();
-    QextSerialPort(const QString & name);
-    QextSerialPort(PortSettings const& s);
-    QextSerialPort(const QString & name, PortSettings const& s);
-    QextSerialPort(const QextSerialPort& s);
-    QextSerialPort& operator=(const QextSerialPort&);
-    virtual ~QextSerialPort();
+class QextSerialPort: public QextBaseType
+{
+	public:
+		QextSerialPort();
+		QextSerialPort(const QString & name);
+		QextSerialPort(PortSettings const& s);
+		QextSerialPort(const QString & name, PortSettings const& s);
+		QextSerialPort(const QextSerialPort& s);
+		QextSerialPort& operator=(const QextSerialPort&);
+		virtual ~QextSerialPort();
 };
-
 #endif

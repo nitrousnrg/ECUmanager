@@ -4,8 +4,9 @@ using namespace Qwt3D;
 
 Drawable::~Drawable()
 {
-  detachAll();
+	detachAll();
 }
+
 
 void Drawable::saveGLState()
 {
@@ -26,11 +27,12 @@ void Drawable::saveGLState()
 	glGetBooleanv(GL_POLYGON_OFFSET_FILL, &poloffsfill);
 }
 
+
 void Drawable::restoreGLState()
 {
 	Enable(GL_LINE_SMOOTH, ls);
 	Enable(GL_POLYGON_SMOOTH, pols);
-	
+
 	setDeviceLineWidth(lw);
 	glBlendFunc(blsrc, bldst);
 	glColor4dv(col);
@@ -46,46 +48,51 @@ void Drawable::restoreGLState()
 	Enable(GL_POLYGON_OFFSET_FILL, poloffsfill);
 }
 
+
 void Drawable::Enable(GLenum what, GLboolean val)
 {
 	if (val)
 		glEnable(what);
-  else
+	else
 		glDisable(what);
 }
+
 
 void Drawable::attach(Drawable* dr)
 {
 	if ( dlist.end() == std::find( dlist.begin(), dlist.end(), dr ) )
 		if (dr)
-		{
-			dlist.push_back(dr);
-		}
+	{
+		dlist.push_back(dr);
+	}
 }
+
 
 void Drawable::detach(Drawable* dr)
 {
 	std::list<Drawable*>::iterator it = std::find(dlist.begin(), dlist.end(), dr);
-	
+
 	if ( it != dlist.end() )
 	{
 		dlist.erase(it);
 	}
 }
+
+
 void Drawable::detachAll()
 {
 	dlist.clear();
 }
 
 
-//! simplified glut routine (glUnProject): windows coordinates_p --> object coordinates_p 
+//! simplified glut routine (glUnProject): windows coordinates_p --> object coordinates_p
 /**
 	Don't rely on (use) this in display lists !
 */
 Triple Drawable::ViewPort2World(Triple win, bool* err)
 {
-  Triple obj;
-	
+	Triple obj;
+
 	getMatrices(modelMatrix, projMatrix, viewport);
 	int res = gluUnProject(win.x, win.y, win.z, modelMatrix, projMatrix, viewport, &obj.x, &obj.y, &obj.z);
 
@@ -94,14 +101,15 @@ Triple Drawable::ViewPort2World(Triple win, bool* err)
 	return obj;
 }
 
-//! simplified glut routine (glProject): object coordinates_p --> windows coordinates_p 
+
+//! simplified glut routine (glProject): object coordinates_p --> windows coordinates_p
 /**
 	Don't rely on (use) this in display lists !
 */
-Triple Drawable::World2ViewPort(Triple obj,	bool* err)
+Triple Drawable::World2ViewPort(Triple obj, bool* err)
 {
-  Triple win;
-	
+	Triple win;
+
 	getMatrices(modelMatrix, projMatrix, viewport);
 	int res = gluProject(obj.x, obj.y, obj.z, modelMatrix, projMatrix, viewport, &win.x, &win.y, &win.z);
 
@@ -110,6 +118,7 @@ Triple Drawable::World2ViewPort(Triple obj,	bool* err)
 	return win;
 }
 
+
 /**
 	Don't rely on (use) this in display lists !
 */
@@ -117,6 +126,7 @@ Triple Drawable::relativePosition(Triple rel)
 {
 	return ViewPort2World(Triple((rel.x-viewport[0])*viewport[2],(rel.y-viewport[1])*viewport[3],rel.z));
 }
+
 
 void Drawable::draw()
 {
@@ -129,12 +139,14 @@ void Drawable::draw()
 	restoreGLState();
 }
 
+
 void Drawable::setColor(double r, double g, double b, double a)
 {
 	color = RGBA(r,g,b,a);
-}	
+}
+
 
 void Drawable::setColor(RGBA rgba)
 {
 	color = rgba;
-}	
+}

@@ -18,55 +18,52 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
+#ifndef DGRAPH_H
+#define DGRAPH_H
 
- #ifndef DGRAPH_H
- #define DGRAPH_H
+#include <QBrush>
+#include <QPen>
+#include <QWidget>
 
- #include <QBrush>
- #include <QPen>
- #include <QWidget>
+class QWidget;
+class QPen;
+class QWidget;
 
- class QWidget;
- class QPen;
- class QWidget;
+class graph2D : public QWidget
+{
+	Q_OBJECT
 
- class graph2D : public QWidget
- {
-     Q_OBJECT
+		public:
 
- public:
+		graph2D(QWidget *parent = 0);
 
-	graph2D(QWidget *parent = 0);
-	
-	bool setPoint(int,int);
-	int getPoint(int index);
-	bool setScaleX(int index,float number);
-	bool setScaleY(int index,float number);
-	void setColumns(int);
-	QSize minimumSizeHint() const;
-	QSize sizeHint() const;
-//	void desplazar(float newValue);
+		bool setPoint(int,int);
+		int getPoint(int index);
+		bool setScaleX(int index,float number);
+		bool setScaleY(int index,float number);
+		void setColumns(int);
+		QSize minimumSizeHint() const;
+		QSize sizeHint() const;
+		//	void desplazar(float newValue);
 
- signals:
-	void valueChanged(int);
- protected:
-	void paintEvent(QPaintEvent *event);
-	void mousePressEvent(QMouseEvent *event);
-	void mouseMoveEvent(QMouseEvent *event);
-	void mouseReleaseEvent(QMouseEvent *event);
-//private slots:
+		signals:
+		void valueChanged(int);
+	protected:
+		void paintEvent(QPaintEvent *event);
+		void mousePressEvent(QMouseEvent *event);
+		void mouseMoveEvent(QMouseEvent *event);
+		void mouseReleaseEvent(QMouseEvent *event);
+		//private slots:
 
-
- private:
-	int columns;
-	QPen pen;
-	QBrush brush;
-	QPoint punto1[21];
-	bool scribbling;
-	float scaleX[21];
-	float scaleY[21];
-	//QPoint punto[10];
-	//static const QPoint;
- };
-
- #endif
+	private:
+		int columns;
+		QPen pen;
+		QBrush brush;
+		QPoint punto1[21];
+		bool scribbling;
+		float scaleX[21];
+		float scaleY[21];
+		//QPoint punto[10];
+		//static const QPoint;
+};
+#endif

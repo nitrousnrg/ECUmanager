@@ -20,31 +20,33 @@
 
 #include <firm_updater.h>
 
- upgrade::upgrade (QextSerialPort *serialreferenced,const QString *fileName)
+upgrade::upgrade (QextSerialPort *serialreferenced,const QString *fileName)
 {
 	serial = serialreferenced;
 	serial->setRts(1);
-        fileName = 0;
+	fileName = 0;
 }
+
 
 void upgrade::loadFlashData(int data)
 {
-/* Command to send:
-0 1 0 0 0
-*/
+	/* Command to send:
+	0 1 0 0 0
+	*/
 	sendBit(0);
 	sendBit(1);
 	sendBit(0);
 	sendBit(0);
 	sendBit(0);
 
-//now, send data
+	//now, send data
 
-	sendBit(0);	//start
+	sendBit(0);					 //start
 	for(int i=0;i<14;++i)
-		sendBit(data & (1<<i));		//LSB first
-	sendBit(0);	//stop
+		sendBit(data & (1<<i));	 //LSB first
+	sendBit(0);					 //stop
 }
+
 
 void upgrade::incrAddress()
 {
@@ -55,6 +57,7 @@ void upgrade::incrAddress()
 	sendBit(0);
 }
 
+
 void upgrade::erase_program()
 {
 	sendBit(0);
@@ -63,17 +66,11 @@ void upgrade::erase_program()
 	sendBit(0);
 	sendBit(0);
 }
+
+
 void upgrade::sendBit(bool bit)
 {
 	serial->setRts(1);
-	serial->setDtr(bit);	//data
-	serial->setRts(0);	//captures on clock's falling edge
+	serial->setDtr(bit);		 //data
+	serial->setRts(0);			 //captures on clock's falling edge
 }
-
-
-
-
-
-
-
-

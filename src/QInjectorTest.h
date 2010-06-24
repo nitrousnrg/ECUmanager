@@ -34,57 +34,54 @@
 #include <QProgressBar>
 #include <QByteArray>
 
- 
- class QWidget;
+class QWidget;
 
 class QInjTester : public QWidget
 {
 	Q_OBJECT
 
-public:
-	QInjTester(QextSerialPort *port);
-	~QInjTester();
+		public:
+		QInjTester(QextSerialPort *port);
+		~QInjTester();
 
-	QSize minimumSizeHint() const;
-	QSize sizeHint() const;
+		QSize minimumSizeHint() const;
+		QSize sizeHint() const;
 
+	protected:
 
-protected:
+	private slots:
+		void startFlow();
+		void stopFlow();
+		void startPulse();
+		void stopPulse();
+		void displayFlowLCD();
+		void displayPulseLCD();
+		void editONChange(const QString text);
+		void editOFFChange(const QString text);
 
-private slots:
-	void startFlow();
-	void stopFlow();
-	void startPulse();
-	void stopPulse();
-	void displayFlowLCD();
-	void displayPulseLCD();
-	void editONChange(const QString text);
-	void editOFFChange(const QString text);
+	private:
+		int timeCount;
+		QextSerialPort *serial;
+		QTimer *flowTimer;
+		QTimer *pulseTimer;
+		QTimer *LCDFlowTimer;
+		QTimer *LCDPulseTimer;
+		QPushButton *startFlowButton;
+		QPushButton *stopFlowButton;
+		QPushButton *startPulseButton;
+		QPushButton *stopPulseButton;
+		QLineEdit *editFlowDuration;
+		QLineEdit *editPulseDuration;
+		QLineEdit *editPulseON;
+		QLineEdit *editPulseOFF;
+		QLCDNumber *flowTimeLCD;
+		QLCDNumber *pulseTimeLCD;
+		QProgressBar *pulseBar;
 
-private:
-	int timeCount;
-	QextSerialPort *serial;
-	QTimer *flowTimer;
-	QTimer *pulseTimer;
-	QTimer *LCDFlowTimer;
-	QTimer *LCDPulseTimer;
-	QPushButton *startFlowButton;
-	QPushButton *stopFlowButton;
-	QPushButton *startPulseButton;
-	QPushButton *stopPulseButton;
-	QLineEdit *editFlowDuration;
-	QLineEdit *editPulseDuration;
-	QLineEdit *editPulseON;
-	QLineEdit *editPulseOFF;
-	QLCDNumber *flowTimeLCD;
-	QLCDNumber *pulseTimeLCD;
-	QProgressBar *pulseBar;
-
-	union  transformer
-	{
-		unsigned char byte[2];
-		int entero;
-	}ONtime,OFFtime,aux;
- };
-
- #endif
+		union  transformer
+		{
+			unsigned char byte[2];
+			int entero;
+		}ONtime,OFFtime,aux;
+};
+#endif

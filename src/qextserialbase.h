@@ -36,7 +36,6 @@
 #define TTY_WARNING(s) qWarning(s)
 #endif
 
-
 /*line status constants*/
 #define LS_CTS  0x01
 #define LS_DSR  0x02
@@ -65,131 +64,138 @@
 #define E_WRITE_FAILED              14
 
 /*enums for port settings*/
-typedef enum _NamingConvention {
-    WIN_NAMES,
-    IRIX_NAMES,
-    HPUX_NAMES,
-    SUN_NAMES,
-    DIGITAL_NAMES,
-    FREEBSD_NAMES,
-    LINUX_NAMES
+typedef enum _NamingConvention
+{
+	WIN_NAMES,
+	IRIX_NAMES,
+	HPUX_NAMES,
+	SUN_NAMES,
+	DIGITAL_NAMES,
+	FREEBSD_NAMES,
+	LINUX_NAMES
 } NamingConvention;
 
-typedef enum _BaudRateType {
-    BAUD50,                //POSIX ONLY
-    BAUD75,                //POSIX ONLY
-    BAUD110,
-    BAUD134,               //POSIX ONLY
-    BAUD150,               //POSIX ONLY
-    BAUD200,               //POSIX ONLY
-    BAUD300,
-    BAUD600,
-    BAUD1200,
-    BAUD1800,              //POSIX ONLY
-    BAUD2400,
-    BAUD4800,
-    BAUD9600,
-    BAUD14400,             //WINDOWS ONLY
-    BAUD19200,
-    BAUD38400,
-    BAUD56000,             //WINDOWS ONLY
-    BAUD57600,
-    BAUD76800,             //POSIX ONLY
-    BAUD115200,
-    BAUD128000,            //WINDOWS ONLY
-    BAUD256000             //WINDOWS ONLY
+typedef enum _BaudRateType
+{
+	BAUD50,						 //POSIX ONLY
+	BAUD75,						 //POSIX ONLY
+	BAUD110,
+	BAUD134,					 //POSIX ONLY
+	BAUD150,					 //POSIX ONLY
+	BAUD200,					 //POSIX ONLY
+	BAUD300,
+	BAUD600,
+	BAUD1200,
+	BAUD1800,					 //POSIX ONLY
+	BAUD2400,
+	BAUD4800,
+	BAUD9600,
+	BAUD14400,					 //WINDOWS ONLY
+	BAUD19200,
+	BAUD38400,
+	BAUD56000,					 //WINDOWS ONLY
+	BAUD57600,
+	BAUD76800,					 //POSIX ONLY
+	BAUD115200,
+	BAUD128000,					 //WINDOWS ONLY
+	BAUD256000					 //WINDOWS ONLY
 } BaudRateType;
 
-typedef enum _DataBitsType {
-    DATA_5,
-    DATA_6,
-    DATA_7,
-    DATA_8
+typedef enum _DataBitsType
+{
+	DATA_5,
+	DATA_6,
+	DATA_7,
+	DATA_8
 } DataBitsType;
 
-typedef enum _ParityType {
-    PAR_NONE,
-    PAR_ODD,
-    PAR_EVEN,
-    PAR_MARK,               //WINDOWS ONLY
-    PAR_SPACE
+typedef enum _ParityType
+{
+	PAR_NONE,
+	PAR_ODD,
+	PAR_EVEN,
+	PAR_MARK,					 //WINDOWS ONLY
+	PAR_SPACE
 } ParityType;
 
-typedef enum _StopBitsType {
-    STOP_1,
-    STOP_1_5,               //WINDOWS ONLY
-    STOP_2
+typedef enum _StopBitsType
+{
+	STOP_1,
+	STOP_1_5,					 //WINDOWS ONLY
+	STOP_2
 } StopBitsType;
 
-typedef enum _FlowType {
-    FLOW_OFF,
-    FLOW_HARDWARE,
-    FLOW_XONXOFF
+typedef enum _FlowType
+{
+	FLOW_OFF,
+	FLOW_HARDWARE,
+	FLOW_XONXOFF
 } FlowType;
 
 /*structure to contain port settings*/
-typedef struct _PortSettings {
-    BaudRateType BaudRate;
-    DataBitsType DataBits;
-    ParityType Parity;
-    StopBitsType StopBits;
-    FlowType FlowControl;
-    ulong Timeout_Sec;
-    ulong Timeout_Millisec;
+typedef struct _PortSettings
+{
+	BaudRateType BaudRate;
+	DataBitsType DataBits;
+	ParityType Parity;
+	StopBitsType StopBits;
+	FlowType FlowControl;
+	ulong Timeout_Sec;
+	ulong Timeout_Millisec;
 } PortSettings;
 
-class QextSerialBase:public QIODevice {
-public:
-    QextSerialBase();
-    QextSerialBase(const QString & name);
-    virtual ~QextSerialBase();
-    virtual void construct();
-    virtual void setPortName(const QString & name);
-    virtual QString portName() const;
+class QextSerialBase:public QIODevice
+{
+	public:
+		QextSerialBase();
+		QextSerialBase(const QString & name);
+		virtual ~QextSerialBase();
+		virtual void construct();
+		virtual void setPortName(const QString & name);
+		virtual QString portName() const;
 
-    virtual void setBaudRate(BaudRateType)=0;
-    virtual BaudRateType baudRate() const;
-    virtual void setDataBits(DataBitsType)=0;
-    virtual DataBitsType dataBits() const;
-    virtual void setParity(ParityType)=0;
-    virtual ParityType parity() const;
-    virtual void setStopBits(StopBitsType)=0;
-    virtual StopBitsType stopBits() const;
-    virtual void setFlowControl(FlowType)=0;
-    virtual FlowType flowControl() const;
-    virtual void setTimeout(ulong, ulong)=0;
+		virtual void setBaudRate(BaudRateType)=0;
+		virtual BaudRateType baudRate() const;
+		virtual void setDataBits(DataBitsType)=0;
+		virtual DataBitsType dataBits() const;
+		virtual void setParity(ParityType)=0;
+		virtual ParityType parity() const;
+		virtual void setStopBits(StopBitsType)=0;
+		virtual StopBitsType stopBits() const;
+		virtual void setFlowControl(FlowType)=0;
+		virtual FlowType flowControl() const;
+		virtual void setTimeout(ulong, ulong)=0;
 
-    virtual bool open(OpenMode mode=0)=0;
-    virtual void close()=0;
-    virtual void flush()=0;
+		virtual bool open(OpenMode mode=0)=0;
+		virtual void close()=0;
+		virtual void flush()=0;
 
-    virtual qint64 size() const=0;
-    virtual qint64 bytesAvailable()=0;
-    virtual bool atEnd() const;
+		virtual qint64 size() const=0;
+		virtual qint64 bytesAvailable()=0;
+		virtual bool atEnd() const;
 
-    virtual void ungetChar(char c)=0;
-    virtual qint64 readLine(char * data, qint64 maxSize);
+		virtual void ungetChar(char c)=0;
+		virtual qint64 readLine(char * data, qint64 maxSize);
 
-    virtual ulong lastError() const;
-    virtual void translateError(ulong error)=0;
+		virtual ulong lastError() const;
+		virtual void translateError(ulong error)=0;
 
-    virtual void setDtr(bool set=true)=0;
-    virtual void setRts(bool set=true)=0;
-    virtual ulong lineStatus()=0;
+		virtual void setDtr(bool set=true)=0;
+		virtual void setRts(bool set=true)=0;
+		virtual ulong lineStatus()=0;
 
-protected:
-    QString port;
-    PortSettings Settings;
-    ulong lastErr;
+	protected:
+		QString port;
+		PortSettings Settings;
+		ulong lastErr;
 
-#ifdef QT_THREAD_SUPPORT
-    static QMutex* mutex;
-    static ulong refCount;
-#endif
+	#ifdef QT_THREAD_SUPPORT
+		static QMutex* mutex;
+		static ulong refCount;
+	#endif
 
-    virtual qint64 readData(char * data, qint64 maxSize)=0;
-    virtual qint64 writeData(const char * data, qint64 maxSize)=0;
+		virtual qint64 readData(char * data, qint64 maxSize)=0;
+		virtual qint64 writeData(const char * data, qint64 maxSize)=0;
 
 };
-
 #endif

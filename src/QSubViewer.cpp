@@ -19,10 +19,9 @@
  ***************************************************************************/
 #include "QSubViewer.h"
 
-
 QSubViewer::QSubViewer(QWidget *parent) : QWidget(parent)
 {
-//Display #1
+	//Display #1
 	QGroupBox *groupBox = new QGroupBox(tr(""));
 	QVBoxLayout *vLayout = new QVBoxLayout();
 
@@ -89,8 +88,8 @@ QSubViewer::QSubViewer(QWidget *parent) : QWidget(parent)
 	plot->setSize(1200,200);
 	vLayout->addWidget(yAxis);
 	vLayout->addWidget(comboY);
-//	vLayout->addWidget(comboY2);
-//	vLayout->addWidget(comboY3);
+	//	vLayout->addWidget(comboY2);
+	//	vLayout->addWidget(comboY3);
 	vLayout->addStretch(40);
 	vLayout->addWidget(xAxis);
 	vLayout->addWidget(comboX);
@@ -102,7 +101,7 @@ QSubViewer::QSubViewer(QWidget *parent) : QWidget(parent)
 	grid->setColumnStretch(80,1);
 
 	groupBox->setLayout(grid);
-	
+
 	QVBoxLayout *soyIgnorante = new QVBoxLayout();
 	soyIgnorante->addWidget(groupBox);
 
@@ -111,50 +110,54 @@ QSubViewer::QSubViewer(QWidget *parent) : QWidget(parent)
 	connect(comboY, SIGNAL(currentIndexChanged(int)),this, SIGNAL(valueChanged(int)));
 }
 
+
 void QSubViewer::setPoints(float newPoint, int size)
-{	plot->setPoints(newPoint,size);}
+{   plot->setPoints(newPoint,size);}
 
 void QSubViewer::setChannel(int channel)
-{	
-	
+{
+
 	comboY->setCurrentIndex(channel);
 }
+
 
 void QSubViewer::clear()
 {
 	plot->clear();
 }
 
+
 int QSubViewer::getChannel()
-{	return plot->getChannel();}
+{   return plot->getChannel();}
 
 void QSubViewer::desplazar(float newPoint)
-{	plot->desplazar(newPoint);}
+{   plot->desplazar(newPoint);}
 
 void QSubViewer::setBackColor(QColor color)
-{	plot->setBackColor(color);}
+{   plot->setBackColor(color);}
 
 void QSubViewer::setFontColor(QColor color)
-{	plot->setFontColor(color);}
+{   plot->setFontColor(color);}
 
 void QSubViewer::setChannel1Color(QColor color)
-{	plot->setChannel1Color(color);}
+{   plot->setChannel1Color(color);}
 
 QColor QSubViewer::getBackgroundColor()
-{	return plot->getBackgroundColor();}
+{   return plot->getBackgroundColor();}
 
 QColor QSubViewer::getFontColor()
-{	return plot->getFontColor();}
+{   return plot->getFontColor();}
 
 QColor QSubViewer::getChannelColor(int i)
-{	return plot->getChannelColor(i);}
+{   return plot->getChannelColor(i);}
 
 QSize QSubViewer::minimumSizeHint() const
 {
-        return QSize(100, 100);
+	return QSize(100, 100);
 }
+
 
 QSize QSubViewer::sizeHint() const
 {
-        return QSize(150, 150);
+	return QSize(150, 150);
 }

@@ -17,32 +17,29 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include <qwt3d_surfaceplot.h> 
+#include <qwt3d_surfaceplot.h>
 #include <qwt3d_function.h>
 #include <qwt3d_plot.h>
 
-  using namespace Qwt3D;
+using namespace Qwt3D;
 
 class QMap3D: public SurfacePlot
 {
 	Q_OBJECT
-private:
-	double **dataTable;
-	union  transformer
-	{
-		unsigned char byte[2];
-		int entero;
-	};
-public:
-	QMap3D();
-	~QMap3D();
+		private:
+		double **dataTable;
+		union  transformer
+		{
+			unsigned char byte[2];
+			int entero;
+		};
+	public:
+		QMap3D();
+		~QMap3D();
 
-	QSize minimumSizeHint() const;
-	QSize sizeHint() const;
-	bool loadData(double data,int, int);
-	void update();
+		QSize minimumSizeHint() const;
+		QSize sizeHint() const;
+		bool loadData(double data,int, int);
+		void update();
 
-
-	
-	
 };

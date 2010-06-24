@@ -14,23 +14,22 @@ namespace
 	}
 }
 
+
 namespace Qwt3D
 {
 
-inline bool isPracticallyZero(double a, double b = 0)
-{
-  if (!b)
-		return (fabs (a) <=  DBL_MIN);	
+	inline bool isPracticallyZero(double a, double b = 0)
+	{
+		if (!b)
+			return (fabs (a) <=  DBL_MIN);
 
-	return (fabs (a - b) <= Min_(fabs(a), fabs(b))*DBL_EPSILON);	
-}
- 
-inline int round(double d)
-{
-	return (d>0) ? int(d+0.5) : int(d-0.5);
-}
+		return (fabs (a - b) <= Min_(fabs(a), fabs(b))*DBL_EPSILON);
+	}
 
+	inline int round(double d)
+	{
+		return (d>0) ? int(d+0.5) : int(d-0.5);
+	}
 
-} //ns
-
+}								 //ns
 #endif

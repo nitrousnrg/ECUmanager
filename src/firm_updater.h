@@ -29,18 +29,17 @@
 
 class upgrade
 {
-public:
-	upgrade(QextSerialPort *,const QString *);
-	void loadFlashData(int data);
-	void incrAddress();
-	void erase_program();
+	public:
+		upgrade(QextSerialPort *,const QString *);
+		void loadFlashData(int data);
+		void incrAddress();
+		void erase_program();
 
-private:
-	//void loadFlash();
-	void sendBit(bool bit);
-	
-	QTimer *timer;
-	QextSerialPort *serial;
+	private:
+		//void loadFlash();
+		void sendBit(bool bit);
+
+		QTimer *timer;
+		QextSerialPort *serial;
 };
-
 #endif

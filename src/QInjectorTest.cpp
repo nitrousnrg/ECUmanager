@@ -23,7 +23,7 @@
 QInjTester::QInjTester(QextSerialPort *port)
 {
 	serial = port;
-	setWindowTitle(tr("Injector tester"));	
+	setWindowTitle(tr("Injector tester"));
 	move(380,80);
 	//setGeometry(300,100,500,320);
 	timeCount = 50;
@@ -38,8 +38,8 @@ QInjTester::QInjTester(QextSerialPort *port)
 	QGridLayout *grid = new QGridLayout;
 
 	QTextEdit *editFlowHelp = new QTextEdit(tr("Choose test duration. Pressing\n"
-	"the start button, the injector will "
-	"remain open for the selected time, or until stop button is pressed."));
+		"the start button, the injector will "
+		"remain open for the selected time, or until stop button is pressed."));
 	editFlowHelp->setReadOnly(true);
 
 	QLabel *flowDurationLabel = new QLabel(tr("Duration (ms):     "));
@@ -57,7 +57,6 @@ QInjTester::QInjTester(QextSerialPort *port)
 	connect(flowTimer,SIGNAL(timeout()),this,SLOT(stopFlow()));
 	connect(LCDFlowTimer,SIGNAL(timeout()),this,SLOT(displayFlowLCD()));
 
-
 	QGroupBox *groupBox2 = new QGroupBox(tr("Flow Test"));
 	QGridLayout *vbox2 = new QGridLayout;
 	vbox2->addWidget(editFlowHelp,0,0);
@@ -69,8 +68,8 @@ QInjTester::QInjTester(QextSerialPort *port)
 	groupBox2->setLayout(vbox2);
 
 	QTextEdit *editPulseHelp = new QTextEdit(tr("Elija la duracion de la prueba (ms).\n"
-	"Cuando pulse el boton Start,los inyectores se abriran el durante el tiempo elegido"
-	" y no se cerraran hasta que termine la prueba o se presione el boton Stop."));
+		"Cuando pulse el boton Start,los inyectores se abriran el durante el tiempo elegido"
+		" y no se cerraran hasta que termine la prueba o se presione el boton Stop."));
 	editPulseHelp->setReadOnly(true);
 
 	QLabel *pulseDurationLabel = new QLabel(tr("Duration (ms):     "));
@@ -125,6 +124,8 @@ QInjTester::QInjTester(QextSerialPort *port)
 
 	setLayout(grid);
 }
+
+
 QInjTester::~QInjTester()
 {
 	delete serial;
@@ -143,6 +144,7 @@ QInjTester::~QInjTester()
 	delete pulseTimeLCD;
 }
 
+
 void QInjTester::startFlow()
 {
 	timeCount = 50;
@@ -158,6 +160,7 @@ void QInjTester::startFlow()
 	}
 }
 
+
 void QInjTester::stopFlow()
 {
 	if(timeCount != 50)
@@ -166,8 +169,9 @@ void QInjTester::stopFlow()
 		LCDFlowTimer->stop();
 		timeCount = 50;
 	}
-//close();
+	//close();
 }
+
 
 void QInjTester::editONChange(const QString text)
 {
@@ -180,6 +184,7 @@ void QInjTester::editONChange(const QString text)
 		pulseBar->setValue(ONtime.entero);
 	}
 }
+
 
 void QInjTester::editOFFChange(const QString text)
 {
@@ -194,17 +199,20 @@ void QInjTester::editOFFChange(const QString text)
 	}
 }
 
+
 void QInjTester::displayFlowLCD()
 {
 	timeCount += 50;
 	flowTimeLCD->display(timeCount);
 }
 
+
 void QInjTester::displayPulseLCD()
 {
 	timeCount += 50;
 	pulseTimeLCD->display(timeCount);
 }
+
 
 void QInjTester::startPulse()
 {
@@ -227,10 +235,11 @@ void QInjTester::startPulse()
 		aux.entero = 65536 - OFFtime.entero*5;
 		word.append(aux.byte[1]);
 		word.append(aux.byte[0]);
-		
+
 		serial->write(word);
 	}
 }
+
 
 void QInjTester::stopPulse()
 {
@@ -240,16 +249,17 @@ void QInjTester::stopPulse()
 		LCDPulseTimer->stop();
 		timeCount = 50;
 	}
-//close();
+	//close();
 }
 
+
 QSize QInjTester::minimumSizeHint() const
- {
-     return QSize(30, 30);
- }
+{
+	return QSize(30, 30);
+}
+
 
 QSize QInjTester::sizeHint() const
 {
 	return QSize(500,700);
 }
-

@@ -21,79 +21,75 @@
  **
  ****************************************************************************/
 
- #ifndef RENDERAREA_H
- #define RENDERAREA_H
+#ifndef RENDERAREA_H
+#define RENDERAREA_H
 
- #include <QBrush>
- #include <QPen>
- #include <QPixmap>
- #include <QWidget>
- #include <QMenu>
- #include <QInputDialog>
+#include <QBrush>
+#include <QPen>
+#include <QPixmap>
+#include <QWidget>
+#include <QMenu>
+#include <QInputDialog>
 
+class RenderArea : public QWidget
+{
+	Q_OBJECT
 
- class RenderArea : public QWidget
- {
-     Q_OBJECT
+		public:
+		RenderArea(QWidget *parent = 0,int limit=10000, int redLine=11000, int initialAngle=20, int finalAngle=230);
 
- public:
-	RenderArea(QWidget *parent = 0,int limit=10000, int redLine=11000, int initialAngle=20, int finalAngle=230);
-	
-	QSize minimumSizeHint() const;
-	QSize sizeHint() const;
-	void setValue(float value);
-	void setLimit(int);
-	void setRedLine(int);
-	void setInitialAngle(int);
-	void setFinalAngle(int);
+		QSize minimumSizeHint() const;
+		QSize sizeHint() const;
+		void setValue(float value);
+		void setLimit(int);
+		void setRedLine(int);
+		void setInitialAngle(int);
+		void setFinalAngle(int);
 
- protected:
-	void paintEvent(QPaintEvent *event);
-	void mouseReleaseEvent(QMouseEvent*);
+	protected:
+		void paintEvent(QPaintEvent *event);
+		void mouseReleaseEvent(QMouseEvent*);
 
- private slots:
-	void setLimitSlot();
-	void setRedLineSlot();
-	void setInitialAngleSlot();
-	void setFinalAngleSlot();
-	void setNeedleColorSlot();
-	void setNumbersColorSlot();
-	void setScale1ColorSlot();
-	void setScale2ColorSlot();
+	private slots:
+		void setLimitSlot();
+		void setRedLineSlot();
+		void setInitialAngleSlot();
+		void setFinalAngleSlot();
+		void setNeedleColorSlot();
+		void setNumbersColorSlot();
+		void setScale1ColorSlot();
+		void setScale2ColorSlot();
 
- private:
-	QPen pen;
-	QBrush brush;
-	int InitialAngle;
-	int FinalAngle;
-	int Limit;
-	int RedLine;
-	float actualPosition;
-	QColor needleColor;
-	QColor numbersColor;
-	QColor scale1Color;
-	QColor scale2Color;
-	QColor hourColor;
-	QColor redPen;
+	private:
+		QPen pen;
+		QBrush brush;
+		int InitialAngle;
+		int FinalAngle;
+		int Limit;
+		int RedLine;
+		float actualPosition;
+		QColor needleColor;
+		QColor numbersColor;
+		QColor scale1Color;
+		QColor scale2Color;
+		QColor hourColor;
+		QColor redPen;
 
+		QMenu *menu;
+		QMenu *changeNumbersMenu;
+		QMenu *changeColorsMenu;
+		QAction* setLimitAct;
+		QAction* setRedLineAct;
+		QAction* setNeedleColorAct;
+		QAction* setNumbersColorAct;
+		QAction* setScale1ColorAct;
+		QAction* setScale2ColorAct;
+		QAction* setInitialAngleAct;
+		QAction* setFinalAngleAct;
+		QInputDialog *setLimitDialog;
+		QInputDialog *setRedLineDialog;
+		QInputDialog *setInitialAngleDialog;
+		QInputDialog *setFinalAngleDialog;
 
-
-	QMenu *menu;
-	QMenu *changeNumbersMenu;
-	QMenu *changeColorsMenu;
-	QAction* setLimitAct;
-	QAction* setRedLineAct;
-	QAction* setNeedleColorAct;
-	QAction* setNumbersColorAct;
-	QAction* setScale1ColorAct;
-	QAction* setScale2ColorAct;
-	QAction* setInitialAngleAct;
-	QAction* setFinalAngleAct;
-	QInputDialog *setLimitDialog;
-	QInputDialog *setRedLineDialog;
-	QInputDialog *setInitialAngleDialog;
-	QInputDialog *setFinalAngleDialog;
-
- };
-
- #endif
+};
+#endif

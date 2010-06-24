@@ -1,4 +1,4 @@
- /****************************************************************************
+/****************************************************************************
  **
  ** Copyright (C) 2005-2007 Trolltech ASA. All rights reserved.
  **
@@ -20,17 +20,17 @@
  ** WARRANTY OF DESIGN, MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
  **
 
-	Modified by Marcos Chaparro jojo
- ****************************************************************************/
+   Modified by Marcos Chaparro jojo
+****************************************************************************/
 
- #include <QtGui>
- #include <math.h>
- #include "renderarea.h"
- #define pi_to_rad 0.017453292
+#include <QtGui>
+#include <math.h>
+#include "renderarea.h"
+#define pi_to_rad 0.017453292
 
- RenderArea::RenderArea(QWidget *parent,int limit, int redLine, int initialAngle, int finalAngle)
-     : QWidget(parent)
- {
+RenderArea::RenderArea(QWidget *parent,int limit, int redLine, int initialAngle, int finalAngle)
+: QWidget(parent)
+{
 	setBackgroundRole(QPalette::Base);
 	setAutoFillBackground(false);
 	Limit = limit/1000;
@@ -82,31 +82,37 @@
 	changeColorsMenu->addAction(setScale1ColorAct);
 	changeColorsMenu->addAction(setScale2ColorAct);
 
- }
+}
 
- QSize RenderArea::minimumSizeHint() const
- {
-     return QSize(100, 100);
- }
 
- QSize RenderArea::sizeHint() const
- {
-     return QSize(300, 200);
- }
+QSize RenderArea::minimumSizeHint() const
+{
+	return QSize(100, 100);
+}
+
+
+QSize RenderArea::sizeHint() const
+{
+	return QSize(300, 200);
+}
+
+
 void RenderArea::setValue(float value)
 {
 	actualPosition = value;
 	update();
 }
 
+
 void RenderArea::setLimitSlot()
 {
 	bool ok;
 	int newLimit = QInputDialog::getInteger(this, tr("RPM Limit"),
-                                      tr("Enter RPM:"), Limit*1000, 0, 20000, 1000, &ok);
+		tr("Enter RPM:"), Limit*1000, 0, 20000, 1000, &ok);
 	if(ok)
 		setLimit(newLimit);
 }
+
 
 void RenderArea::setLimit(int newLimit)
 {
@@ -114,35 +120,39 @@ void RenderArea::setLimit(int newLimit)
 	update();
 }
 
+
 void RenderArea::setRedLineSlot()
 {
 	bool ok;
 	int newLimit = QInputDialog::getInteger(this, tr("RPM Limit"),
-                                      tr("Enter RPM:"), RedLine*1000, 0, 20000, 1000, &ok);
+		tr("Enter RPM:"), RedLine*1000, 0, 20000, 1000, &ok);
 	if(ok)
 		RedLine = newLimit/1000;
 	update();
 }
 
+
 void RenderArea::setInitialAngleSlot()
 {
 	bool ok;
 	int newAngle = QInputDialog::getInteger(this, tr("Initial Angle"),
-                                      tr("Enter Angle:"), InitialAngle, 0, FinalAngle, 1, &ok);
+		tr("Enter Angle:"), InitialAngle, 0, FinalAngle, 1, &ok);
 	if(ok)
 		InitialAngle = newAngle;
 	update();
 }
 
+
 void RenderArea::setFinalAngleSlot()
 {
 	bool ok;
 	int newAngle = QInputDialog::getInteger(this, tr("Final Angle"),
-                                      tr("Enter Angle:"), FinalAngle, InitialAngle, 360, 1, &ok);
+		tr("Enter Angle:"), FinalAngle, InitialAngle, 360, 1, &ok);
 	if(ok)
 		FinalAngle = newAngle;
 	update();
 }
+
 
 void RenderArea::setNeedleColorSlot()
 {
@@ -154,6 +164,7 @@ void RenderArea::setNeedleColorSlot()
 	update();
 }
 
+
 void RenderArea::setNumbersColorSlot()
 {
 	QColor color = QColorDialog::getColor(numbersColor, this);
@@ -163,6 +174,7 @@ void RenderArea::setNumbersColorSlot()
 	}
 	update();
 }
+
 
 void RenderArea::setScale1ColorSlot()
 {
@@ -174,6 +186,7 @@ void RenderArea::setScale1ColorSlot()
 	update();
 }
 
+
 void RenderArea::setScale2ColorSlot()
 {
 	QColor color = QColorDialog::getColor(scale2Color, this);
@@ -184,30 +197,31 @@ void RenderArea::setScale2ColorSlot()
 	update();
 }
 
- void RenderArea::paintEvent(QPaintEvent * /* event */)
- {
-     static const QPoint Needle[3] = {
-         QPoint(7, 8),
-         QPoint(-7, 8),
-         QPoint(0, -85) };
+
+void RenderArea::paintEvent(QPaintEvent * /* event */)
+{
+	static const QPoint Needle[3] =
+	{
+		QPoint(7, 8),
+		QPoint(-7, 8),
+		QPoint(0, -85)
+	};
 
 	QFont newFont = font();
 	newFont.setPixelSize(15);
 	setFont(newFont);
 	QFontMetrics fontMetrics(newFont);
 	QRect xBoundingRect = fontMetrics.boundingRect(tr("x"));
-	
-	
-	
+
 	int side = qMin(width(), height());
 	//     QTime time = QTime::currentTime();
-	
+
 	QPainter painter(this);
 	painter.setRenderHint(QPainter::Antialiasing);
 	painter.translate(width() / 2, height() / 2);
 	painter.scale(side / 200.0, side / 200.0);
-	
-//	painter.setPen(numbersColor);
+
+	//	painter.setPen(numbersColor);
 
 	double step = (FinalAngle-InitialAngle)/Limit;
 
@@ -217,16 +231,17 @@ void RenderArea::setScale2ColorSlot()
 	QString num;
 	QColor black(56,56,90);
 	painter.setPen(black);
-	painter.drawText(	30 + xBoundingRect.width() / 2,
-				40 + xBoundingRect.height() / 2,
-				num.setNum((int)(actualPosition*1000),10));	//poner scalefactor!
+	painter.drawText(   30 + xBoundingRect.width() / 2,
+		40 + xBoundingRect.height() / 2,
+								 //poner scalefactor!
+		num.setNum((int)(actualPosition*1000),10));
 
 	painter.setPen(numbersColor);
 
 	for (int j = 0 ; j <= (Limit); ++j)
 	{
 		painter.drawText( 74*cos(angle*pi_to_rad) - 10 + xBoundingRect.width() / 2,
-				  74*sin(angle*pi_to_rad) - 4 + xBoundingRect.height() / 2, num.setNum(j,10));
+			74*sin(angle*pi_to_rad) - 4 + xBoundingRect.height() / 2, num.setNum(j,10));
 		angle += step;
 	}
 
@@ -241,10 +256,10 @@ void RenderArea::setScale2ColorSlot()
 		painter.rotate(step);
 	}
 	painter.restore();
-	
+
 	painter.setPen(Qt::NoPen);
 	painter.setBrush(needleColor);
-	
+
 	painter.save();
 	painter.rotate(actualPosition*step+180+InitialAngle);
 	painter.drawConvexPolygon(Needle, 3);
@@ -262,12 +277,11 @@ void RenderArea::setScale2ColorSlot()
 			painter.drawLine(0, 92, 0, 96);
 		painter.rotate(step/5);
 	}
- }
+}
+
 
 void RenderArea::mouseReleaseEvent(QMouseEvent *event)
- {
+{
 	if (event->button() == Qt::RightButton)
 		menu->popup(QPoint(event->globalX(),event->globalY()), setLimitAct);
- }
-
-
+}

@@ -17,27 +17,27 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
- 
- #include "plotter.h"
- 
- PlotArea::PlotArea(QWidget *parent)     : QWidget(parent)
- {
 
-         LambdaBox	= new QCheckBox(tr("Lambda"));
-         RPMBox          = new QCheckBox(tr("RPM"));
-         VEBox		= new QCheckBox(tr("VE"));
-         MAPBox          = new QCheckBox(tr("MAP"));
-         airTempBox	= new QCheckBox(tr("Air Temp"));
-         waterTempBox	= new QCheckBox(tr("Water Temp"));
-         ignAdvanceBox	= new QCheckBox(tr("Ignition Advance"));
-         fuelAdvBox	= new QCheckBox(tr("Fuel Advance"));
-         dutyBox 	= new QCheckBox(tr("Duty %"));
-         injTimeBox	= new QCheckBox(tr("Inj Time"));
-         throttleBox	= new QCheckBox(tr("Throttle pos"));
+#include "plotter.h"
 
-         readSettings();
-        setBackgroundRole(QPalette::Base);
-        setMinimumSize(100,100);
+PlotArea::PlotArea(QWidget *parent)     : QWidget(parent)
+{
+
+	LambdaBox  = new QCheckBox(tr("Lambda"));
+	RPMBox          = new QCheckBox(tr("RPM"));
+	VEBox      = new QCheckBox(tr("VE"));
+	MAPBox          = new QCheckBox(tr("MAP"));
+	airTempBox = new QCheckBox(tr("Air Temp"));
+	waterTempBox   = new QCheckBox(tr("Water Temp"));
+	ignAdvanceBox  = new QCheckBox(tr("Ignition Advance"));
+	fuelAdvBox = new QCheckBox(tr("Fuel Advance"));
+	dutyBox    = new QCheckBox(tr("Duty %"));
+	injTimeBox = new QCheckBox(tr("Inj Time"));
+	throttleBox    = new QCheckBox(tr("Throttle pos"));
+
+	readSettings();
+	setBackgroundRole(QPalette::Base);
+	setMinimumSize(100,100);
 	setAutoFillBackground(true);
 	BackColor.setRgb(255, 255, 255);
 	penColor.setRgb(150, 150, 150);
@@ -47,10 +47,9 @@
 	palette.setColor(backgroundRole(), BackColor);
 	setPalette(palette);
 
-
 	points = new QPoint[1100];
-	const int base = height();	//out of range
-	for(int i=0;i<1100;++i)//width()-15;++i)
+	const int base = height();	 //out of range
+	for(int i=0;i<1100;++i)		 //width()-15;++i)
 	{
 		(points+i)->setX(i+25);
 		(points+i)->setY(base);
@@ -72,10 +71,10 @@
 
 	menu = new QMenu;
 
-        selectChannelAct = new QAction(tr("Select channels"), this);
-        connect(selectChannelAct, SIGNAL(triggered()), this, SLOT(chooseDialog()));
+	selectChannelAct = new QAction(tr("Select channels"), this);
+	connect(selectChannelAct, SIGNAL(triggered()), this, SLOT(chooseDialog()));
 
-        menu->addAction(selectChannelAct);
+	menu->addAction(selectChannelAct);
 	colors = menu->addMenu("Colors");
 	backColorAct = colors->addAction(tr("Background"));
 	fontColorAct = colors->addAction(tr("Font Color"));
@@ -89,17 +88,20 @@
 	connect(chan2ColorAct, SIGNAL(triggered()), this, SLOT(setBackColorSlot()));
 	connect(chan3ColorAct, SIGNAL(triggered()), this, SLOT(setBackColorSlot()));
 
- }
+}
 
- QSize PlotArea::minimumSizeHint() const
- {
-     return QSize(180, 180);
- }
 
- QSize PlotArea::sizeHint() const
- {
-     return QSize(xSize, ySize);
- }
+QSize PlotArea::minimumSizeHint() const
+{
+	return QSize(180, 180);
+}
+
+
+QSize PlotArea::sizeHint() const
+{
+	return QSize(xSize, ySize);
+}
+
 
 void PlotArea::setSize(int x, int y)
 {
@@ -107,34 +109,41 @@ void PlotArea::setSize(int x, int y)
 	ySize = y;
 }
 
+
 void PlotArea::desplazar(float newValue)
-{	newValue = height() - 15 - newValue;
+{
+	newValue = height() - 15 - newValue;
 	for(int i=0;i<(myWidth-25);++i)
 	{
 		(points+i)->setY(points[i+1].y());
 	}
 	(points+(myWidth-25))->setY((int)newValue);
-	update();//20,0,300,146);
+	update();					 //20,0,300,146);
 	return;
 }
+
 
 int PlotArea::getChannel()
 {
 	return channel;
 }
 
+
 void PlotArea::setBackColorSlot()
-{	setBackColor(QColor());}	//puts an invalid color
+{								 //puts an invalid color
+	setBackColor(QColor());
+}
+
 
 void PlotArea::setBackColor(QColor color = NULL)
 {
-	if (color.isValid()) 
+	if (color.isValid())
 	{
 		palette.setColor(backgroundRole(), color);
 		setPalette(palette);
 	}
 	else
-	{	
+	{
 		color = QColorDialog::getColor(Qt::white, this);
 		if (color.isValid())
 		{
@@ -146,60 +155,71 @@ void PlotArea::setBackColor(QColor color = NULL)
 	update();
 
 }
+
+
 void PlotArea::setFontColorSlot()
-{	setFontColor(QColor());	}	//invalid
+{								 //invalid
+	setFontColor(QColor());
+}
+
 
 void PlotArea::clear()
 {
-	const int base = height();	//out of range
-	for(int i=0;i<1100;++i)//width()-15;++i)
+	const int base = height();	 //out of range
+	for(int i=0;i<1100;++i)		 //width()-15;++i)
 	{
 		(points+i)->setX(i+25);
 		(points+i)->setY(base);
 	}
 }
 
+
 void PlotArea::setFontColor(QColor color)
 {
-	if (color.isValid()) 
+	if (color.isValid())
 		penColor = color;
 	else
 	{
 		color = QColorDialog::getColor(penColor, this);
-		if (color.isValid()) 
+		if (color.isValid())
 			penColor = color;
 	}
 	update();
 }
+
 
 void PlotArea::setChannel1ColorSlot()
 {
 	setChannel1Color(QColor());
 }
 
+
 void PlotArea::setChannel1Color(QColor color)
 {
-	if (color.isValid()) 
+	if (color.isValid())
 		channel1Color = color;
 	else
 	{
 		color = QColorDialog::getColor(channel1Color, this);
-		if (color.isValid()) 
+		if (color.isValid())
 			channel1Color = color;
 	}
 	update();
 }
 
+
 QColor PlotArea::getBackgroundColor()
-{	return palette.color(backgroundRole());	}
+{   return palette.color(backgroundRole()); }
 
 QColor PlotArea::getFontColor()
-{	return penColor;	}
+{   return penColor;    }
 
 QColor PlotArea::getChannelColor(int atChannel)
 {
-    atChannel=1;
-    return channel1Color;	}
+	atChannel=1;
+	return channel1Color;
+}
+
 
 void PlotArea::setPoints(float newValue,int size)
 {
@@ -216,17 +236,19 @@ void PlotArea::setPoints(float newValue,int size)
 				(points+i)->setY(points[i+1].y());
 			}
 			(points+(myWidth-25))->setY((int)newValue);
-			update();//20,0,300,146);
+			update();			 //20,0,300,146);
 		}
 	}
 	++pointsReceived;
 	return;
 }
 
+
 void PlotArea::setStyle(int tipo)
 {
 	style = tipo;
 }
+
 
 void PlotArea::setRows(int ROW)
 {
@@ -234,16 +256,19 @@ void PlotArea::setRows(int ROW)
 		rows=ROW;
 }
 
+
 void PlotArea::setColumns(int COLUMN)
 {
 	columns = COLUMN;
 }
+
 
 void PlotArea::setScaleFactorX(float scale,bool reverse)
 {
 	scaleFactorX = scale;
 	reversed = reverse;
 }
+
 
 void PlotArea::setScaleFactorY(float scale)
 {
@@ -254,11 +279,13 @@ void PlotArea::setScaleFactorY(float scale)
 	}
 
 }
- void PlotArea::paintEvent(QPaintEvent * /* event */)
- {
+
+
+void PlotArea::paintEvent(QPaintEvent * /* event */)
+{
 
 	QPen pen;
-//	backBrush;
+	//	backBrush;
 	QPainter painter(this);
 
 	painter.setPen(penColor);
@@ -288,78 +315,79 @@ void PlotArea::setScaleFactorY(float scale)
 
 	}
 
-        // mark which channels it is plotting
-        if( MAPBox->isChecked() )
-            painter.drawText(width()-30, 14, QString(tr("MAP")));
-        if( LambdaBox->isChecked() )
-            painter.drawText(width()-30, 24, QString("Lambda"));
-        if( RPMBox->isChecked() )
-            painter.drawText(width()-30, 34, QString("RPM"));
-        if( VEBox->isChecked() )
-            painter.drawText(width()-30, 44, QString("VE"));
-        if( airTempBox->isChecked() )
-            painter.drawText(width()-30, 54, QString(tr("Air Temp")));
-        if( waterTempBox->isChecked() )
-            painter.drawText(width()-30, 64, QString(tr("Water Temp")));
-        if( ignAdvanceBox->isChecked() )
-            painter.drawText(width()-30, 74, QString(tr("Ign Adv")));
-        if( fuelAdvBox->isChecked() )
-            painter.drawText(width()-30, 84, QString(tr("Fuel Adv")));
-        if( dutyBox->isChecked() )
-            painter.drawText(width()-30, 84, QString(tr("Duty")));
-        if( injTimeBox->isChecked() )
-            painter.drawText(width()-30, 84, QString(tr("Inj Time")));
-        if( throttleBox->isChecked() )
-            painter.drawText(width()-30, 84, QString(tr("Throttle")));
-
-
+	// mark which channels it is plotting
+	if( MAPBox->isChecked() )
+		painter.drawText(width()-30, 14, QString(tr("MAP")));
+	if( LambdaBox->isChecked() )
+		painter.drawText(width()-30, 24, QString("Lambda"));
+	if( RPMBox->isChecked() )
+		painter.drawText(width()-30, 34, QString("RPM"));
+	if( VEBox->isChecked() )
+		painter.drawText(width()-30, 44, QString("VE"));
+	if( airTempBox->isChecked() )
+		painter.drawText(width()-30, 54, QString(tr("Air Temp")));
+	if( waterTempBox->isChecked() )
+		painter.drawText(width()-30, 64, QString(tr("Water Temp")));
+	if( ignAdvanceBox->isChecked() )
+		painter.drawText(width()-30, 74, QString(tr("Ign Adv")));
+	if( fuelAdvBox->isChecked() )
+		painter.drawText(width()-30, 84, QString(tr("Fuel Adv")));
+	if( dutyBox->isChecked() )
+		painter.drawText(width()-30, 84, QString(tr("Duty")));
+	if( injTimeBox->isChecked() )
+		painter.drawText(width()-30, 84, QString(tr("Inj Time")));
+	if( throttleBox->isChecked() )
+		painter.drawText(width()-30, 84, QString(tr("Throttle")));
 
 	painter.setRenderHint(QPainter::Antialiasing);
 	painter.setPen(channel1Color);
 
-
 	painter.drawPolyline(points, (myWidth-25));
- }
+}
+
 
 void PlotArea::mouseReleaseEvent(QMouseEvent *event)
- {
+{
 	if (event->button() == Qt::RightButton)
 	{
 		menu->popup(QPoint(event->globalX(),event->globalY()), chooseAct);
 	}
- }
+}
+
 
 void PlotArea::readSettings()
 {
-    QSettings settings("FreeEMS", "Moving plot settings");
-    VEBox->         setChecked(settings.value("Show VE",false).toBool());
-    MAPBox->        setChecked(settings.value("Show MAP",true).toBool());
-    airTempBox->    setChecked(settings.value("Show Air Temp",false).toBool());
-    waterTempBox->  setChecked(settings.value("Show Water Temp",false).toBool());
-    LambdaBox->     setChecked(settings.value("Show Air/fuel",false).toBool());
-    RPMBox->        setChecked(settings.value("Show RPM",false).toBool());
-    ignAdvanceBox-> setChecked(settings.value("Show Ign advance",false).toBool());
-    fuelAdvBox->    setChecked(settings.value("Show Fuel advance",false).toBool());
-    dutyBox->       setChecked(settings.value("Show Duty Cycle",false).toBool());
-    injTimeBox->    setChecked(settings.value("Show Injection Time",false).toBool());
-    throttleBox->   setChecked(settings.value("Show throttle",false).toBool());
+	QSettings settings("FreeEMS", "Moving plot settings");
+	VEBox->         setChecked(settings.value("Show VE",false).toBool());
+	MAPBox->        setChecked(settings.value("Show MAP",true).toBool());
+	airTempBox->    setChecked(settings.value("Show Air Temp",false).toBool());
+	waterTempBox->  setChecked(settings.value("Show Water Temp",false).toBool());
+	LambdaBox->     setChecked(settings.value("Show Air/fuel",false).toBool());
+	RPMBox->        setChecked(settings.value("Show RPM",false).toBool());
+	ignAdvanceBox-> setChecked(settings.value("Show Ign advance",false).toBool());
+	fuelAdvBox->    setChecked(settings.value("Show Fuel advance",false).toBool());
+	dutyBox->       setChecked(settings.value("Show Duty Cycle",false).toBool());
+	injTimeBox->    setChecked(settings.value("Show Injection Time",false).toBool());
+	throttleBox->   setChecked(settings.value("Show throttle",false).toBool());
 }
+
 
 void PlotArea::writeSettings()
 {
-    QSettings settings("FreeEMS", "Moving plot settings");
-    settings.setValue("Show VE",            VEBox->isChecked());
-    settings.setValue("Show MAP",           MAPBox->isChecked());
-    settings.setValue("Show Air Temp",      airTempBox->isChecked());
-    settings.setValue("Show Water Temp",    waterTempBox->isChecked());
-    settings.setValue("Show Air/fuel",      LambdaBox->isChecked());
-    settings.setValue("Show RPM",           RPMBox->isChecked());
-    settings.setValue("Show Ign advance",   ignAdvanceBox->isChecked());
-    settings.setValue("Show Fuel advance",  fuelAdvBox->isChecked());
-    settings.setValue("Show Duty Cycle",    dutyBox->isChecked());
-    settings.setValue("Show Injection Time",injTimeBox->isChecked());
-    settings.setValue("Show throttle",      throttleBox->isChecked());
+	QSettings settings("FreeEMS", "Moving plot settings");
+	settings.setValue("Show VE",            VEBox->isChecked());
+	settings.setValue("Show MAP",           MAPBox->isChecked());
+	settings.setValue("Show Air Temp",      airTempBox->isChecked());
+	settings.setValue("Show Water Temp",    waterTempBox->isChecked());
+	settings.setValue("Show Air/fuel",      LambdaBox->isChecked());
+	settings.setValue("Show RPM",           RPMBox->isChecked());
+	settings.setValue("Show Ign advance",   ignAdvanceBox->isChecked());
+	settings.setValue("Show Fuel advance",  fuelAdvBox->isChecked());
+	settings.setValue("Show Duty Cycle",    dutyBox->isChecked());
+	settings.setValue("Show Injection Time",injTimeBox->isChecked());
+	settings.setValue("Show throttle",      throttleBox->isChecked());
 }
+
 
 void PlotArea::chooseDialog()
 {
@@ -375,37 +403,37 @@ void PlotArea::chooseDialog()
 	switch(channel)
 	{
 		case 0:
-                        LambdaBox->setChecked(true);
+			LambdaBox->setChecked(true);
 			break;
 		case 1:
-                        RPMBox->setChecked(true);
+			RPMBox->setChecked(true);
 			break;
 		case 2:
-                        VEBox->setChecked(true);
+			VEBox->setChecked(true);
 			break;
 		case 3:
-                        MAPBox->setChecked(true);
+			MAPBox->setChecked(true);
 			break;
 		case 4:
-                        airTempBox->setChecked(true);
+			airTempBox->setChecked(true);
 			break;
 		case 5:
-                        waterTempBox->setChecked(true);
+			waterTempBox->setChecked(true);
 			break;
 		case 6:
-                        ignAdvanceBox->setChecked(true);
+			ignAdvanceBox->setChecked(true);
 			break;
 		case 7:
-                        fuelAdvBox->setChecked(true);
+			fuelAdvBox->setChecked(true);
 			break;
 		case 8:
-                        dutyBox->setChecked(true);
+			dutyBox->setChecked(true);
 			break;
 		case 9:
-                        injTimeBox->setChecked(true);
+			injTimeBox->setChecked(true);
 			break;
 		case 10:
-                        throttleBox->setChecked(true);
+			throttleBox->setChecked(true);
 			break;
 
 	}
@@ -415,21 +443,20 @@ void PlotArea::chooseDialog()
 	connect(accept, SIGNAL(accepted()), this, SLOT(acceptDialog()));
 	connect(accept, SIGNAL(rejected()), this, SLOT(rejectDialog()));
 
-
 	QGroupBox *groupBox1 = new QGroupBox(tr("Channels:"));
 	QGridLayout *vbox = new QGridLayout;
 
-        vbox->addWidget(LambdaBox,1,0);
-        vbox->addWidget(RPMBox,2,0);
-        vbox->addWidget(VEBox,3,0);
-        vbox->addWidget(MAPBox,4,0);
-        vbox->addWidget(airTempBox,5,0);
-        vbox->addWidget(waterTempBox,6,0);
-        vbox->addWidget(ignAdvanceBox,7,0);
-        vbox->addWidget(fuelAdvBox,8,0);
-        vbox->addWidget(dutyBox,9,0);
-        vbox->addWidget(injTimeBox,10,0);
-        vbox->addWidget(throttleBox,11,0);
+	vbox->addWidget(LambdaBox,1,0);
+	vbox->addWidget(RPMBox,2,0);
+	vbox->addWidget(VEBox,3,0);
+	vbox->addWidget(MAPBox,4,0);
+	vbox->addWidget(airTempBox,5,0);
+	vbox->addWidget(waterTempBox,6,0);
+	vbox->addWidget(ignAdvanceBox,7,0);
+	vbox->addWidget(fuelAdvBox,8,0);
+	vbox->addWidget(dutyBox,9,0);
+	vbox->addWidget(injTimeBox,10,0);
+	vbox->addWidget(throttleBox,11,0);
 	groupBox1->setLayout(vbox);
 
 	grid->addWidget(groupBox1,1,0,1,2);
@@ -440,25 +467,27 @@ void PlotArea::chooseDialog()
 
 }
 
+
 void PlotArea::acceptDialog()
 {
-        if( LambdaBox->isChecked() )        channel = 0;
-        if( RPMBox->isChecked() )           channel = 1;
-        if( VEBox->isChecked() )            channel = 2;
-        if( MAPBox->isChecked() )           channel = 3;
-        if( airTempBox->isChecked() )       channel = 4;
-        if( waterTempBox->isChecked() )     channel = 5;
-        if( ignAdvanceBox->isChecked() )    channel = 6;
-        if( fuelAdvBox->isChecked() )       channel = 7;
-        if( dutyBox->isChecked() )          channel = 8;
-        if( injTimeBox->isChecked() )       channel = 9;
-        if( throttleBox->isChecked() )      channel = 10;
+	if( LambdaBox->isChecked() )        channel = 0;
+	if( RPMBox->isChecked() )           channel = 1;
+	if( VEBox->isChecked() )            channel = 2;
+	if( MAPBox->isChecked() )           channel = 3;
+	if( airTempBox->isChecked() )       channel = 4;
+	if( waterTempBox->isChecked() )     channel = 5;
+	if( ignAdvanceBox->isChecked() )    channel = 6;
+	if( fuelAdvBox->isChecked() )       channel = 7;
+	if( dutyBox->isChecked() )          channel = 8;
+	if( injTimeBox->isChecked() )       channel = 9;
+	if( throttleBox->isChecked() )      channel = 10;
 
-        writeSettings();
-        update();
+	writeSettings();
+	update();
 	dialog->accept();
 	clear();
 }
+
 
 void PlotArea::rejectDialog()
 {

@@ -31,29 +31,28 @@
 
 class QPlayer : public QWidget
 {
-Q_OBJECT
-public:
-	QPlayer(QTimer*, QTimer*, QFile*);
-	void setFileTimer(QTimer*);
-	void setPosition(int);
-	int pos();
-	bool isBusy();
-	QSize minimumSizeHint() const;
-	QSize sizeHint() const;
-private:
-	int xSize,ySize;
-	QTimer *playTimer;
-	QTimer *refreshTimer;
-	QFile *file;
-	QSlider *slider;
-	bool busy;
+	Q_OBJECT
+		public:
+		QPlayer(QTimer*, QTimer*, QFile*);
+		void setFileTimer(QTimer*);
+		void setPosition(int);
+		int pos();
+		bool isBusy();
+		QSize minimumSizeHint() const;
+		QSize sizeHint() const;
+	private:
+		int xSize,ySize;
+		QTimer *playTimer;
+		QTimer *refreshTimer;
+		QFile *file;
+		QSlider *slider;
+		bool busy;
 
-private slots:
-	void play();
-	void pause();
-	void sliderPress();
-	void seekFile();
-
+	private slots:
+		void play();
+		void pause();
+		void sliderPress();
+		void seekFile();
 
 };
 #endif

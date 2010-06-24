@@ -52,20 +52,26 @@ QPlayer::QPlayer(QTimer *timer1, QTimer *timer2, QFile *file1)
 	setLayout(layout);
 	show();
 }
-void QPlayer::setFileTimer(QTimer * timer)		//Recibe el timer que controla el flujo de datos del archivo
+
+
+								 //Recibe el timer que controla el flujo de datos del archivo
+void QPlayer::setFileTimer(QTimer * timer)
 {
 	playTimer = timer;
 }
+
 
 void QPlayer::setPosition(int pos)
 {
 	slider->setValue(pos);
 }
+
+
 int QPlayer::pos()
-{	return slider->value();}
+{   return slider->value();}
 
 void QPlayer::sliderPress()
-{	busy = true;	}
+{   busy = true;    }
 
 void QPlayer::seekFile()
 {
@@ -73,11 +79,13 @@ void QPlayer::seekFile()
 	busy = false;
 }
 
+
 void QPlayer::play()
 {
 	playTimer->start();
 	refreshTimer->start();
 }
+
 
 void QPlayer::pause()
 {
@@ -86,15 +94,16 @@ void QPlayer::pause()
 
 }
 
+
 bool QPlayer::isBusy()
-{	return busy;	}
+{   return busy;    }
 QSize QPlayer::minimumSizeHint() const
- {
-     return QSize(20, 20);
- }
+{
+	return QSize(20, 20);
+}
 
- QSize QPlayer::sizeHint() const
- {
-     return QSize(xSize, ySize);
- }
 
+QSize QPlayer::sizeHint() const
+{
+	return QSize(xSize, ySize);
+}

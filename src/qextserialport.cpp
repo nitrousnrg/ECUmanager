@@ -44,7 +44,7 @@ The object will be associated with the first port in the system, e.g. COM1 on Wi
 See the other constructors if you need to use a port other than the first.
 */
 QextSerialPort::QextSerialPort()
- : QextBaseType()
+: QextBaseType()
 {}
 
 /*!
@@ -54,7 +54,7 @@ name is the name of the device, which is windowsystem-specific,
 e.g."COM1" or "/dev/ttyS0".
 */
 QextSerialPort::QextSerialPort(const QString & name)
- : QextBaseType(name)
+: QextBaseType(name)
 {}
 
 /*!
@@ -62,7 +62,7 @@ QextSerialPort::QextSerialPort(const QString & name)
 Constructs a port with default name and settings specified by the settings parameter.
 */
 QextSerialPort::QextSerialPort(PortSettings const& settings)
- : QextBaseType(settings)
+: QextBaseType(settings)
 {}
 
 /*!
@@ -70,7 +70,7 @@ QextSerialPort::QextSerialPort(PortSettings const& settings)
 Constructs a port with the name and settings specified.
 */
 QextSerialPort::QextSerialPort(const QString & name, PortSettings const& settings)
- : QextBaseType(name, settings)
+: QextBaseType(name, settings)
 {}
 
 /*!
@@ -78,7 +78,7 @@ QextSerialPort::QextSerialPort(const QString & name, PortSettings const& setting
 Copy constructor.
 */
 QextSerialPort::QextSerialPort(const QextSerialPort& s)
- : QextBaseType(s)
+: QextBaseType(s)
 {}
 
 /*!
@@ -87,8 +87,9 @@ Overrides the = operator.
 */
 QextSerialPort& QextSerialPort::operator=(const QextSerialPort& s)
 {
-    return (QextSerialPort&)QextBaseType::operator=(s);
+	return (QextSerialPort&)QextBaseType::operator=(s);
 }
+
 
 /*!
 \fn QextSerialPort::~QextSerialPort()

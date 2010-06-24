@@ -26,27 +26,25 @@
 
 class QuickTune: public QWidget
 {
-Q_OBJECT
+	Q_OBJECT
 
-public:
-	QuickTune(QWidget *parent = 0);
-	int getMAP(int index);
-	int getRPM(int index);
+		public:
+		QuickTune(QWidget *parent = 0);
+		int getMAP(int index);
+		int getRPM(int index);
 
+		enum {MAP,RPM};
 
-	enum {MAP,RPM};
+	public slots:
+		void MAPvalueChanged(int);
+		void RPMvalueChanged(int);
 
-public slots:
-	void MAPvalueChanged(int);
-	void RPMvalueChanged(int);
+		signals:
+		void QTuneChange(int channel, int index);
 
-	signals:
-	void QTuneChange(int channel, int index);
-
-private:
-	QString versionName;
-	graph2D *tableMAP;
-	graph2D *tableRPM;
+	private:
+		QString versionName;
+		graph2D *tableMAP;
+		graph2D *tableRPM;
 };
-
 #endif

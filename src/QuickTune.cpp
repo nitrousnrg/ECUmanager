@@ -58,24 +58,30 @@ QuickTune::QuickTune(QWidget *parent) : QWidget(parent)
 	show();
 }
 
+
 void QuickTune::MAPvalueChanged(int index)
 {
-    if(index<12)   //number of columns limit
-        emit QTuneChange(MAP,index); //0
+	if(index<12)				 //number of columns limit
+								 //0
+			emit QTuneChange(MAP,index);
 }
+
+
 void QuickTune::RPMvalueChanged(int index)
 {
-        emit QTuneChange(RPM,index); //0
+	emit QTuneChange(RPM,index); //0
 }
+
 
 int QuickTune::getMAP(int index)
 {
-    if(index<12)   //number of columns limit
-	return tableMAP->getPoint(index);
-    return 0;
-}
-int QuickTune::getRPM(int index)
-{
-        return tableRPM->getPoint(index);
+	if(index<12)				 //number of columns limit
+		return tableMAP->getPoint(index);
+	return 0;
 }
 
+
+int QuickTune::getRPM(int index)
+{
+	return tableRPM->getPoint(index);
+}

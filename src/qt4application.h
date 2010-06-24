@@ -39,7 +39,7 @@
 #include <QuickTune.h>
 #include <QPlayer.h>
 #include <QInjectorTest.h>
-#include <qwt3d_surfaceplot.h> 
+#include <qwt3d_surfaceplot.h>
 #include <qwt3d_function.h>
 #include <qwt3d_plot.h>
 
@@ -63,300 +63,301 @@ class qt4application:public QMainWindow
 {
 	Q_OBJECT
 
-public:
-	qt4application();
-	~qt4application();
+		public:
+		qt4application();
+		~qt4application();
 
-protected:
-	void closeEvent(QCloseEvent *event);
+	protected:
+		void closeEvent(QCloseEvent *event);
 
-private slots:
-	void connectECU();
-	void disconnectECU();
-	void openECU();
-	void openECUslot();
-	void sendFilesInit();
-	void upgradeFirmware();
-	void configureECUmanager();
-	void refresh();
-	void showIgnition();
-	void showFuel();
-	void showFuelTiming();
-	void tempDialog();
-	void accelDialog();
-	void putTempCalibration();
-	void boostDialog();
-	void nitrousDialog();
-        void parametersDialog();
-        void setMainTableSize();
-        void alarmsDialog();
-	void printDialog();
-	void acceptDialog();
-	void rejectDialog();
-	void startLog();
-	void saveLog();
-	void replay();
-	void viewData();
-	void quickTune();
-	void injectorTestDialog();
-	void newFile();
-	void open();
-	void checkChange(QTableWidgetItem *);
-	void QuickTuneChange(int channel, int index);
-	void save();	//bool
-	void saveAs();	//bool
-	void about();
-	void documentWasModified();
+	private slots:
+		void connectECU();
+		void disconnectECU();
+		void openECU();
+		void openECUslot();
+		void sendFilesInit();
+		void upgradeFirmware();
+		void configureECUmanager();
+		void refresh();
+		void showIgnition();
+		void showFuel();
+		void showFuelTiming();
+		void tempDialog();
+		void accelDialog();
+		void putTempCalibration();
+		void boostDialog();
+		void nitrousDialog();
+		void parametersDialog();
+		void setMainTableSize();
+		void alarmsDialog();
+		void printDialog();
+		void acceptDialog();
+		void rejectDialog();
+		void startLog();
+		void saveLog();
+		void replay();
+		void viewData();
+		void quickTune();
+		void injectorTestDialog();
+		void newFile();
+		void open();
+		void checkChange(QTableWidgetItem *);
+		void QuickTuneChange(int channel, int index);
+		void save();			 //bool
+		void saveAs();			 //bool
+		void about();
+		void documentWasModified();
 
-        void debugFreeEMS();
-        void showPacket(QByteArray);
-        void sendReset();
+		void debugFreeEMS();
+		void showPacket(QByteArray);
+		void sendReset();
 
+	private:
+		void createVEtable();
+		void createLinearTable();
+		void createBars();
+		void createLabels();
+		void createActions();
+		void createMenus();
+		void createToolBars();
+		void createStatusBar();
+		void createLayout();
+		void readSettings();
+		void writeSettings();
+		bool maybeSave();
+		void loadFile(const QString &fileName);
+		void process_line(QByteArray line,int i);
+		bool saveFile(const QString &fileName);
+		void setCurrentFile(const QString &fileName);
 
-private:
-	void createVEtable();
-	void createLinearTable();
-	void createBars();
-	void createLabels();
-	void createActions();
-	void createMenus();
-	void createToolBars();
-	void createStatusBar();
-	void createLayout();
-	void readSettings();
-	void writeSettings();
-	bool maybeSave();
-	void loadFile(const QString &fileName);
-	void process_line(QByteArray line,int i);
-	bool saveFile(const QString &fileName);
-	void setCurrentFile(const QString &fileName);
+		bool connectedECU;
+		bool fileopened;
+		bool parametersDialogOpen;
+		bool setMainTableSizeDialogOpen;
+		bool tempDialogOpen;
+		bool accelEnrichDialogOpen;
+		bool alarmDialogOpen;
+		bool configDialogOpen;
+		int nitrousDialogOpen;	 //WTF?!?!
+		bool logEnabled;
+		int injectorTestDialogOpen;
+		bool VE_table_ON;
+		bool fuel_adv_ON;
+		bool Ign_table_ON;
+		bool QuickTune_ON;
+		bool debugEnabledFlag;
+		QString strippedName(const QString &fullFileName);
 
-	bool connectedECU;
-	bool fileopened;
-        bool parametersDialogOpen;
-        bool setMainTableSizeDialogOpen;
-        bool tempDialogOpen;
-	bool accelEnrichDialogOpen;
-	bool alarmDialogOpen;
-	bool configDialogOpen;
-	int nitrousDialogOpen;	//WTF?!?!
-	bool logEnabled;
-	int injectorTestDialogOpen;
-	bool VE_table_ON;
-	bool fuel_adv_ON;
-	bool Ign_table_ON;
-	bool QuickTune_ON;
-        bool debugEnabledFlag;
- 	QString strippedName(const QString &fullFileName);
+		QWidget *window;
+		QWidget *QmainLayout;
+		QextSerialPort *serial;
+		commThread *serialThread;
+		QString hardwareTarget,hardwareTargetTemp;
 
-	QWidget *window;
-	QWidget *QmainLayout;
-	QextSerialPort *serial;
-	commThread *serialThread;
-	QString hardwareTarget,hardwareTargetTemp;
+		QMap3D *map3D;
+		QViewer *plot1;
+		QuickTune *QTune;
+		upgrade *newFirmware;
+		PlotArea *plot;
+		graph2D *tempCorrGraph;
+		graph2D *tempSensorGraph;
+		RenderArea *renderArea;	 //bad name for the tacho
+		QPlayer *playMenu;
+		QInjTester *tester;
+		QTimer *sendTimer;
+		QTimer *refreshTimer;
+		QTimer *openECUtimer;
+		char logbuffer[4];
+		QByteArray auxiliarByteArray;
 
-        QMap3D *map3D;
-	QViewer *plot1;
-	QuickTune *QTune;
-	upgrade *newFirmware;
-	PlotArea *plot;
-	graph2D *tempCorrGraph;
-	graph2D *tempSensorGraph;
-        RenderArea *renderArea;     //bad name for the tacho
-	QPlayer *playMenu;
-	QInjTester *tester;
-	QTimer *sendTimer;
-	QTimer *refreshTimer;
-	QTimer *openECUtimer;
-	char logbuffer[4];
-	QByteArray auxiliarByteArray;
+		QTableWidget *VE_table;
+		QTableWidget *Ign_table;
+		QTableWidget *fuelAdvTable;
+		QTableWidget *packetTable;
 
-	QTableWidget *VE_table;
-	QTableWidget *Ign_table;
-	QTableWidget *fuelAdvTable;
-        QTableWidget *packetTable;
+		QTableWidgetItem VEtableItem[16][25];
+		QTableWidgetItem ignTableItem[12][21];
+		QTableWidgetItem fuelAdvTableItem[12];
+		QTableWidget *headerTableRPM;
+		QTableWidget *headerTableMAP;
+		QTableWidgetItem *packetTableItem;
+		QTableWidgetItem *headerContentsRPM;
+		QTableWidgetItem *headerContentsMAP;
+		QHBoxLayout *horizontaLayout;
+		QDialog *dialog;
+		QMenu *fileMenu;
+		QMenu *adjustMenu;
+		QMenu *adjustFuelMenu;
 
-        QTableWidgetItem VEtableItem[16][25];
-	QTableWidgetItem ignTableItem[12][21];
-	QTableWidgetItem fuelAdvTableItem[12];
-        QTableWidget *headerTableRPM;
-        QTableWidget *headerTableMAP;
-        QTableWidgetItem *packetTableItem;
-        QTableWidgetItem *headerContentsRPM;
-        QTableWidgetItem *headerContentsMAP;
-        QHBoxLayout *horizontaLayout;
-	QDialog *dialog;
-	QMenu *fileMenu;
-	QMenu *adjustMenu;
-	QMenu *adjustFuelMenu;
+		QMenu *adjustIgnMenu;
+		QMenu *adjustOptions;
+		QMenu *viewMenu;
+		QMenu *logMenu;
+		QMenu *helpMenu;
+		QMenu *toolsMenu;
+		QToolBar *fileToolBar;
+		QToolBar *commToolBar;
+		QLabel *heavyDataLabel;
+		QLabel *VElabel;
+		QLabel *MAPlabel;
+		QLabel *AirTemplabel;
+		QLabel *TEMPlabel;
+		QLabel *throttleLabel;
+		QLabel *AirFuellabel;
+		QLabel *InyTimelabel;
+		QLabel *Dutylabel;
 
-	QMenu *adjustIgnMenu;
-	QMenu *adjustOptions;
-	QMenu *viewMenu;
-	QMenu *logMenu;
-	QMenu *helpMenu;
-	QMenu *toolsMenu;
-	QToolBar *fileToolBar;
-	QToolBar *commToolBar;
-	QLabel *heavyDataLabel;
-	QLabel *VElabel;
-	QLabel *MAPlabel;
-	QLabel *AirTemplabel;
-	QLabel *TEMPlabel;
-	QLabel *throttleLabel;
-	QLabel *AirFuellabel;
-	QLabel *InyTimelabel;
-	QLabel *Dutylabel;
+		QLineEdit * serialPortEdit;
+								 //accel pump
+		QLineEdit *enrichFactorEdit;
+		QLineEdit *decayEdit;	 //accel pump
+								 //accel pump
+		QLineEdit *accelTresholdEdit;
+		QLineEdit *editDisplacement;
+		QLineEdit *editCyl;
+		QLineEdit *editIdle;
+		QLineEdit *editFuelCut;
+		QLineEdit *editLaunchRPM;
+		QLineEdit *editSize;
+		QLineEdit *editDeadTime;
+		QComboBox *hardwareTargetBox;
 
-	QLineEdit * serialPortEdit;
-	QLineEdit *enrichFactorEdit;	//accel pump
-	QLineEdit *decayEdit;		//accel pump
-	QLineEdit *accelTresholdEdit;	//accel pump
-	QLineEdit *editDisplacement;
-	QLineEdit *editCyl;
-	QLineEdit *editIdle;
-	QLineEdit *editFuelCut;
-	QLineEdit *editLaunchRPM;
-	QLineEdit *editSize;
-	QLineEdit *editDeadTime;
-	QComboBox *hardwareTargetBox;
+		QCheckBox *calibration;
+		QProgressBar *VEbar;
+		QProgressBar *MAPbar;
+		QProgressBar *TEMPbar;
+		QProgressBar *AirFuelbar;
+		QProgressBar *InyTimebar;
+		QProgressBar *Dutybar;
+		QProgressBar *throttleBar;
+		QProgressBar *AirTempbar;
+		QProgressBar *sendingBar;
+		QString string1;
+		QString serialPort;
 
-	QCheckBox *calibration;
-	QProgressBar *VEbar;
-	QProgressBar *MAPbar;
-	QProgressBar *TEMPbar;
-	QProgressBar *AirFuelbar;
-	QProgressBar *InyTimebar;
-	QProgressBar *Dutybar;
-	QProgressBar *throttleBar;
-	QProgressBar *AirTempbar;
-	QProgressBar *sendingBar;
-	QString string1;
-	QString serialPort;
- 
-	QAction *connectAct;
-	QAction *disconnectAct;
-	QAction *fetchAct;
-	QAction *sendfileAct;
-	QAction *upgradeFirmwareAct;
-	QAction *view1Act;
-	QAction *adjustParametersAct;
-	QAction *adjustIgnitionAct;
-	QAction *adjustFuelAct;
-	QAction *adjustFuelTimingAct;
-	QAction *adjustTempCorrectionAct;
-	QAction *adjustAccelEnrichmentAct;
-	QAction *adjustIgnTempCorrectionAct;
-	QAction *adjustAlarmsAct;
-	QAction *adjustBoostCtrlAct;
-	QAction *adjustNitrousAct;
-	QAction *adjustPWM1;
-	QAction *adjustPWM2;
-	QAction *configureECUManagerAct;
-	QAction *startLogAct;
-	QAction *saveLogAct;
-	QAction *replayAct;
-	QAction *viewAct;
-	QAction *quickTuneAct;
-	QAction *injectorTestAct;
-	QAction *newAct;
-	QAction *openAct;
-	QAction *saveAct;
-	QAction *saveAsAct;
-	QAction *exitAct;
-	QAction *printAct;
-	QAction *cutAct;
-	QAction *copyAct;
-	QAction *pasteAct;
-	QAction *connectorPinoutAct;
-	QAction *aboutAct;
-	QAction *aboutQtAct;
+		QAction *connectAct;
+		QAction *disconnectAct;
+		QAction *fetchAct;
+		QAction *sendfileAct;
+		QAction *upgradeFirmwareAct;
+		QAction *view1Act;
+		QAction *adjustParametersAct;
+		QAction *adjustIgnitionAct;
+		QAction *adjustFuelAct;
+		QAction *adjustFuelTimingAct;
+		QAction *adjustTempCorrectionAct;
+		QAction *adjustAccelEnrichmentAct;
+		QAction *adjustIgnTempCorrectionAct;
+		QAction *adjustAlarmsAct;
+		QAction *adjustBoostCtrlAct;
+		QAction *adjustNitrousAct;
+		QAction *adjustPWM1;
+		QAction *adjustPWM2;
+		QAction *configureECUManagerAct;
+		QAction *startLogAct;
+		QAction *saveLogAct;
+		QAction *replayAct;
+		QAction *viewAct;
+		QAction *quickTuneAct;
+		QAction *injectorTestAct;
+		QAction *newAct;
+		QAction *openAct;
+		QAction *saveAct;
+		QAction *saveAsAct;
+		QAction *exitAct;
+		QAction *printAct;
+		QAction *cutAct;
+		QAction *copyAct;
+		QAction *pasteAct;
+		QAction *connectorPinoutAct;
+		QAction *aboutAct;
+		QAction *aboutQtAct;
 
-        /* FreeEMS stuff */
-        QAction *sendResetAct;
-        QAction *getInterfaceVersionAct;
-        QAction *getFirmwareVersionAct;
-        QAction *openDebugWindowAct;
+		/* FreeEMS stuff */
+		QAction *sendResetAct;
+		QAction *getInterfaceVersionAct;
+		QAction *getFirmwareVersionAct;
+		QAction *openDebugWindowAct;
 
+		unsigned char MAP,throttle;
+		char TEMP,waterTEMP;
+		float duty,Dwell;
+		int byteCounter;		 //para la programacin
 
-	unsigned char MAP,throttle;
-	char TEMP,waterTEMP;
-	float duty,Dwell;
-	int byteCounter;	//para la programación
+		char *oxygenSensor;		 //wb, nb, none
 
-        char *oxygenSensor;	//wb, nb, none
+		struct estructura
+		{
+								 //defines table size
+			unsigned int headerRPM[21];
+			unsigned int headerMAP[21];
+			unsigned int cylinders;
+								 //cm
+			unsigned int displacement;
+			unsigned int fuelCut;//rpm
+			unsigned int idleRPM;
+			unsigned int launchRPM;
+			unsigned int injSize;//cm/min
+								 //us
+			unsigned int deadTime;
 
-	struct estructura
-	{
-                unsigned int headerRPM[21];     //defines table size
-                unsigned int headerMAP[21];
-                unsigned int cylinders;
-		unsigned int displacement;	//cm³
-		unsigned int fuelCut;		//rpm
-		unsigned int idleRPM;
-		unsigned int launchRPM;
-		unsigned int injSize;		//cm³/min
-		unsigned int deadTime;		//us
+			unsigned char accel_pump_source;
+			unsigned char accel_pump_treshold;
+			unsigned char accel_pump_decay;
+			unsigned char accel_pump_enrich_factor;
 
-		unsigned char accel_pump_source;
-		unsigned char accel_pump_treshold;
-		unsigned char accel_pump_decay;
-		unsigned char accel_pump_enrich_factor;
+			float tempCorr[13];	 //enrich %
+			//float dwell;
 
-		float tempCorr[13];		//enrich %
-		//float dwell;
-	
-		unsigned int nitrousRPM;
-		unsigned int nitrousMAP;
-		unsigned int nitrousTPS;
-		float nitrousStage1Flow;
-		float nitrousStage2Flow;
-		float nitrousStage3Flow;
-		float nitrousStage1Retard;
-		float nitrousStage2Retard;
-		float nitrousStage3Retard;
-		//boost ctrl	
-	}confParameter;
+			unsigned int nitrousRPM;
+			unsigned int nitrousMAP;
+			unsigned int nitrousTPS;
+			float nitrousStage1Flow;
+			float nitrousStage2Flow;
+			float nitrousStage3Flow;
+			float nitrousStage1Retard;
+			float nitrousStage2Retard;
+			float nitrousStage3Retard;
+			//boost ctrl
+		}confParameter;
 
-	union  transformer
-	{
-		BYTE byte[2];
-		int entero;
-	}RPM,VE,VEtable[12][21],fuel,auxTransformer;
+		union  transformer
+		{
+			BYTE byte[2];
+			int entero;
+		}RPM,VE,VEtable[12][21],fuel,auxTransformer;
 
-	int parcialVE_MAP[12];
-	int parcialVE_RPM[21];
-	struct degreeConverter
-	{
-		BYTE byte[2];
-		float angle;
-	}IgnTable[12][21],fuelAdv[12],fuelAdvActual,IgnAdvActual;
+		int parcialVE_MAP[12];
+		int parcialVE_RPM[21];
+		struct degreeConverter
+		{
+			BYTE byte[2];
+			float angle;
+		}IgnTable[12][21],fuelAdv[12],fuelAdvActual,IgnAdvActual;
 
-	union zocotroco_de_numeros
-	{
-		BYTE partido[12][21][2];
-		char plain[504];
-	}plaindataVE,plaindataIgn;
+		union zocotroco_de_numeros
+		{
+			BYTE partido[12][21][2];
+			char plain[504];
+		}plaindataVE,plaindataIgn;
 
+		FILE *f;
+		QString confFile;
+		QString openedFile;
+		QString logFileName;
+		QFile *tempLogFile;
+		QFile *openedLogFile;
+		//QString &logFileName;
 
-	FILE *f;
-	QString confFile;
-	QString openedFile;
-	QString logFileName;
-	QFile *tempLogFile;
-	QFile *openedLogFile;
-	//QString &logFileName;
-
-/* nitrous dialog */
-	QLineEdit *editNitrousRPM;
-	QLineEdit *editNitrousMAP;
-	QLineEdit *editNitrousTPS;
-	QLineEdit *editNitrousFlow1;
-	QLineEdit *editNitrousFlow2;
-	QLineEdit *editNitrousFlow3;
-	QLineEdit *editNitrousRetard1;
-	QLineEdit *editNitrousRetard2;
-	QLineEdit *editNitrousRetard3;
+		/* nitrous dialog */
+		QLineEdit *editNitrousRPM;
+		QLineEdit *editNitrousMAP;
+		QLineEdit *editNitrousTPS;
+		QLineEdit *editNitrousFlow1;
+		QLineEdit *editNitrousFlow2;
+		QLineEdit *editNitrousFlow3;
+		QLineEdit *editNitrousRetard1;
+		QLineEdit *editNitrousRetard2;
+		QLineEdit *editNitrousRetard3;
 };
-
 #endif

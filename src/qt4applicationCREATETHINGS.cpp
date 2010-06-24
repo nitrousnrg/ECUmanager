@@ -24,36 +24,38 @@
 
 void qt4application::createVEtable()
 {
-        int i;
+	int i;
 
-        QStringList RPMheader;
-        QStringList MAPheader;
-        QString num;
-        headerTableRPM = new QTableWidget(1,21);
-        headerTableMAP = new QTableWidget(1,21);
-        headerContentsRPM = new QTableWidgetItem[21];
-        headerContentsMAP = new QTableWidgetItem[21];	VE_table = new QTableWidget(12, 21, this);
-        VE_table->setContextMenuPolicy(Qt::CustomContextMenu);      //This enables the right click pop up
+	QStringList RPMheader;
+	QStringList MAPheader;
+	QString num;
+	headerTableRPM = new QTableWidget(1,21);
+	headerTableMAP = new QTableWidget(1,21);
+	headerContentsRPM = new QTableWidgetItem[21];
+	headerContentsMAP = new QTableWidgetItem[21];   VE_table = new QTableWidget(12, 21, this);
+								 //This enables the right click pop up
+	VE_table->setContextMenuPolicy(Qt::CustomContextMenu);
 	VE_table_ON = true;
-        connect(VE_table,SIGNAL(customContextMenuRequested(QPoint)),this,SLOT(setMainTableSize()));
+	connect(VE_table,SIGNAL(customContextMenuRequested(QPoint)),this,SLOT(setMainTableSize()));
 
-        for(i=0;i<12;++i)
-        {
-            VE_table->setRowHeight(i,19);
-            MAPheader.prepend(num.setNum(confParameter.headerMAP[i]));
-        }
-        for(i=0;i<21;++i)
-        {
-            VE_table->setColumnWidth(i,45);
-            RPMheader.append(num.setNum(confParameter.headerRPM[i]));
-        }
+	for(i=0;i<12;++i)
+	{
+		VE_table->setRowHeight(i,19);
+		MAPheader.prepend(num.setNum(confParameter.headerMAP[i]));
+	}
+	for(i=0;i<21;++i)
+	{
+		VE_table->setColumnWidth(i,45);
+		RPMheader.append(num.setNum(confParameter.headerRPM[i]));
+	}
 
-        VE_table->setHorizontalHeaderLabels ( RPMheader );
-        VE_table->setVerticalHeaderLabels ( MAPheader );
-        VE_table->setMaximumHeight( 275 );
+	VE_table->setHorizontalHeaderLabels ( RPMheader );
+	VE_table->setVerticalHeaderLabels ( MAPheader );
+	VE_table->setMaximumHeight( 275 );
 
 	connect(VE_table,SIGNAL(itemChanged(QTableWidgetItem * )),this, SLOT(checkChange(QTableWidgetItem *)));
 }
+
 
 void qt4application::createLinearTable()
 {
@@ -77,6 +79,7 @@ void qt4application::createLinearTable()
 	connect(fuelAdvTable,SIGNAL(itemChanged(QTableWidgetItem * )),this, SLOT(checkChange(QTableWidgetItem *)));
 }
 
+
 void qt4application::createLayout()
 {
 	QVBoxLayout *cornerLayout = new QVBoxLayout;
@@ -84,40 +87,39 @@ void qt4application::createLayout()
 
 	QHBoxLayout *mainLayout = new QHBoxLayout;
 	mainLayout->addWidget(heavyDataLabel);
-        mainLayout->addSpacing(15);
+	mainLayout->addSpacing(15);
 	mainLayout->addWidget(VElabel);
-        mainLayout->addWidget(VEbar);
-        mainLayout->addSpacing(15);
+	mainLayout->addWidget(VEbar);
+	mainLayout->addSpacing(15);
 	mainLayout->addWidget(MAPlabel);
-        mainLayout->addWidget(MAPbar);
-        mainLayout->addSpacing(15);
-        mainLayout->addWidget(AirTemplabel);
-        mainLayout->addWidget(AirTempbar);
-        mainLayout->addSpacing(15);
- 	mainLayout->addWidget(TEMPlabel);
-        mainLayout->addWidget(TEMPbar);
-        mainLayout->addSpacing(15);
-        mainLayout->addWidget(AirFuellabel);
-        mainLayout->addWidget(AirFuelbar);
-        mainLayout->addSpacing(15);
-        mainLayout->addWidget(throttleLabel);
-        mainLayout->addWidget(throttleBar);
-        mainLayout->addSpacing(15);
-        mainLayout->addWidget(Dutylabel);
-        mainLayout->addWidget(Dutybar);
-        mainLayout->addWidget(InyTimelabel);
-        mainLayout->addWidget(InyTimebar);
-        mainLayout->addSpacing(20);
+	mainLayout->addWidget(MAPbar);
+	mainLayout->addSpacing(15);
+	mainLayout->addWidget(AirTemplabel);
+	mainLayout->addWidget(AirTempbar);
+	mainLayout->addSpacing(15);
+	mainLayout->addWidget(TEMPlabel);
+	mainLayout->addWidget(TEMPbar);
+	mainLayout->addSpacing(15);
+	mainLayout->addWidget(AirFuellabel);
+	mainLayout->addWidget(AirFuelbar);
+	mainLayout->addSpacing(15);
+	mainLayout->addWidget(throttleLabel);
+	mainLayout->addWidget(throttleBar);
+	mainLayout->addSpacing(15);
+	mainLayout->addWidget(Dutylabel);
+	mainLayout->addWidget(Dutybar);
+	mainLayout->addWidget(InyTimelabel);
+	mainLayout->addWidget(InyTimebar);
+	mainLayout->addSpacing(20);
 	mainLayout->addLayout(cornerLayout);
-	
+
 	QmainLayout = new QWidget;
 	QmainLayout->setLayout(mainLayout);
 	QmainLayout->setMaximumHeight( 180 );
 
-
 	horizontaLayout = new QHBoxLayout;
-//	horizontaLayout->addWidget(tablesLabels);
-        horizontaLayout->addWidget(map3D);
+	//	horizontaLayout->addWidget(tablesLabels);
+	horizontaLayout->addWidget(map3D);
 	horizontaLayout->addWidget(VE_table);
 	horizontaLayout->addWidget(fuelAdvTable);
 	horizontaLayout->addWidget(renderArea);
@@ -131,8 +133,8 @@ void qt4application::createLayout()
 
 	setCentralWidget(window);
 
- 
 }
+
 
 void qt4application::createLabels()
 {
@@ -147,7 +149,7 @@ void qt4application::createLabels()
 	VElabel->setAlignment(Qt::AlignCenter |Qt::AlignRight);
 
 	MAPlabel = new QLabel(this);
-//	MAPlabel->setFrameStyle(QFrame::Panel | QFrame::Sunken);
+	//	MAPlabel->setFrameStyle(QFrame::Panel | QFrame::Sunken);
 	MAPlabel->setText("MAP");
 	MAPlabel->setAlignment(Qt::AlignCenter |Qt::AlignRight);
 
@@ -175,11 +177,12 @@ void qt4application::createLabels()
 	Dutylabel->setText("Duty");
 	Dutylabel->setAlignment(Qt::AlignCenter | Qt::AlignRight);
 
-/*	tablesLabels = new QLabel(this);
-	tablesLabels->setFont(font);
-	tablesLabels->setText("VE map");
-        tablesLabels->setAlignment(Qt::AlignRight);*/
+	/*	tablesLabels = new QLabel(this);
+		tablesLabels->setFont(font);
+		tablesLabels->setText("VE map");
+			tablesLabels->setAlignment(Qt::AlignRight);*/
 }
+
 
 void qt4application::createBars()
 {
@@ -190,7 +193,7 @@ void qt4application::createBars()
 	VEbar->setOrientation(Qt::Vertical);
 
 	MAPbar= new QProgressBar(this);
-//	MAPbar->setRange(10,120);
+	//	MAPbar->setRange(10,120);
 	MAPbar->setTextVisible(FALSE);
 	MAPbar->show();
 	MAPbar->setOrientation(Qt::Vertical);
@@ -201,14 +204,12 @@ void qt4application::createBars()
 	TEMPbar->show();
 	TEMPbar->setOrientation(Qt::Vertical);
 
-
-//Alarm!
-/*
-	QPalette TEMPpalette = TEMPbar->palette();
-	TEMPpalette.setColor(QPalette::Base,QColor(255,0,0,90));
-	TEMPpalette.setColor(QPalette::Window,Qt::red);
-	TEMPbar->setPalette(TEMPpalette);*/
-
+	//Alarm!
+	/*
+		QPalette TEMPpalette = TEMPbar->palette();
+		TEMPpalette.setColor(QPalette::Base,QColor(255,0,0,90));
+		TEMPpalette.setColor(QPalette::Window,Qt::red);
+		TEMPbar->setPalette(TEMPpalette);*/
 
 	throttleBar = new QProgressBar(this);
 	throttleBar->setRange(0,100);
@@ -223,8 +224,7 @@ void qt4application::createBars()
 		AirFuelbar->setRange(0,206);
 	if(strcmp(oxygenSensor,"Not Available"))
 		AirFuelbar->setRange(0,1024);
-		
-	
+
 	AirFuelbar->setTextVisible(FALSE);
 	AirFuelbar->show();
 	AirFuelbar->setOrientation(Qt::Vertical);
@@ -234,7 +234,7 @@ void qt4application::createBars()
 	InyTimebar->setTextVisible(FALSE);
 	InyTimebar->show();
 	InyTimebar->setOrientation(Qt::Vertical);
- 
+
 	Dutybar= new QProgressBar(this);
 	//Dutybar->setRange(0,300);
 	Dutybar->setTextVisible(FALSE);
@@ -242,12 +242,13 @@ void qt4application::createBars()
 	Dutybar->setOrientation(Qt::Vertical);
 
 	AirTempbar= new QProgressBar(this);
-        AirTempbar->setRange(0,50);     //-5°C is healthier
+	AirTempbar->setRange(0,50);	 //-5C is healthier
 	AirTempbar->setTextVisible(FALSE);
 	AirTempbar->show();
 	AirTempbar->setOrientation(Qt::Vertical);
 
 }
+
 
 void qt4application::createActions()
 {
@@ -267,7 +268,7 @@ void qt4application::createActions()
 
 	fetchAct = new QAction(tr("Open ECU"), this);
 	fetchAct->setStatusTip(tr("Reads config file from ECU"));
-        fetchAct->setDisabled(true);
+	fetchAct->setDisabled(true);
 	connect(fetchAct, SIGNAL(triggered()), this, SLOT(openECU()));
 
 	sendfileAct = new QAction(QIcon(":/amarok_burn.png"),tr("Send File"),this);
@@ -295,7 +296,7 @@ void qt4application::createActions()
 	adjustFuelAct = new QAction(tr("VE Table"), this);
 	adjustFuelAct->setStatusTip(tr("Shows VE map for calibration"));
 	connect(adjustFuelAct, SIGNAL(triggered()),this,SLOT(showFuel()));
- 
+
 	adjustFuelTimingAct = new QAction(tr("Timing"), this);
 	adjustFuelTimingAct->setStatusTip(tr("Timing calibration (BTDC)"));
 	connect(adjustFuelTimingAct, SIGNAL(triggered()),this,SLOT(showFuelTiming()));
@@ -313,7 +314,7 @@ void qt4application::createActions()
 	connect(adjustAlarmsAct, SIGNAL(triggered()),this,SLOT(alarmsDialog()));
 
 	adjustBoostCtrlAct = new QAction(tr("Boost Ctrl"), this);
-        adjustBoostCtrlAct->setDisabled(true);
+	adjustBoostCtrlAct->setDisabled(true);
 	adjustBoostCtrlAct->setStatusTip(tr("Shows dialog for calibration"));
 	connect(adjustBoostCtrlAct, SIGNAL(triggered()),this,SLOT(boostDialog()));
 
@@ -322,33 +323,33 @@ void qt4application::createActions()
 	connect(adjustNitrousAct, SIGNAL(triggered()),this,SLOT(nitrousDialog()));
 
 	adjustPWM1 = new QAction(tr("PWM 1"), this);
-        adjustPWM1->setDisabled(true);
+	adjustPWM1->setDisabled(true);
 	adjustPWM1->setStatusTip(tr("Shows dialog for output 1 calibration"));
 	connect(adjustPWM1, SIGNAL(triggered()),this,SLOT(nitrousDialog()));
 
 	adjustPWM2 = new QAction(tr("PWM 2"), this);
-        adjustPWM2->setDisabled(true);
-        adjustPWM2->setStatusTip(tr("Shows dialog for output 2 calibration"));
+	adjustPWM2->setDisabled(true);
+	adjustPWM2->setStatusTip(tr("Shows dialog for output 2 calibration"));
 	connect(adjustPWM2, SIGNAL(triggered()),this,SLOT(nitrousDialog()));
 
 	view1Act = new QAction(tr("Std Arrange"), this);
-        view1Act->setDisabled(true);
+	view1Act->setDisabled(true);
 	view1Act->setStatusTip(tr("Recommended Layout"));
 	connect(view1Act, SIGNAL(triggered()),this,SLOT(nitrousDialog()));
-
 
 	startLogAct = new QAction(tr("Start Logging"), this);
 	startLogAct->setDisabled(true);
 	startLogAct->setStatusTip(tr("Log engine data"));
 	connect(startLogAct, SIGNAL(triggered()),this,SLOT(startLog()));
 
-	saveLogAct = new QAction(QIcon(":/amarok_burn.png"), tr("Save Log"), this);	// if logenabled = false -> disabed!
+								 // if logenabled = false -> disabed!
+	saveLogAct = new QAction(QIcon(":/amarok_burn.png"), tr("Save Log"), this);
 	saveLogAct->setDisabled(true);
 	saveLogAct->setStatusTip(tr("Ends log & save"));
 	connect(saveLogAct, SIGNAL(triggered()),this,SLOT(saveLog()));
 
 	printAct = new QAction(tr("Print"), this);
-	printAct->setShortcut(tr("Ctrl+P")); 
+	printAct->setShortcut(tr("Ctrl+P"));
 	//printAct->setDisabled(true);
 	//printAct->setStatusTip(tr("Prin"));
 	connect(printAct, SIGNAL(triggered()),this,SLOT(printDialog()));
@@ -398,24 +399,24 @@ void qt4application::createActions()
 	exitAct->setStatusTip(tr("Exit the application"));
 	connect(exitAct, SIGNAL(triggered()), this, SLOT(close()));
 
-/*    cutAct = new QAction(QIcon(":/editcut.xpm"), tr("Cu&t"), this);
-      cutAct->setShortcut(tr("Ctrl+X"));
-      cutAct->setStatusTip(tr("Cut the current selection's contents to the "
-                              "clipboard"));
-      connect(cutAct, SIGNAL(triggered()), textEdit, SLOT(cut()));
+	/*    cutAct = new QAction(QIcon(":/editcut.xpm"), tr("Cu&t"), this);
+		  cutAct->setShortcut(tr("Ctrl+X"));
+		  cutAct->setStatusTip(tr("Cut the current selection's contents to the "
+								  "clipboard"));
+		  connect(cutAct, SIGNAL(triggered()), textEdit, SLOT(cut()));
 
-      copyAct = new QAction(QIcon(":/editcopy.xpm"), tr("&Copy"), this);
-      copyAct->setShortcut(tr("Ctrl+C"));
-      copyAct->setStatusTip(tr("Copy the current selection's contents to the "
-                              "clipboard"));
-      connect(copyAct, SIGNAL(triggered()), textEdit, SLOT(copy()));
+		  copyAct = new QAction(QIcon(":/editcopy.xpm"), tr("&Copy"), this);
+		  copyAct->setShortcut(tr("Ctrl+C"));
+		  copyAct->setStatusTip(tr("Copy the current selection's contents to the "
+								  "clipboard"));
+		  connect(copyAct, SIGNAL(triggered()), textEdit, SLOT(copy()));
 
-      pasteAct = new QAction(QIcon(":/editpaste.xpm"), tr("&Paste"), this);
-      pasteAct->setShortcut(tr("Ctrl+V"));
-      pasteAct->setStatusTip(tr("Paste the clipboard's contents into the current "
-                              "selection"));
-      connect(pasteAct, SIGNAL(triggered()), textEdit, SLOT(paste()));
-*/
+		  pasteAct = new QAction(QIcon(":/editpaste.xpm"), tr("&Paste"), this);
+		  pasteAct->setShortcut(tr("Ctrl+V"));
+		  pasteAct->setStatusTip(tr("Paste the clipboard's contents into the current "
+								  "selection"));
+		  connect(pasteAct, SIGNAL(triggered()), textEdit, SLOT(paste()));
+	*/
 
 	connectorPinoutAct = new QAction(tr("&Pinout"), this);
 	//connectorPinoutAct->setStatusTip(tr("Show the application's About box"));
@@ -429,23 +430,24 @@ void qt4application::createActions()
 	aboutQtAct->setStatusTip(tr("Show the Qt library's About box"));
 	connect(aboutQtAct, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
 
-/* FreeEMS stuff */
+	/* FreeEMS stuff */
 
-        sendResetAct = new QAction(tr("Soft &Reset"), this);
-        sendResetAct->setStatusTip(tr("Instructs the device to software reset itself"));
-        connect(sendResetAct, SIGNAL(triggered()), this, SLOT(sendReset()));
+	sendResetAct = new QAction(tr("Soft &Reset"), this);
+	sendResetAct->setStatusTip(tr("Instructs the device to software reset itself"));
+	connect(sendResetAct, SIGNAL(triggered()), this, SLOT(sendReset()));
 
-        getInterfaceVersionAct = new QAction(tr("&Interface Version"), this);
+	getInterfaceVersionAct = new QAction(tr("&Interface Version"), this);
 
-        getFirmwareVersionAct = new QAction(tr("&Firmware Version"), this);
+	getFirmwareVersionAct = new QAction(tr("&Firmware Version"), this);
 
-        getFirmwareVersionAct = new QAction(tr("&Firmware Version"), this);
+	getFirmwareVersionAct = new QAction(tr("&Firmware Version"), this);
 
-        openDebugWindowAct = new QAction(tr("&Debug"), this);
-        openDebugWindowAct ->setStatusTip(tr("Open debug window"));
-        connect(openDebugWindowAct, SIGNAL(triggered()), this, SLOT(debugFreeEMS()));
+	openDebugWindowAct = new QAction(tr("&Debug"), this);
+	openDebugWindowAct ->setStatusTip(tr("Open debug window"));
+	connect(openDebugWindowAct, SIGNAL(triggered()), this, SLOT(debugFreeEMS()));
 
-    }
+}
+
 
 void qt4application::createMenus()
 {
@@ -477,11 +479,11 @@ void qt4application::createMenus()
 	adjustFuelMenu->addAction(adjustAccelEnrichmentAct);
 	adjustFuelMenu->addAction(adjustFuelTimingAct);
 
-
 	adjustOptions->addAction(adjustAlarmsAct);
 	adjustOptions->addAction(adjustBoostCtrlAct);
 	adjustOptions->addAction(adjustNitrousAct);
-	adjustOptions->addAction(adjustPWM1); //la admisión de luis
+								 //la admisin de luis
+	adjustOptions->addAction(adjustPWM1);
 	adjustOptions->addAction(adjustPWM2);
 
 	viewMenu = menuBar()->addMenu(tr("&View"));
@@ -496,25 +498,25 @@ void qt4application::createMenus()
 	toolsMenu = menuBar()->addMenu(tr("&Tools"));
 	toolsMenu->addAction(quickTuneAct);
 	toolsMenu->addAction(injectorTestAct);
-        toolsMenu->addAction(configureECUManagerAct);
+	toolsMenu->addAction(configureECUManagerAct);
 
+	//if(hardwareTarget == "freeEMS project")
+	{
+		toolsMenu = menuBar()->addMenu(tr("&FreeEMS"));
+		toolsMenu->addAction(sendResetAct);
+		toolsMenu->addAction(getInterfaceVersionAct);
+		toolsMenu->addAction(getFirmwareVersionAct);
+		toolsMenu->addAction(openDebugWindowAct);
+	}
 
-        //if(hardwareTarget == "freeEMS project")
-        {
-            toolsMenu = menuBar()->addMenu(tr("&FreeEMS"));
-            toolsMenu->addAction(sendResetAct);
-            toolsMenu->addAction(getInterfaceVersionAct);
-            toolsMenu->addAction(getFirmwareVersionAct);
-            toolsMenu->addAction(openDebugWindowAct);
-        }
+	menuBar()->addSeparator();
 
-        menuBar()->addSeparator();
-	
 	helpMenu = menuBar()->addMenu(tr("&Help"));
 	helpMenu->addAction(connectorPinoutAct);
 	helpMenu->addAction(aboutAct);
 	helpMenu->addAction(aboutQtAct);
 }
+
 
 void qt4application::createToolBars()
 {
@@ -528,15 +530,14 @@ void qt4application::createToolBars()
 	commToolBar->addAction(sendfileAct);
 	commToolBar->addAction(disconnectAct);
 
-
-  /*    editToolBar = addToolBar(tr("Edit"));
-      editToolBar->addAction(cutAct);
-      editToolBar->addAction(copyAct);
-      editToolBar->addAction(pasteAct);*/
+	/*    editToolBar = addToolBar(tr("Edit"));
+		editToolBar->addAction(cutAct);
+		editToolBar->addAction(copyAct);
+		editToolBar->addAction(pasteAct);*/
 }
+
 
 void qt4application::createStatusBar()
 {
-      statusBar()->showMessage(tr("Ready"));
+	statusBar()->showMessage(tr("Ready"));
 }
-

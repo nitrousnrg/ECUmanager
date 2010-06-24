@@ -1,4 +1,4 @@
-#if defined(_MSC_VER) /* MSVC Compiler */
+#if defined(_MSC_VER)			 /* MSVC Compiler */
 #pragma warning ( disable : 4305 )
 #pragma warning ( disable : 4786 )
 #endif
@@ -7,4 +7,3 @@
 
 using namespace std;
 using namespace Qwt3D;
-

@@ -18,41 +18,40 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-  #include <math.h>
-  #include <qapplication.h>
-  #include <qwt3d_surfaceplot.h>
- // #include <qwt3d_function.h>
-  #include <QMap3D.h>
-  #include <QColorDialog>
-  
+#include <math.h>
+#include <qapplication.h>
+#include <qwt3d_surfaceplot.h>
+// #include <qwt3d_function.h>
+#include <QMap3D.h>
+#include <QColorDialog>
 
- // using namespace Qwt3D;
+// using namespace Qwt3D;
 /*
   class Rosenbrock : public Function
   {
   public:
 
-    Rosenbrock(SurfacePlot& pw)
-    :Function(pw)
-    {
-    }
+	Rosenbrock(SurfacePlot& pw)
+	:Function(pw)
+	{
+	}
 
-    double operator()(double x, double y)
-    {
-      return log((1-x)*(1-x) + 100 * (y - x*x)*(y - x*x)) / 8;
-    }
+	double operator()(double x, double y)
+	{
+	  return log((1-x)*(1-x) + 100 * (y - x*x)*(y - x*x)) / 8;
+	}
   };
 */
 /*
   class Plot : public SurfacePlot
   {
   public:
-      Plot();
+	  Plot();
   };
 */
 
-  QMap3D::QMap3D()
-  {
+QMap3D::QMap3D()
+{
 
 	dataTable = (double **) malloc(12*sizeof(double*));
 	for(int i = 0;i<12;++i)
@@ -62,34 +61,34 @@
 			dataTable[row][col]=0;
 	//loadFromData(dataTable,12,21,0,21,0,12);
 
-        RGBA rgb = Qt2GL(QColor(210,209,208));
+	RGBA rgb = Qt2GL(QColor(210,209,208));
 	setBackgroundColor(rgb);
-        setTitle("VE");
-        //coordinates()->axes[X1].setLabelString("MAP");
-        //coordinates()->axes[Y1].setLabelString("RPM");
+	setTitle("VE");
+	//coordinates()->axes[X1].setLabelString("MAP");
+	//coordinates()->axes[Y1].setLabelString("RPM");
 
-        setRotation(30,0,-55);
-        setScale(1,1,1);
-        setShift(0.15,0,0);
-        setZoom(1.0);
-	
-/*	for (unsigned i=0; i!=coordinates()->axes.size(); ++i)
-	{
-		coordinates()->axes[i].setMajors(4);
-		coordinates()->axes[i].setMinors(4);
-	}
-*/	
-	
+	setRotation(30,0,-55);
+	setScale(1,1,1);
+	setShift(0.15,0,0);
+	setZoom(1.0);
+
+	/*	for (unsigned i=0; i!=coordinates()->axes.size(); ++i)
+		{
+			coordinates()->axes[i].setMajors(4);
+			coordinates()->axes[i].setMinors(4);
+		}
+	*/
+
 	//coordinates()->axes[Z1].setLabelString(QChar(0x38f)); // Omega - see http://www.unicode.org/charts/
-	
-	
-        //setCoordinateStyle(BOX);
-	
+
+	//setCoordinateStyle(BOX);
+
 	updateData();
 	updateGL();
 }
 
-bool	QMap3D::loadData(double data,int row, int column)
+
+bool    QMap3D::loadData(double data,int row, int column)
 {
 
 	dataTable[row][column] = data;
@@ -98,20 +97,24 @@ bool	QMap3D::loadData(double data,int row, int column)
 	return true;
 }
 
-void	QMap3D::update()
+
+void    QMap3D::update()
 {
 	updateGL();
 }
 
-QSize	QMap3D::minimumSizeHint() const
- {
-     return QSize(100, 100);
- }
 
- QSize	QMap3D::sizeHint() const
- {
-     return QSize(300, 200);
- }
+QSize   QMap3D::minimumSizeHint() const
+{
+	return QSize(100, 100);
+}
+
+
+QSize  QMap3D::sizeHint() const
+{
+	return QSize(300, 200);
+}
+
 
 QMap3D::~QMap3D()
 {
@@ -119,4 +122,3 @@ QMap3D::~QMap3D()
 		free(dataTable[i]);
 	free(dataTable);
 }
-

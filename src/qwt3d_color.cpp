@@ -4,12 +4,13 @@
 using namespace Qwt3D;
 
 StandardColor::StandardColor(Plot3D* data, unsigned size)
-			: data_(data)
+: data_(data)
 {
 	Q_ASSERT(data_);
-	
+
 	reset(size);
 }
+
 
 void StandardColor::reset(unsigned size)
 {
@@ -17,7 +18,7 @@ void StandardColor::reset(unsigned size)
 	RGBA elem;
 
 	double dsize = size;
-	
+
 	for (unsigned int i=0; i!=size; ++i)
 	{
 		elem.r = i / dsize;
@@ -28,6 +29,7 @@ void StandardColor::reset(unsigned size)
 	}
 }
 
+
 /**
 	Assigns a new ColorVector (Also overwrites the constructors size argument)
 */
@@ -36,11 +38,12 @@ void StandardColor::setColorVector(ColorVector const& cv)
 	colors_ = cv;
 }
 
+
 void StandardColor::setAlpha(double a)
 {
 	if (a<0 || a>1)
 		return;
-	
+
 	RGBA elem;
 
 	for (unsigned int i=0; i!=colors_.size(); ++i)
@@ -48,8 +51,9 @@ void StandardColor::setAlpha(double a)
 		elem = colors_[i];
 		elem.a = a;
 		colors_[i] = elem;
-	}	
-}	
+	}
+}
+
 
 RGBA StandardColor::operator()(double, double, double z) const
 {

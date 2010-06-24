@@ -18,44 +18,46 @@ unsigned long QextSerialBase::refCount=0;
 Default constructor.
 */
 QextSerialBase::QextSerialBase()
- : QIODevice()
+: QIODevice()
 {
 
-#ifdef _TTY_WIN_
-    setPortName("COM1");
+	#ifdef _TTY_WIN_
+	setPortName("COM1");
 
-#elif defined(_TTY_IRIX_)
-    setPortName("/dev/ttyf1");
+	#elif defined(_TTY_IRIX_)
+	setPortName("/dev/ttyf1");
 
-#elif defined(_TTY_HPUX_)
-    setPortName("/dev/tty1p0");
+	#elif defined(_TTY_HPUX_)
+	setPortName("/dev/tty1p0");
 
-#elif defined(_TTY_SUN_)
-    setPortName("/dev/ttya");
+	#elif defined(_TTY_SUN_)
+	setPortName("/dev/ttya");
 
-#elif defined(_TTY_DIGITAL_)
-    setPortName("/dev/tty01");
+	#elif defined(_TTY_DIGITAL_)
+	setPortName("/dev/tty01");
 
-#elif defined(_TTY_FREEBSD_)
-    setPortName("/dev/ttyd1");
+	#elif defined(_TTY_FREEBSD_)
+	setPortName("/dev/ttyd1");
 
-#else
-    setPortName("/dev/ttyS0");
-#endif
+	#else
+	setPortName("/dev/ttyS0");
+	#endif
 
-    construct();
+	construct();
 }
+
 
 /*!
 \fn QextSerialBase::QextSerialBase(const QString & name)
 Construct a port and assign it to the device specified by the name parameter.
 */
 QextSerialBase::QextSerialBase(const QString & name)
- : QIODevice()
+: QIODevice()
 {
-    setPortName(name);
-    construct();
+	setPortName(name);
+	construct();
 }
+
 
 /*!
 \fn QextSerialBase::~QextSerialBase()
@@ -64,15 +66,17 @@ Standard destructor.
 QextSerialBase::~QextSerialBase()
 {
 
-#ifdef QT_THREAD_SUPPORT
-    refCount--;
-    if (mutex && refCount==0) {
-        delete mutex;
-        mutex=NULL;
-    }
-#endif
+	#ifdef QT_THREAD_SUPPORT
+	refCount--;
+	if (mutex && refCount==0)
+	{
+		delete mutex;
+		mutex=NULL;
+	}
+	#endif
 
 }
+
 
 /*!
 \fn void QextSerialBase::construct()
@@ -81,23 +85,25 @@ Common constructor function for setting up default port settings.
 */
 void QextSerialBase::construct()
 {
-    Settings.BaudRate=BAUD115200;
-    Settings.DataBits=DATA_8;
-    Settings.Parity=PAR_NONE;
-    Settings.StopBits=STOP_1;
-    Settings.FlowControl=FLOW_HARDWARE;
-    Settings.Timeout_Sec=0;
-    Settings.Timeout_Millisec=500;
+	Settings.BaudRate=BAUD115200;
+	Settings.DataBits=DATA_8;
+	Settings.Parity=PAR_NONE;
+	Settings.StopBits=STOP_1;
+	Settings.FlowControl=FLOW_HARDWARE;
+	Settings.Timeout_Sec=0;
+	Settings.Timeout_Millisec=500;
 
-#ifdef QT_THREAD_SUPPORT
-    if (!mutex) {
-        mutex=new QMutex( QMutex::Recursive );
-    }
-    refCount++;
-#endif
+	#ifdef QT_THREAD_SUPPORT
+	if (!mutex)
+	{
+		mutex=new QMutex( QMutex::Recursive );
+	}
+	refCount++;
+	#endif
 
 	setOpenMode(QIODevice::NotOpen);
 }
+
 
 /*!
 \fn void QextSerialBase::setPortName(const QString & name)
@@ -105,8 +111,9 @@ Sets the name of the device associated with the object, e.g. "COM1", or "/dev/tt
 */
 void QextSerialBase::setPortName(const QString & name)
 {
-    port = name;
+	port = name;
 }
+
 
 /*!
 \fn QString QextSerialBase::portName() const
@@ -114,8 +121,9 @@ Returns the name set by setPortName().
 */
 QString QextSerialBase::portName() const
 {
-    return port;
+	return port;
 }
+
 
 /*!
 \fn BaudRateType QextSerialBase::baudRate(void) const
@@ -124,8 +132,9 @@ the definition of the enum BaudRateType.
 */
 BaudRateType QextSerialBase::baudRate(void) const
 {
-    return Settings.BaudRate;
+	return Settings.BaudRate;
 }
+
 
 /*!
 \fn DataBitsType QextSerialBase::dataBits() const
@@ -134,8 +143,9 @@ this function, see the definition of the enum DataBitsType.
 */
 DataBitsType QextSerialBase::dataBits() const
 {
-    return Settings.DataBits;
+	return Settings.DataBits;
 }
+
 
 /*!
 \fn ParityType QextSerialBase::parity() const
@@ -144,8 +154,9 @@ this function, see the definition of the enum ParityType.
 */
 ParityType QextSerialBase::parity() const
 {
-    return Settings.Parity;
+	return Settings.Parity;
 }
+
 
 /*!
 \fn StopBitsType QextSerialBase::stopBits() const
@@ -154,8 +165,9 @@ the definition of the enum StopBitsType.
 */
 StopBitsType QextSerialBase::stopBits() const
 {
-    return Settings.StopBits;
+	return Settings.StopBits;
 }
+
 
 /*!
 \fn FlowType QextSerialBase::flowControl() const
@@ -164,8 +176,9 @@ by this function, see the definition of the enum FlowType.
 */
 FlowType QextSerialBase::flowControl() const
 {
-    return Settings.FlowControl;
+	return Settings.FlowControl;
 }
+
 
 /*!
 \fn bool QextSerialBase::atEnd() const
@@ -174,11 +187,13 @@ Call QextSerialBase::lastError() for error information.
 */
 bool QextSerialBase::atEnd() const
 {
-    if (size()) {
-        return true;
-    }
-    return false;
+	if (size())
+	{
+		return true;
+	}
+	return false;
 }
+
 
 /*!
 \fn qint64 QextSerialBase::readLine(char * data, qint64 maxSize)
@@ -188,24 +203,27 @@ The value returned is the length of the string that was read.
 */
 qint64 QextSerialBase::readLine(char * data, qint64 maxSize)
 {
-    qint64 numBytes = bytesAvailable();
-    char* pData = data;
+	qint64 numBytes = bytesAvailable();
+	char* pData = data;
 
-	if (maxSize < 2)	//maxSize must be larger than 1
+	if (maxSize < 2)			 //maxSize must be larger than 1
 		return -1;
 
-    /*read a byte at a time for MIN(bytesAvail, maxSize - 1) iterations, or until a newline*/
-    while (pData<(data+numBytes) && --maxSize) {
-        readData(pData, 1);
-        if (*pData++ == '\n') {
-            break;
-        }
-    }
-    *pData='\0';
+	/*read a byte at a time for MIN(bytesAvail, maxSize - 1) iterations, or until a newline*/
+	while (pData<(data+numBytes) && --maxSize)
+	{
+		readData(pData, 1);
+		if (*pData++ == '\n')
+		{
+			break;
+		}
+	}
+	*pData='\0';
 
-    /*return size of data read*/
-    return (pData-data);
+	/*return size of data read*/
+	return (pData-data);
 }
+
 
 /*!
 \fn ulong QextSerialBase::lastError() const
@@ -223,7 +241,7 @@ E_PORT_TIMEOUT                  Operation timed out (POSIX)
 E_INVALID_DEVICE                The file opened by the port is not a character device (POSIX)
 E_BREAK_CONDITION               The port detected a break condition
 E_FRAMING_ERROR                 The port detected a framing error
-                                (usually caused by incorrect baud rate settings)
+								(usually caused by incorrect baud rate settings)
 E_IO_ERROR                      There was an I/O error while communicating with the port
 E_BUFFER_OVERRUN                Character buffer overrun
 E_RECEIVE_OVERFLOW              Receive buffer overflow
@@ -235,5 +253,5 @@ E_WRITE_FAILED                  General write operation failure
 */
 ulong QextSerialBase::lastError() const
 {
-    return lastErr;
+	return lastErr;
 }

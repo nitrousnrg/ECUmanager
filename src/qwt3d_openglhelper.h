@@ -11,120 +11,116 @@
 namespace Qwt3D
 {
 
-#ifndef QWT3D_NOT_FOR_DOXYGEN
+	#ifndef QWT3D_NOT_FOR_DOXYGEN
 
-class GLStateBewarer
-{
-public:
-	
-	GLStateBewarer(GLenum what, bool on, bool persist=false)
+	class GLStateBewarer
 	{
-		state_ = what;
-		stateval_ = glIsEnabled(what);	
-		if (on)
-			turnOn(persist);
-		else
-			turnOff(persist);
+		public:
+
+			GLStateBewarer(GLenum what, bool on, bool persist=false)
+			{
+				state_ = what;
+				stateval_ = glIsEnabled(what);
+				if (on)
+					turnOn(persist);
+				else
+					turnOff(persist);
+			}
+
+			~GLStateBewarer()
+			{
+				if (stateval_)
+					glEnable(state_);
+				else
+					glDisable(state_);
+			}
+
+			void turnOn(bool persist = false)
+			{
+				glEnable(state_);
+				if (persist)
+					stateval_ = true;
+			}
+
+			void turnOff(bool persist = false)
+			{
+				glDisable(state_);
+				if (persist)
+					stateval_ = false;
+			}
+
+		private:
+
+			GLenum state_;
+			bool stateval_;
+
+	};
+
+	inline const GLubyte* gl_error()
+	{
+		GLenum errcode;
+		const GLubyte* err = 0;
+
+		if ((errcode = glGetError()) != GL_NO_ERROR)
+		{
+			err = gluErrorString(errcode);
+		}
+		return err;
 	}
 
-	~GLStateBewarer() 
+	inline  void SaveGlDeleteLists(GLuint& lstidx, GLsizei range)
 	{
-		if (stateval_)
-			glEnable(state_);
-		else
-			glDisable(state_);
-	}
-	
-	void turnOn(bool persist = false)
-	{
-		glEnable(state_);
-		if (persist)
-			stateval_ = true;
-	}
-	
-	void turnOff(bool persist = false)
-	{
-		glDisable(state_);
-		if (persist)
-			stateval_ = false;
+		if (glIsList(lstidx))
+			glDeleteLists(lstidx, range);
+		lstidx = 0;
 	}
 
-
-private:
-	
-	GLenum state_;
-	bool stateval_;
-
-};
-
-inline const GLubyte* gl_error()
-{
-	GLenum errcode;
-	const GLubyte* err = 0;
-	
-	if ((errcode = glGetError()) != GL_NO_ERROR)
+	//! get OpenGL transformation matrices
+	/**
+		Don't rely on (use) this in display lists !
+		\param modelMatrix should be a GLdouble[16]
+		\param projMatrix should be a GLdouble[16]
+		\param viewport should be a GLint[4]
+	*/
+	inline void getMatrices(GLdouble* modelMatrix, GLdouble* projMatrix, GLint* viewport)
 	{
-		err = gluErrorString(errcode);
+		glGetIntegerv(GL_VIEWPORT, viewport);
+		glGetDoublev(GL_MODELVIEW_MATRIX,   modelMatrix);
+		glGetDoublev(GL_PROJECTION_MATRIX,  projMatrix);
 	}
-	return err;
-}
 
-inline	void SaveGlDeleteLists(GLuint& lstidx, GLsizei range)
-{
-	if (glIsList(lstidx))
-		glDeleteLists(lstidx, range);
-	lstidx = 0;
-}
+	//! simplified glut routine (glUnProject): windows coordinates_p --> object coordinates_p
+	/**
+		Don't rely on (use) this in display lists !
+	*/
+	inline bool ViewPort2World(double& objx, double& objy, double& objz, double winx, double winy, double winz)
+	{
+		GLdouble modelMatrix[16];
+		GLdouble projMatrix[16];
+		GLint viewport[4];
 
-//! get OpenGL transformation matrices
-/**
-	Don't rely on (use) this in display lists !
-	\param modelMatrix should be a GLdouble[16]
-	\param projMatrix should be a GLdouble[16]
-	\param viewport should be a GLint[4]
-*/
-inline void getMatrices(GLdouble* modelMatrix, GLdouble* projMatrix, GLint* viewport)
-{
-	glGetIntegerv(GL_VIEWPORT, viewport);
-	glGetDoublev(GL_MODELVIEW_MATRIX,	modelMatrix);
-	glGetDoublev(GL_PROJECTION_MATRIX,	projMatrix);
-}
+		getMatrices(modelMatrix, projMatrix, viewport);
+		int res = gluUnProject(winx, winy, winz, modelMatrix, projMatrix, viewport, &objx, &objy, &objz);
 
-//! simplified glut routine (glUnProject): windows coordinates_p --> object coordinates_p 
-/**
-	Don't rely on (use) this in display lists !
-*/
-inline bool ViewPort2World(double& objx, double& objy, double& objz, double winx, double winy, double winz)
-{
-	GLdouble modelMatrix[16];
-  GLdouble projMatrix[16];
-  GLint viewport[4];
+		return (res == GL_FALSE) ? false : true;
+	}
 
-	getMatrices(modelMatrix, projMatrix, viewport);
-	int res = gluUnProject(winx, winy, winz, modelMatrix, projMatrix, viewport, &objx, &objy, &objz);
+	//! simplified glut routine (glProject): object coordinates_p --> windows coordinates_p
+	/**
+		Don't rely on (use) this in display lists !
+	*/
+	inline bool World2ViewPort(double& winx, double& winy, double& winz, double objx, double objy, double objz )
+	{
+		GLdouble modelMatrix[16];
+		GLdouble projMatrix[16];
+		GLint viewport[4];
 
-	return (res == GL_FALSE) ? false : true;
-}
+		getMatrices(modelMatrix, projMatrix, viewport);
+		int res = gluProject(objx, objy, objz, modelMatrix, projMatrix, viewport, &winx, &winy, &winz);
 
-//! simplified glut routine (glProject): object coordinates_p --> windows coordinates_p 
-/**
-	Don't rely on (use) this in display lists !
-*/
-inline bool World2ViewPort(double& winx, double& winy, double& winz, double objx, double objy, double objz )
-{
-	GLdouble modelMatrix[16];
-  GLdouble projMatrix[16];
-  GLint viewport[4];
+		return (res == GL_FALSE) ? false : true;
+	}
+	#endif						 // QWT3D_NOT_FOR_DOXYGEN
 
-	getMatrices(modelMatrix, projMatrix, viewport);
-	int res = gluProject(objx, objy, objz, modelMatrix, projMatrix, viewport, &winx, &winy, &winz);
-
-	return (res == GL_FALSE) ? false : true;
-}
-
-
-#endif // QWT3D_NOT_FOR_DOXYGEN
-
-} // ns
-
+}								 // ns
 #endif

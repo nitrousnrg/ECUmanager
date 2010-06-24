@@ -43,8 +43,9 @@
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
 #  if defined(_MSC_VER)
 #    pragma warning(disable:4115)
-#    if (_MSC_VER >= 1400) /* VS8 - not sure about VC7 */
-#      pragma warning(disable: 4996) /* MS security enhancements */
+#    if (_MSC_VER >= 1400)		 /* VS8 - not sure about VC7 */
+								 /* MS security enhancements */
+#      pragma warning(disable: 4996)
 #    endif
 #  endif
 #  include <windows.h>
@@ -85,8 +86,8 @@
 #define GL2PS_EXTRA_VERSION ""
 
 #define GL2PS_VERSION (GL2PS_MAJOR_VERSION + \
-                       0.01 * GL2PS_MINOR_VERSION + \
-                       0.0001 * GL2PS_PATCH_VERSION)
+	0.01 * GL2PS_MINOR_VERSION + \
+	0.0001 * GL2PS_PATCH_VERSION)
 
 #define GL2PS_COPYRIGHT "(C) 1999-2006 Christophe Geuzaine (geuz@geuz.org)"
 
@@ -140,10 +141,10 @@
 #define GL2PS_BLEND               4
 
 /* Text alignment (o=raster position; default mode is BL):
-   +---+ +---+ +---+ +---+ +---+ +---+ +-o-+ o---+ +---o 
-   | o | o   | |   o |   | |   | |   | |   | |   | |   | 
-   +---+ +---+ +---+ +-o-+ o---+ +---o +---+ +---+ +---+ 
-    C     CL    CR    B     BL    BR    T     TL    TR */
+   +---+ +---+ +---+ +---+ +---+ +---+ +-o-+ o---+ +---o
+   | o | o   | |   o |   | |   | |   | |   | |   | |   |
+   +---+ +---+ +---+ +-o-+ o---+ +---o +---+ +---+ +---+
+	C     CL    CR    B     BL    BR    T     TL    TR */
 
 #define GL2PS_TEXT_C  1
 #define GL2PS_TEXT_CL 2
@@ -158,42 +159,42 @@
 typedef GLfloat GL2PSrgba[4];
 
 #if defined(__cplusplus)
-extern "C" {
-#endif
+extern "C"
+{
+	#endif
 
-GL2PSDLL_API GLint gl2psBeginPage(const char *title, const char *producer, 
-                                  GLint viewport[4], GLint format, GLint sort,
-                                  GLint options, GLint colormode,
-                                  GLint colorsize, GL2PSrgba *colormap, 
-                                  GLint nr, GLint ng, GLint nb, GLint buffersize,
-                                  FILE *stream, const char *filename);
-GL2PSDLL_API GLint gl2psEndPage(void);
-GL2PSDLL_API GLint gl2psSetOptions(GLint options);
-GL2PSDLL_API GLint gl2psBeginViewport(GLint viewport[4]);
-GL2PSDLL_API GLint gl2psEndViewport(void);
-GL2PSDLL_API GLint gl2psText(const char *str, const char *fontname, 
-                             GLshort fontsize);
-GL2PSDLL_API GLint gl2psTextOpt(const char *str, const char *fontname, 
-                                GLshort fontsize, GLint align, GLfloat angle);
-GL2PSDLL_API GLint gl2psSpecial(GLint format, const char *str);
-GL2PSDLL_API GLint gl2psDrawPixels(GLsizei width, GLsizei height,
-                                   GLint xorig, GLint yorig,
-                                   GLenum format, GLenum type, const void *pixels);
-GL2PSDLL_API GLint gl2psEnable(GLint mode);
-GL2PSDLL_API GLint gl2psDisable(GLint mode);
-GL2PSDLL_API GLint gl2psPointSize(GLfloat value);
-GL2PSDLL_API GLint gl2psLineWidth(GLfloat value);
-GL2PSDLL_API GLint gl2psBlendFunc(GLenum sfactor, GLenum dfactor);
+	GL2PSDLL_API GLint gl2psBeginPage(const char *title, const char *producer,
+		GLint viewport[4], GLint format, GLint sort,
+		GLint options, GLint colormode,
+		GLint colorsize, GL2PSrgba *colormap,
+		GLint nr, GLint ng, GLint nb, GLint buffersize,
+		FILE *stream, const char *filename);
+	GL2PSDLL_API GLint gl2psEndPage(void);
+	GL2PSDLL_API GLint gl2psSetOptions(GLint options);
+	GL2PSDLL_API GLint gl2psBeginViewport(GLint viewport[4]);
+	GL2PSDLL_API GLint gl2psEndViewport(void);
+	GL2PSDLL_API GLint gl2psText(const char *str, const char *fontname,
+		GLshort fontsize);
+	GL2PSDLL_API GLint gl2psTextOpt(const char *str, const char *fontname,
+		GLshort fontsize, GLint align, GLfloat angle);
+	GL2PSDLL_API GLint gl2psSpecial(GLint format, const char *str);
+	GL2PSDLL_API GLint gl2psDrawPixels(GLsizei width, GLsizei height,
+		GLint xorig, GLint yorig,
+		GLenum format, GLenum type, const void *pixels);
+	GL2PSDLL_API GLint gl2psEnable(GLint mode);
+	GL2PSDLL_API GLint gl2psDisable(GLint mode);
+	GL2PSDLL_API GLint gl2psPointSize(GLfloat value);
+	GL2PSDLL_API GLint gl2psLineWidth(GLfloat value);
+	GL2PSDLL_API GLint gl2psBlendFunc(GLenum sfactor, GLenum dfactor);
 
-/* undocumented */
-GL2PSDLL_API GLint gl2psDrawImageMap(GLsizei width, GLsizei height,
-                                     const GLfloat position[3],
-                                     const unsigned char *imagemap);
-GL2PSDLL_API const char *gl2psGetFileExtension(GLint format);
-GL2PSDLL_API const char *gl2psGetFormatDescription(GLint format);
+	/* undocumented */
+	GL2PSDLL_API GLint gl2psDrawImageMap(GLsizei width, GLsizei height,
+		const GLfloat position[3],
+		const unsigned char *imagemap);
+	GL2PSDLL_API const char *gl2psGetFileExtension(GLint format);
+	GL2PSDLL_API const char *gl2psGetFormatDescription(GLint format);
 
-#if defined(__cplusplus)
+	#if defined(__cplusplus)
 }
 #endif
-
-#endif /* __GL2PS_H__ */
+#endif							 /* __GL2PS_H__ */

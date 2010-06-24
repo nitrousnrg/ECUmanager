@@ -29,37 +29,34 @@
 #include <QComboBox>
 #include <QGroupBox>
 
-
-
 class QSubViewer : public QWidget
 {
-Q_OBJECT
-public:
-	QSubViewer(QWidget *parent = 0);
-	QSize minimumSizeHint() const;
-	QSize sizeHint() const;
-	void clear();
-	void setBackColor(QColor color);
-	void setFontColor(QColor color);
-	void setChannel1Color(QColor color);
-	void setPoints(float,int size);
-	int getChannel();
-	QColor getBackgroundColor();
-	QColor getFontColor();
-	QColor getChannelColor(int);
-	void desplazar(float);
-	void setChannel(int);
+	Q_OBJECT
+		public:
+		QSubViewer(QWidget *parent = 0);
+		QSize minimumSizeHint() const;
+		QSize sizeHint() const;
+		void clear();
+		void setBackColor(QColor color);
+		void setFontColor(QColor color);
+		void setChannel1Color(QColor color);
+		void setPoints(float,int size);
+		int getChannel();
+		QColor getBackgroundColor();
+		QColor getFontColor();
+		QColor getChannelColor(int);
+		void desplazar(float);
+		void setChannel(int);
 
-signals:
-	void valueChanged(int);
-private:
-	PlotArea *plot;
-	QGridLayout *grid;
-	QComboBox *comboY;
-	QComboBox *comboY2;
-	QComboBox *comboY3;
-	QComboBox *comboX;
+		signals:
+		void valueChanged(int);
+	private:
+		PlotArea *plot;
+		QGridLayout *grid;
+		QComboBox *comboY;
+		QComboBox *comboY2;
+		QComboBox *comboY3;
+		QComboBox *comboX;
 
 };
-
 #endif
