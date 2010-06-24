@@ -505,28 +505,17 @@ void qt4application::showIgnition()
 
 void qt4application::openECU()
 {
-	serial = new QextSerialPort(serialPort);
-	serial->setBaudRate(BAUD19200);
-	serial->setParity(PAR_NONE);
-	serial->setDataBits(DATA_8);
-	serial->setStopBits(STOP_1);
-	serial->setFlowControl(FLOW_OFF);
-	serial->setTimeout(0,20);
-	if(!serial->open(QIODevice::ReadWrite))
+	/* PIC code only, this has to be modified. It shall pass through commThread */
+	if( connectedECU )
 	{
-		QMessageBox::warning(   0,
-			tr("Application"),
-			tr("Cannot open file %1:\n%2.").arg(serialPort).arg(serial->errorString()));
+		serial->write("R");			 //send command
+
+		openECUtimer = new QTimer(this);
+
+		connect(openECUtimer,SIGNAL(timeout()),this,SLOT(openECUslot()));
+		openECUtimer->start(800);
+		byteCounter = 0;
 	}
-
-	serial->write("R");			 //send command
-
-	openECUtimer = new QTimer(this);
-
-	connect(openECUtimer,SIGNAL(timeout()),this,SLOT(openECUslot()));
-	openECUtimer->start(800);
-	byteCounter = 0;
-
 }
 
 

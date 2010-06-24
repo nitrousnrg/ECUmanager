@@ -143,7 +143,7 @@ void aPacket::preparePacket()	 //to send trough RS232 we need to add start/stop 
 	char endPair[2];
 
 	startPair[0] = 0xBB;
-	startPair[1] = 0x55;
+	startPair[1] = 0x55;	//me falta terminarlo en \0 ?
 	escapePair[0] = 0xBB;
 	escapePair[1] = 0x44;
 	endPair[0] = 0xBB;
@@ -203,6 +203,14 @@ void aPacket::unpreparePacket()
 }
 */
 
+
+/* If the checksum, payload length and escaping characters make sense, the packet is correct and check() returns true
+   otherwise, the packet is corrupted and check returns false */
+bool aPacket::check()
+{
+	return true;
+}
+
 void qt4application::sendReset()
 {
 	qDebug("emited!!!");
@@ -210,7 +218,7 @@ void qt4application::sendReset()
 	packet.setHeaderAckFlag(false);
 								 //false
 	packet.setHeaderLengthFlag(true);
-	packet.setPayloadID(requestSoftReset);
+	packet.setPayloadID(requestSoftSystemReset);
 	packet.buildPacket();
 	packet.preparePacket();
 	//serial->write(packet.getPacket(),1);

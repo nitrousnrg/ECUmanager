@@ -59,6 +59,7 @@ class aPacket
 		int  getPayloadLength();
 		int  getCalculatedPayloadLength();
 		//   unsigned char checksum(QByteArray data);
+		bool check();
 		void buildPacket();
 		void preparePacket();	 //to send through rs232
 		void unpreparePacket();	 //to be parsed after rs232
@@ -109,6 +110,9 @@ class commThread : public QThread
 		void getInterfaceVersion();
 		void getFirmwareVersion();
 		void readFreeEMS();
+		void sendPeriodicDataRequest();
+		void readPeriodicDataResponse();
+		void decodeFreeEMSPacket(QByteArray buffer);
 
 		signals:
 		void packetArrived(QByteArray);

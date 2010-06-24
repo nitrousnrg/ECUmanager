@@ -278,13 +278,72 @@ void commThread::read_PIC_data()
 
 /* This is the biggest TODO: Create the interface between packet reception and the GUI
    I have to make FreeEMS speak, its not a matter of just listen. This happens when I "connect" the device,
-   just to make the gauges show something
+   just to make the gauges show something.
+
+   How to?
+	*Create a timer that periodically makes ECUmanager send request packets.
+	*Create a timer that periodically reads from the serial port, extracting packets.
+	*Decode the packet and present information.
 
 */
 void commThread::read_FreeEMS_data()
 {
+	QTimer sendTimer;
+	QTimer receiveTimer;
+
+	connect(&sendTimer,	  SIGNAL(timeout()),this,SLOT(sendPeriodicDataRequest()));
+	connect(&receiveTimer,SIGNAL(timeout()),this,SLOT(readPeriodicDataResponse()));
+	sendTimer.start(500);
+	receiveTimer.start(500);
 }
 
+
+void commThread::sendPeriodicDataRequest()
+{
+	qDebug("send\n");
+	aPacket packet;
+	packet.setPacket("soy un paquete");
+	serial->write(packet.getPacket());
+}
+
+
+void commThread::readPeriodicDataResponse()
+{
+	qDebug("receive");
+	QByteArray buffer = serial->readAll();
+	int index;
+
+	// search occurrences of the end character (0xCC) from the beggining.
+	while( (index = buffer.indexOf(0xCC, 0) ) != -1)
+	{
+		decodeFreeEMSPacket(buffer.left(index));
+		buffer.remove(0,index);		//extract the decoded packet from the buffer.
+	}
+
+}
+#define RPM_FREEEMS 1
+#define MAP_FREEEMS 2
+
+void commThread::decodeFreeEMSPacket(QByteArray buffer)
+{
+	aPacket packet;
+	packet.setPacket(buffer);
+	if( packet.check() == false )
+	{
+		qDebug("Packet corrupted");
+		return;
+	}
+
+	switch(packet.getPayloadID())
+	{
+		case RPM_FREEEMS:
+			channel[RPM] = packet.getPayload();
+			break;
+		case MAP_FREEEMS:
+			channel[MAP] = packet.getPayload();
+			break;
+	}
+}
 
 								 //puede acceder a todos los datos recibidos desde aqui
 int commThread::getChannel(int address)

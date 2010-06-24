@@ -35,7 +35,7 @@
 	Engine Parameters
 
 Cylinders:
-20
+4
 Displacement (cm³):
 1242
 FuelCut (RPM):
@@ -84,7 +84,7 @@ Extra Fuel (ms)	3.5
 Ign Retard:	6.2
 
 Accel enrichment
-Source:		TPS
+Source:		MAP
 Treshold:	9
 Decay:		9
 Amplifier:	9
