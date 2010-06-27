@@ -434,15 +434,22 @@ void qt4application::createActions()
 
 	sendResetAct = new QAction(tr("Soft &Reset"), this);
 	sendResetAct->setStatusTip(tr("Instructs the device to software reset itself"));
+	sendResetAct->setDisabled(true);
 	connect(sendResetAct, SIGNAL(triggered()), this, SLOT(sendReset()));
 
 	getInterfaceVersionAct = new QAction(tr("&Interface Version"), this);
+	getInterfaceVersionAct->setDisabled(true);
 
 	getFirmwareVersionAct = new QAction(tr("&Firmware Version"), this);
+	getFirmwareVersionAct->setDisabled(true);
 
-	getFirmwareVersionAct = new QAction(tr("&Firmware Version"), this);
+	sendDatalogRequestAct = new QAction(tr("Request &Datalog"),this);
+	sendDatalogRequestAct->setStatusTip(tr("Start the data logging of all EMS variables"));
+	sendDatalogRequestAct->setDisabled(true);
+	connect(sendDatalogRequestAct, SIGNAL(triggered()), this, SLOT(sendFreeEMSDatalogRequest()));
 
-	openDebugWindowAct = new QAction(tr("&Debug"), this);
+
+	openDebugWindowAct = new QAction(tr("De&bug"), this);
 	openDebugWindowAct ->setStatusTip(tr("Open debug window"));
 	connect(openDebugWindowAct, SIGNAL(triggered()), this, SLOT(debugFreeEMS()));
 
@@ -500,12 +507,13 @@ void qt4application::createMenus()
 	toolsMenu->addAction(injectorTestAct);
 	toolsMenu->addAction(configureECUManagerAct);
 
-	//if(hardwareTarget == "freeEMS project")
+//	if(hardwareTarget == "freeEMS project")
 	{
 		toolsMenu = menuBar()->addMenu(tr("&FreeEMS"));
 		toolsMenu->addAction(sendResetAct);
 		toolsMenu->addAction(getInterfaceVersionAct);
 		toolsMenu->addAction(getFirmwareVersionAct);
+		toolsMenu->addAction(sendDatalogRequestAct);
 		toolsMenu->addAction(openDebugWindowAct);
 	}
 

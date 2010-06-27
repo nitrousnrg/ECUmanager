@@ -238,6 +238,10 @@ bool aPacket::check()
 	return true;
 }
 
+void aPacket::setChecksum()
+{
+}
+
 void qt4application::sendReset()
 {
 	qDebug("Send Soft System Reset");

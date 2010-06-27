@@ -108,6 +108,7 @@ class qt4application:public QMainWindow
 		void about();
 		void documentWasModified();
 
+		//FreeEMS slots
 		void debugFreeEMS();
 		void showPacket(QByteArray);
 		void sendReset();
@@ -277,12 +278,13 @@ class qt4application:public QMainWindow
 		QAction *sendResetAct;
 		QAction *getInterfaceVersionAct;
 		QAction *getFirmwareVersionAct;
+		QAction *sendDatalogRequestAct;
 		QAction *openDebugWindowAct;
 
 		unsigned char MAP,throttle;
 		char TEMP,waterTEMP;
 		float duty,Dwell;
-		int byteCounter;		 //para la programacin
+		int byteCounter;		 //para la programacion
 
 		char *oxygenSensor;		 //wb, nb, none
 

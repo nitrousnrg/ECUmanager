@@ -350,6 +350,14 @@ void qt4application::connectECU()
 		connectAct->setDisabled(true);
 		disconnectAct->setDisabled(false);
 
+		//FreeEMS:
+		sendResetAct->setDisabled(false);
+		getFirmwareVersionAct->setDisabled(false);
+		getInterfaceVersionAct->setDisabled(false);
+		sendDatalogRequestAct->setDisabled(false);
+
+
+
 		connectedECU = TRUE;
 		refreshTimer->start();
 		statusBar()->showMessage(tr("Connected"),6);
@@ -377,6 +385,13 @@ void qt4application::disconnectECU()
 	injectorTestAct->setDisabled(true);
 	connectAct->setDisabled(false);
 	disconnectAct->setDisabled(true);
+
+	//FreeEMS:
+	sendResetAct->setDisabled(true);
+	getFirmwareVersionAct->setDisabled(true);
+	getInterfaceVersionAct->setDisabled(true);
+	sendDatalogRequestAct->setDisabled(true);
+
 	refreshTimer->stop();
 
 	delete serialThread;
@@ -1111,7 +1126,8 @@ void qt4application::acceptDialog()
 	{
 		serialPort = serialPortEdit->text();
 		hardwareTarget = hardwareTargetBox->itemText(hardwareTargetBox->currentIndex());
-		configDialogOpen = true;
+		qDebug()<<"EEESsste"<<hardwareTarget;
+		configDialogOpen = false;
 	}
 
 	dialog->accept();

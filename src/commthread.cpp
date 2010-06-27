@@ -33,7 +33,7 @@ bool commThread::openPort()
 
 	timer = new QTimer(this);
 	connect(timer, SIGNAL(timeout()), this, SLOT(readSerialPort()));
-	timer->setInterval(20);		 //as fast as you want
+	timer->setInterval(80);		 //as fast as you want. 20 works well with the PIC version
 	bytes_to_int.entero = 0;
 
 	online = false;
@@ -132,7 +132,7 @@ void commThread::replayLog(QString fileName)
 		qDebug("wrong file");
 }
 
-
+//Here you switch between different device procols:
 void commThread::readSerialPort()
 {
 								 //alpha version of pic16F877's firmware
@@ -361,19 +361,33 @@ void commThread::decodeFreeEMSPacket(QByteArray buffer)
 			payloadIndex += sizeof(DerivedVar);
 			memcpy(ADCArrays,payloadIndex,sizeof(ADCArray));
 			qDebug("\nRPM = %d\nMAP = %f", CoreVars->RPM,(float)CoreVars->MAP/512);
-			qDebug("\nIAT = %f\nCHT = %f", (float)CoreVars->IAT/512,(float)CoreVars->CHT/512);
+			qDebug("\nMAT = %f\nCHT = %f", (float)CoreVars->MAT/512,(float)CoreVars->CHT/512);
+			qDebug("\nTPS = %f\nFinalPW = %f", (float)CoreVars->TPS/512,(float)DerivedVars->FinalPW/512);
 
 			channel[RPM] = CoreVars->RPM;
 			channel[MAP] = CoreVars->MAP/512;
-			channel[airTemp] = CoreVars->IAT;
+			channel[airTemp] = CoreVars->MAT;
+			channel[THROTTLE] = CoreVars->TPS;
 			channel[waterTemp] = CoreVars->CHT;
 			channel[VE] = DerivedVars->VEMain;
+			channel[FUEL] = DerivedVars->FinalPW;
 			break;
 		default :
 			qDebug("Unknown packetID = %d", packet.getPayloadID());
 			break;
 	}
 }
+
+void commThread::sendFreeEMSDatalogRequest()
+{
+/*	aPacket packet;
+	packet.setHeader(HEADER_HAS_LENGTH);
+	packet.setPayloadID(requestBasicDatalog);
+	packet.setChecksum();
+	packet.addEscape();
+	serial->write(packet.getPacket());*/
+}
+
 
 								 //puede acceder a todos los datos recibidos desde aqui
 int commThread::getChannel(int address)
