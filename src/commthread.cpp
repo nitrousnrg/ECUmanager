@@ -24,12 +24,19 @@ los datos deben salir por algn lado hacia qt4application. TODO: send 'U' when es
 
 void commThread::run()
 {
+	exec();
+}
+
+bool commThread::openPort()
+{
 	mutex.lock();
-	online = false;
+
 	timer = new QTimer(this);
 	connect(timer, SIGNAL(timeout()), this, SLOT(readSerialPort()));
 	timer->setInterval(20);		 //as fast as you want
 	bytes_to_int.entero = 0;
+
+	online = false;
 
 	serial = new QextSerialPort(serialPort);
 	serial->setBaudRate(BAUD19200);
@@ -57,12 +64,10 @@ void commThread::run()
 			tr("Application"),
 			tr("Cannot open file %1:\n%2.").arg(serialPort).arg(serial->errorString()));
 	}
-
 	mutex.unlock();
 
-	exec();
+	return online;
 }
-
 
 								 //needed before run()
 void commThread::setPort(QString portAddress)
@@ -137,7 +142,6 @@ void commThread::readSerialPort()
 	}
 	if(hardwareTarget == "freeEMS project")
 	{
-		//	qDebug("freeEMS!!");
 		read_FreeEMS_data();
 	}
 								 //rt linux-based controller
@@ -288,59 +292,85 @@ void commThread::read_PIC_data()
 */
 void commThread::read_FreeEMS_data()
 {
-	QTimer sendTimer;
-	QTimer receiveTimer;
-
-	connect(&sendTimer,	  SIGNAL(timeout()),this,SLOT(sendPeriodicDataRequest()));
-	connect(&receiveTimer,SIGNAL(timeout()),this,SLOT(readPeriodicDataResponse()));
-	sendTimer.start(500);
-	receiveTimer.start(500);
+	readPeriodicDataResponse();
 }
 
 
 void commThread::sendPeriodicDataRequest()
 {
-	qDebug("send\n");
 	aPacket packet;
 	packet.setPacket("soy un paquete");
-	serial->write(packet.getPacket());
+	//serial->write(packet.getPacket());
 }
 
 
 void commThread::readPeriodicDataResponse()
 {
-	qDebug("receive");
 	QByteArray buffer = serial->readAll();
 	int index;
 
+
+/*	QFile datalogFile("comms20100421201222.bin");
+	datalogFile.open(QIODevice::ReadOnly);
+	buffer = datalogFile.readAll();
+	datalogFile.close();
+*/
+	//this Way I will lose bytes!
 	// search occurrences of the end character (0xCC) from the beggining.
 	while( (index = buffer.indexOf(0xCC, 0) ) != -1)
 	{
-		decodeFreeEMSPacket(buffer.left(index));
-		buffer.remove(0,index);		//extract the decoded packet from the buffer.
+		//Start from the end byte. Extract from the last occurence of a start byte, to the first occurence of the end byte
+		//and pass that string to decodeFreeEMSPacket()
+		int packetStart = buffer.lastIndexOf(0xAA,index);
+		if(packetStart == -1)
+			packetStart = 0;
+		decodeFreeEMSPacket(buffer.mid(packetStart, index + 1 - packetStart));
+	//	qDebug()<<"buffer = "<<buffer.mid(packetStart, index + 1 - packetStart).toHex();
+		buffer.remove(0,index+1);		//extract the decoded packet from the buffer.
 	}
-
 }
-#define RPM_FREEEMS 1
-#define MAP_FREEEMS 2
 
 void commThread::decodeFreeEMSPacket(QByteArray buffer)
 {
+	CoreVar *CoreVars = (CoreVar *)malloc(sizeof(CoreVar));
+	DerivedVar *DerivedVars = (DerivedVar *)malloc(sizeof(DerivedVar));;
+	ADCArray *ADCArrays = (ADCArray *)malloc(sizeof(ADCArray));;
+
+
 	aPacket packet;
-	packet.setPacket(buffer);
-	if( packet.check() == false )
+	if( !packet.setPacket(buffer) )
 	{
-		qDebug("Packet corrupted");
+		qDebug("bad packet");
 		return;
 	}
 
+	char *payload;
+	char *payloadIndex;
+
 	switch(packet.getPayloadID())
 	{
-		case RPM_FREEEMS:
-			channel[RPM] = packet.getPayload();
+		case responseBasicDatalog:
+			qDebug("basic datalog received");
+
+
+			payload = packet.getPayload().data();
+			payloadIndex = payload;
+			memcpy(CoreVars,payloadIndex,sizeof(CoreVar));
+			payloadIndex += sizeof(CoreVar);
+			memcpy(DerivedVars,payloadIndex,sizeof(DerivedVar));
+			payloadIndex += sizeof(DerivedVar);
+			memcpy(ADCArrays,payloadIndex,sizeof(ADCArray));
+			qDebug("\nRPM = %d\nMAP = %f", CoreVars->RPM,(float)CoreVars->MAP/512);
+			qDebug("\nIAT = %f\nCHT = %f", (float)CoreVars->IAT/512,(float)CoreVars->CHT/512);
+
+			channel[RPM] = CoreVars->RPM;
+			channel[MAP] = CoreVars->MAP/512;
+			channel[airTemp] = CoreVars->IAT;
+			channel[waterTemp] = CoreVars->CHT;
+			channel[VE] = DerivedVars->VEMain;
 			break;
-		case MAP_FREEEMS:
-			channel[MAP] = packet.getPayload();
+		default :
+			qDebug("Unknown packetID = %d", packet.getPayloadID());
 			break;
 	}
 }

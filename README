@@ -8,6 +8,11 @@ To give it a try:
 apt-get install qtcreator
 
 For a command line compiling, you are a "make" away.
+
+For windows users, install Qt Creator, but it won't compile, the 3D map isn't portable -yet-
+http://qt.nokia.com/downloads
+
+
 In both cases, make some coffe, or take a shower... it needs some time to compile the first time -between one and five min-.
 
 /DataExamples/Fiat Palio FIRE lean.txt is the config file I use in my car. Try it (File->Open)

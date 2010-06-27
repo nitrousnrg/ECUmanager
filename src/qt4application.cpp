@@ -331,7 +331,7 @@ void qt4application::connectECU()
 	serialThread = new commThread();
 	serialThread->setPort(serialPort);
 	serialThread->setTarget(hardwareTarget);
-	serialThread->run();
+	serialThread->openPort();
 	//	serialThread->setPort(serialPort);
 
 	/* FreeEMS stuff */
@@ -340,7 +340,6 @@ void qt4application::connectECU()
 
 	connect(getInterfaceVersionAct, SIGNAL(triggered()), serialThread, SLOT(getInterfaceVersion()));
 	connect(getFirmwareVersionAct,  SIGNAL(triggered()), serialThread, SLOT(getFirmwareVersion()));
-
 	if(serialThread->isOnline())
 	{
 		sendfileAct->setDisabled(false);
@@ -361,13 +360,11 @@ void qt4application::connectECU()
 		fetchAct->setDisabled(false);
 		injectorTestAct->setDisabled(false);
 
+		serialThread->run();
+
 	}
-	/*else
-	{
-		QMessageBox::warning(	this,
-					tr("Application"),
-					tr("Cannot open file %1:\n%2.").arg(serialPort).arg(serial->errorString()));
-	}*/
+
+
 }
 
 

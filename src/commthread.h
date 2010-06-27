@@ -21,7 +21,7 @@
 #define COMM_THREAD_H
 
 /**
-commthread se encarga de todos los aspectos de la comunicacion con el hardware.
+commthread handles all communication with the plugged device
 
 	@author marcos chaparro <nitrousnrg@gmail.com>
 */
@@ -38,6 +38,8 @@ commthread se encarga de todos los aspectos de la comunicacion con el hardware.
 
 //#include "commCore_FreeEMS.h"
 
+#include "FreeEMS.h"
+
 #define MAPsourced 0
 #define TPSsourced 1
 
@@ -45,30 +47,30 @@ class aPacket
 {
 	public:
 		aPacket();
-		void setPacket(QByteArray);
+		bool setPacket(QByteArray);
 		QByteArray getPacket();
 		void setHeaderAckFlag(bool);
 		bool hasHeaderAckFlag();
 		void setHeaderLengthFlag(bool);
 		bool hasHeaderLengthFlag();
-		void setPayloadID(int);
-		int  getPayloadID();
+		void setPayloadID(unsigned int);
+		unsigned int  getPayloadID();
 		void setPayload(QByteArray payload);
 		QByteArray getPayload();
 		void setPayloadLength(int length);
-		int  getPayloadLength();
+		unsigned int  getPayloadLength();
 		int  getCalculatedPayloadLength();
 		//   unsigned char checksum(QByteArray data);
 		bool check();
 		void buildPacket();
-		void preparePacket();	 //to send through rs232
-		void unpreparePacket();	 //to be parsed after rs232
-		void addEscape();
+		void addEscape();	 //to send through rs232
+		bool removeEscape();	 //to be parsed after rs232
 
 	private:
 		unsigned char headerFlags;
 		unsigned char checksum;
-		int payloadID;
+		unsigned int payloadID;
+		unsigned int payloadAddress;
 		unsigned int payloadLength;
 		QByteArray payload;
 		QByteArray fullPacket;
@@ -80,6 +82,7 @@ class commThread : public QThread
 	Q_OBJECT
 		public:
 		commThread(){serial=0;logging=0;};
+		bool openPort();
 		void run();
 								 //needed before run()
 		void setPort(QString portAddress);
@@ -109,7 +112,6 @@ class commThread : public QThread
 		/*FreeEMS stuff */
 		void getInterfaceVersion();
 		void getFirmwareVersion();
-		void readFreeEMS();
 		void sendPeriodicDataRequest();
 		void readPeriodicDataResponse();
 		void decodeFreeEMSPacket(QByteArray buffer);
@@ -118,8 +120,8 @@ class commThread : public QThread
 		void packetArrived(QByteArray);
 
 	private:
-		void read_PIC_data();
 		void read_FreeEMS_data();
+		void read_PIC_data();
 		void process_line(QByteArray line,int i);
 		bool online;
 

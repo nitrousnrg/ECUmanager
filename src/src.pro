@@ -46,7 +46,8 @@ HEADERS += qt4application.h \
     QPlayer.h \
     QInjectorTest.h \
     commthread.h \
-    commCore_FreeEMS.h
+    commCore_FreeEMS.h \
+    FreeEMS.h
 SOURCES += qt4application.cpp \
     main.cpp \
     posix_qextserialport.cpp \

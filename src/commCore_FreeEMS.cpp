@@ -1,5 +1,8 @@
 #include "commCore_FreeEMS.h"
 
+/* This file contains mostly the tools used to decode and process
+   the packets coming to and from FreeEMS */
+
 aPacket::aPacket()
 {
 	payloadLength = 0;
@@ -8,27 +11,36 @@ aPacket::aPacket()
 }
 
 
-void aPacket::setPacket(QByteArray newPacket)
+bool aPacket::setPacket(QByteArray newPacket)
 {
-	union intByte
-	{
-		BYTE byte[2];
-		int entero;
-	} bytesID;
 	fullPacket = newPacket;
-	//    unpreparePacket();
+	if(removeEscape() == false)
+		return false;
+	if( check() == false )
+	{
+		qDebug("Packet corrupted (bad checksum)");
+		return false;
+	}
 	headerFlags = fullPacket[0];
-	bytesID.byte[1] = fullPacket[1];
-	bytesID.byte[0] = fullPacket[2];
+	payloadID = (unsigned char)fullPacket[1]*256 + (unsigned char)fullPacket.at(2);
 
-	payloadID = fullPacket[1]*256+fullPacket[2];
-	//payloadID = bytesID.entero;
-	qDebug("fullPacket[0] = %d",headerFlags);
-	qDebug("fullPacket[1] = %d",bytesID.byte[1]);
-	qDebug("fullPacket[2] = %d",bytesID.byte[0]);
-	qDebug("payloadID = %d",payloadID);
+	unsigned int index = 3;
+	if( headerFlags & HEADER_HAS_ADDRS )
+	{
+		payloadAddress = (unsigned char)fullPacket[index]*256 + (unsigned char)fullPacket[index+1];
+		index += 2;
+	}
+	if( headerFlags & HEADER_HAS_LENGTH )
+	{
+		payloadLength = (unsigned char)fullPacket[index]*256 + (unsigned char)fullPacket[index+1];
+		index += 2;
+	}
+	payload = fullPacket.mid(index,payloadLength);
+	if((unsigned int)fullPacket.size() != (index + payloadLength + 1))
+		qDebug("Wrong payload size");
+	//success!
+	return true;
 }
-
 
 QByteArray aPacket::getPacket()
 {
@@ -66,15 +78,14 @@ bool aPacket::hasHeaderLengthFlag()
 }
 
 
-int aPacket::getPayloadID()
+unsigned int aPacket::getPayloadID()
 {
 								 //2nd and 3rd bytes correspond to the payloadID *always*
-	payloadID = fullPacket[1]*256 + fullPacket[2];
 	return payloadID;
 }
 
 
-void aPacket::setPayloadID(int newID)
+void aPacket::setPayloadID(unsigned int newID)
 {
 	payloadID = newID;
 }
@@ -98,9 +109,9 @@ void aPacket::setPayloadLength(int newLength)
 }
 
 
-int aPacket::getPayloadLength()
+unsigned int aPacket::getPayloadLength()
 {
-	if( hasHeaderLengthFlag() )	 //the flag must be set to extract the length
+	if( hasHeaderLengthFlag() )	 //flag must be set to extract the length
 	{
 		int n = 4;
 		if( hasHeaderAckFlag() ) //check for optional bytes
@@ -135,7 +146,7 @@ void aPacket::buildPacket()
 }
 
 
-void aPacket::preparePacket()	 //to send trough RS232 we need to add start/stop bytes
+void aPacket::addEscape()	 //to send trough RS232 we need to add start/stop bytes
 {
 	/* add escaping scheme */
 	char startPair[2];
@@ -162,13 +173,14 @@ void aPacket::preparePacket()	 //to send trough RS232 we need to add start/stop 
 }
 
 
-void aPacket::unpreparePacket()
+bool aPacket::removeEscape()
 {
 	/* remove escaping scheme */
 
 	QByteArray escapedStart;
 	escapedStart[0] = 0xBB;
 	escapedStart[1] = 0x55;
+	escapedStart[2] = '\0';
 	QByteArray start;
 	start[0] = 0xAA;
 
@@ -184,6 +196,19 @@ void aPacket::unpreparePacket()
 	QByteArray end;
 	end[0] = 0xCC;
 
+	//Check if it is a valid scaping scheme. It must have both start and end chars
+	if((fullPacket.count(start) ) != 1)
+	{
+		qDebug("0xAA Escape characters inconsistency (%d)",fullPacket.count(0xAA) );
+		return false;
+	}
+	if((fullPacket.count(0xCC) ) != 1)
+	{
+		qDebug("0xCC Escape characters inconsistency (%d)",fullPacket.count(0xCC));
+		return false;
+	}
+
+
 	fullPacket.replace(escapedStart, start);
 	fullPacket.replace(escapedEscape, escape);
 	fullPacket.replace(escapedEnd, end);
@@ -191,6 +216,8 @@ void aPacket::unpreparePacket()
 								 //remove start byte (0xAA = start)
 	fullPacket= fullPacket.right(fullPacket.size()-1);
 	fullPacket.chop(1);			 //remove last byte (0xCC = end)
+	
+	return true;
 }
 
 
@@ -213,14 +240,14 @@ bool aPacket::check()
 
 void qt4application::sendReset()
 {
-	qDebug("emited!!!");
+	qDebug("Send Soft System Reset");
 	aPacket packet;
 	packet.setHeaderAckFlag(false);
 								 //false
 	packet.setHeaderLengthFlag(true);
 	packet.setPayloadID(requestSoftSystemReset);
 	packet.buildPacket();
-	packet.preparePacket();
+	packet.addEscape();
 	//serial->write(packet.getPacket(),1);
 	qDebug(packet.getPacket().data());
 
@@ -235,7 +262,7 @@ void commThread::getInterfaceVersion()
 	packet.setHeaderLengthFlag(false);
 	packet.setPayloadID(requestInterfaceVersion);
 	packet.buildPacket();
-	packet.preparePacket();
+	packet.addEscape();
 	// serial->write(packet.getPacket(),1);
 	emit packetArrived(packet.getPacket());
 
@@ -249,46 +276,20 @@ void commThread::getFirmwareVersion()
 	packet.setHeaderLengthFlag(false);
 	packet.setPayloadID(requestFirmwareVersion);
 	packet.buildPacket();
-	packet.preparePacket();
+	packet.addEscape();
 	//serial->write(packet.getPacket(),1);
 	emit packetArrived(packet.getPacket());
 }
 
-
-/* this is where every packet is extracted from the incoming stream, and parsed to be used later */
-void commThread::readFreeEMS()
-{
-	const qint64 available = serial->bytesAvailable();
-	buffer.append(serial->read(available));
-
-	if( buffer.contains(0xCC) )	 //there is an end char in the buffer (we have a full packet here!)
-	{
-								 //this is where the start of my packet is
-		int start = buffer.indexOf(0xAA);
-								 //this is where the end of my packet is
-		int end = buffer.indexOf(0xCC);
-		QByteArray auxBuffer = buffer;
-								 //remove first chunk
-		auxBuffer.remove(0, start);
-								 //remove last chunk
-		auxBuffer.remove(end, auxBuffer.size()-1);
-
-		aPacket received_packet;
-		received_packet.setPacket(auxBuffer);
-
-		emit packetArrived(auxBuffer);
-	}
-
-}
-
-
+/* This will be moved inside qt4application, and the packet decoding has to be
+	done only once, in decodeFreeEMSPacket() */
 void qt4application::showPacket(QByteArray dataArray)
 {
 	aPacket data;
 
 	data.setPacket(dataArray);
 	qDebug(data.getPacket().data());
-	data.unpreparePacket();
+	data.removeEscape();
 	qDebug(data.getPacket().data());
 
 	if(debugEnabledFlag)
