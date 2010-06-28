@@ -306,7 +306,8 @@ void commThread::sendPeriodicDataRequest()
 
 void commThread::readPeriodicDataResponse()
 {
-	QByteArray buffer = serial->readAll();
+	if( serial->bytesAvailable() > 500)
+		QByteArray buffer = serial->read(serial->bytesAvailable());
 	int index;
 
 
@@ -325,7 +326,7 @@ void commThread::readPeriodicDataResponse()
 		if(packetStart == -1)
 			packetStart = 0;
 		decodeFreeEMSPacket(buffer.mid(packetStart, index + 1 - packetStart));
-		//qDebug()<<"buffer = "<<buffer.mid(packetStart, index + 1 - packetStart).toHex();
+		qDebug()<<"buffer = "<<buffer.mid(packetStart, index + 1 - packetStart).toHex();
 		buffer.remove(0,index+1);		//extract the decoded packet from the buffer.
 	}
 }
