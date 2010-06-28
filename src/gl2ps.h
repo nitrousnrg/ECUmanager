@@ -39,6 +39,7 @@
 #include <stdlib.h>
 
 /* Define GL2PSDLL at compile time to build a Windows DLL */
+#define GL2PSDLL	//I added it
 
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
 #  if defined(_MSC_VER)
@@ -61,6 +62,7 @@
 #else
 #  define GL2PSDLL_API
 #endif
+
 
 #if defined(__APPLE__) || defined(HAVE_OPENGL_GL_H)
 #  include <OpenGL/gl.h>

@@ -38,7 +38,7 @@ bool commThread::openPort()
 
 	online = false;
 
-	serial = new QextSerialPort(serialPort);
+	serial = new QextSerialPort(serialPort.name);
 	serial->setBaudRate(BAUD19200);
 	serial->setParity(PAR_NONE);
 	serial->setDataBits(DATA_8);
@@ -46,7 +46,7 @@ bool commThread::openPort()
 	serial->setFlowControl(FLOW_OFF);
 	serial->setTimeout(0,20);
 
-	qDebug() << "Listening on " << serialPort;
+	qDebug() << "Listening on " << serialPort.name;
 	//qDebug( serialPort.latin1());
 	buffer = "";
 
@@ -62,7 +62,7 @@ bool commThread::openPort()
 		qDebug("Cannot open serial port");
 		QMessageBox::warning(   0,
 			tr("Application"),
-			tr("Cannot open file %1:\n%2.").arg(serialPort).arg(serial->errorString()));
+			tr("Cannot open file %1:\n%2.").arg(serialPort.name).arg(serial->errorString()));
 	}
 	mutex.unlock();
 
@@ -70,7 +70,7 @@ bool commThread::openPort()
 }
 
 								 //needed before run()
-void commThread::setPort(QString portAddress)
+void commThread::setPort(serialPorts portAddress)
 {
 	if(serial == 0)
 	{
@@ -106,7 +106,7 @@ void commThread::setPort(QString portAddress)
 	else
 	{
 		serial->close();
-		serial->setPortName(portAddress);
+		serial->setPortName(portAddress.name);
 		serial->open(QIODevice::ReadWrite);
 	}
 }
@@ -310,7 +310,7 @@ void commThread::readPeriodicDataResponse()
 	int index;
 
 
-/*	QFile datalogFile("comms20100421201222.bin");
+/*	QFile datalogFile("../Data Examples/comms20100421201222.bin");
 	datalogFile.open(QIODevice::ReadOnly);
 	buffer = datalogFile.readAll();
 	datalogFile.close();
@@ -325,7 +325,7 @@ void commThread::readPeriodicDataResponse()
 		if(packetStart == -1)
 			packetStart = 0;
 		decodeFreeEMSPacket(buffer.mid(packetStart, index + 1 - packetStart));
-	//	qDebug()<<"buffer = "<<buffer.mid(packetStart, index + 1 - packetStart).toHex();
+		//qDebug()<<"buffer = "<<buffer.mid(packetStart, index + 1 - packetStart).toHex();
 		buffer.remove(0,index+1);		//extract the decoded packet from the buffer.
 	}
 }
@@ -366,11 +366,11 @@ void commThread::decodeFreeEMSPacket(QByteArray buffer)
 
 			channel[RPM] = CoreVars->RPM;
 			channel[MAP] = CoreVars->MAP/512;
-			channel[airTemp] = CoreVars->MAT;
-			channel[THROTTLE] = CoreVars->TPS;
-			channel[waterTemp] = CoreVars->CHT;
-			channel[VE] = DerivedVars->VEMain;
-			channel[FUEL] = DerivedVars->FinalPW;
+			channel[airTemp] = CoreVars->MAT/512;
+			channel[THROTTLE] = CoreVars->TPS/512;
+			channel[waterTemp] = CoreVars->CHT/512;
+			channel[VE] = DerivedVars->VEMain/512;
+			channel[FUEL] = DerivedVars->FinalPW/512;
 			break;
 		default :
 			qDebug("Unknown packetID = %d", packet.getPayloadID());

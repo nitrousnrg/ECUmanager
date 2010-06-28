@@ -1124,7 +1124,7 @@ void qt4application::acceptDialog()
 
 	if(configDialogOpen)
 	{
-		serialPort = serialPortEdit->text();
+		serialPort.name = serialPortEdit->text();
 		hardwareTarget = hardwareTargetBox->itemText(hardwareTargetBox->currentIndex());
 		qDebug()<<"EEESsste"<<hardwareTarget;
 		configDialogOpen = false;

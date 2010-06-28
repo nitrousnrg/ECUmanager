@@ -50,7 +50,6 @@ HEADERS += qt4application.h \
     FreeEMS.h
 SOURCES += qt4application.cpp \
     main.cpp \
-    posix_qextserialport.cpp \
     qextserialbase.cpp \
     qextserialport.cpp \
     RenderArea.cpp \
@@ -92,12 +91,20 @@ SOURCES += qt4application.cpp \
     qt4applicationCREATETHINGS.cpp \
     commthread.cpp \
     commCore_FreeEMS.cpp
+win32 {
+	SOURCES += win_qextserialport.cpp
+	HEADERS += win_qextserialport.h
+	}
+unix {
+     SOURCES += posix_qextserialport.cpp
+     HEADERS += posix_qextserialport.h
+	}
 TEMPLATE = app
 CONFIG += warn_on \
     thread \
     qt \
     opengl
-TARGET = ../bin/qt4application
+TARGET = ../bin/ECUmanager
 RESOURCES = application.qrc
 LIBS += -L/usr/lib
 QT += opengl

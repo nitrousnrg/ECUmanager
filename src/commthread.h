@@ -78,6 +78,15 @@ class aPacket
 
 };
 
+struct serialPorts
+{
+	QString name;
+	int serialPortBaudRate;
+	int serialPortParity;
+	int dataBits;
+	int stopBits;
+};
+
 class commThread : public QThread
 {
 	Q_OBJECT
@@ -86,7 +95,7 @@ class commThread : public QThread
 		bool openPort();
 		void run();
 								 //needed before run()
-		void setPort(QString portAddress);
+		void setPort(serialPorts portAddress);
 		bool burnFlash(QString fileName);
 								 //needed before run() too
 		void setTarget(QString target)
@@ -129,14 +138,13 @@ class commThread : public QThread
 
 		QVariant channel[20];	 //as big as you want
 		QByteArray buffer, auxiliarByteArray;
-
+		serialPorts serialPort;
 		QextSerialPort *serial;
 		QFile *logFile;
 		QTimer *timer;
 		QTimer *sendTimer;
 		QMutex mutex;
 		QFile *tempLogFile;
-		QString serialPort;
 		QString binaryFileName;
 		bool isSerial;
 		bool logging;

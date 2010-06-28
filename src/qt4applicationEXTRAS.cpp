@@ -57,7 +57,7 @@ void qt4application::configureECUmanager()
 	vbox1->setColumnStretch(0,100);
 	vbox1->setRowStretch(1,100);
 	QLabel *serialPortName = new QLabel(tr("Serial Port"));
-	serialPortEdit = new QLineEdit(serialPort);
+	serialPortEdit = new QLineEdit(serialPort.name);
 	serialPortEdit->setAlignment(Qt::AlignRight);
 								 //default serial port="/dev/ttyUSB0";
 	vbox1->addWidget(serialPortName,0,0);
@@ -569,7 +569,12 @@ void qt4application::nitrousDialog()
 void qt4application::readSettings()
 {
 	QSettings settings("FreeEMS", "ECU manager");
-	serialPort = settings.value("Serial Port",QString("/dev/ttyUSB0")).toString();
+	serialPort.name = settings.value("Serial Port",QString("/dev/ttyUSB0")).toString();
+	serialPort.serialPortBaudRate = settings.value("Serial Port Baudrate",BAUD19200).toInt();
+	serialPort.serialPortParity = settings.value("Serial Port Parity",PAR_NONE).toInt();
+	serialPort.dataBits = settings.value("Serial Port Data Bits",DATA_8).toInt();
+	serialPort.stopBits = settings.value("Serial Port Stop Bits",STOP_1).toInt();
+
 	hardwareTarget = settings.value("Hardware Target",QString("ePIC project")).toString();
 	confFile = settings.value("default File",QString()).toString();
 	logFileName = settings.value("default Log File",QString()).toString();
@@ -605,7 +610,7 @@ void qt4application::readSettings()
 void qt4application::writeSettings()
 {
 	QSettings settings("FreeEMS", "ECU manager");
-	settings.setValue("Serial Port",serialPort);
+	settings.setValue("Serial Port",serialPort.name);
 	settings.setValue("Hardware Target",hardwareTarget);
 	settings.setValue("pos", pos());
 	settings.setValue("size", size());

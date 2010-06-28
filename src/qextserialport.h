@@ -3,7 +3,9 @@
 #define _QEXTSERIALPORT_H_
 
 // Change this variable and add the required files to compile under windows
+#ifndef WIN32
 #define _TTY_POSIX_
+#endif
 
 /*POSIX CODE*/
 #ifdef _TTY_POSIX_

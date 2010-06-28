@@ -20,7 +20,6 @@
 #ifndef  UPDATER_H
 #define UPDATER_H
 
-#define _TTY_POSIX_
 #include <qextserialport.h>
 
 #include <QTimer>

@@ -154,7 +154,7 @@ void aPacket::addEscape()	 //to send trough RS232 we need to add start/stop byte
 	char endPair[2];
 
 	startPair[0] = 0xBB;
-	startPair[1] = 0x55;	//me falta terminarlo en \0 ?
+	startPair[1] = 0x55;
 	escapePair[0] = 0xBB;
 	escapePair[1] = 0x44;
 	endPair[0] = 0xBB;
@@ -180,7 +180,6 @@ bool aPacket::removeEscape()
 	QByteArray escapedStart;
 	escapedStart[0] = 0xBB;
 	escapedStart[1] = 0x55;
-	escapedStart[2] = '\0';
 	QByteArray start;
 	start[0] = 0xAA;
 
@@ -197,7 +196,7 @@ bool aPacket::removeEscape()
 	end[0] = 0xCC;
 
 	//Check if it is a valid scaping scheme. It must have both start and end chars
-	if((fullPacket.count(start) ) != 1)
+	if((fullPacket.count(0xAA) ) != 1)
 	{
 		qDebug("0xAA Escape characters inconsistency (%d)",fullPacket.count(0xAA) );
 		return false;
@@ -207,7 +206,6 @@ bool aPacket::removeEscape()
 		qDebug("0xCC Escape characters inconsistency (%d)",fullPacket.count(0xCC));
 		return false;
 	}
-
 
 	fullPacket.replace(escapedStart, start);
 	fullPacket.replace(escapedEscape, escape);
@@ -240,6 +238,10 @@ bool aPacket::check()
 
 void aPacket::setChecksum()
 {
+	unsigned char sum = 0;
+	for( int i=0; i<fullPacket.size(); i++ )
+		sum += fullPacket[i];
+	fullPacket.append(sum);
 }
 
 void qt4application::sendReset()
@@ -247,7 +249,6 @@ void qt4application::sendReset()
 	qDebug("Send Soft System Reset");
 	aPacket packet;
 	packet.setHeaderAckFlag(false);
-								 //false
 	packet.setHeaderLengthFlag(true);
 	packet.setPayloadID(requestSoftSystemReset);
 	packet.buildPacket();
@@ -269,7 +270,6 @@ void commThread::getInterfaceVersion()
 	packet.addEscape();
 	// serial->write(packet.getPacket(),1);
 	emit packetArrived(packet.getPacket());
-
 }
 
 

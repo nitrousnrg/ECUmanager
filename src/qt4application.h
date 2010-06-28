@@ -27,7 +27,6 @@
 
 #include <QMainWindow>
 #include <QCloseEvent>
-#define _TTY_POSIX_
 #include <qextserialport.h>
 #include <commthread.h>
 //#include "commCore_FreeEMS.h"
@@ -153,6 +152,7 @@ class qt4application:public QMainWindow
 		QWidget *QmainLayout;
 		QextSerialPort *serial;
 		commThread *serialThread;
+		serialPorts serialPort;
 		QString hardwareTarget,hardwareTargetTemp;
 
 		QMap3D *map3D;
@@ -234,7 +234,6 @@ class qt4application:public QMainWindow
 		QProgressBar *AirTempbar;
 		QProgressBar *sendingBar;
 		QString string1;
-		QString serialPort;
 
 		QAction *connectAct;
 		QAction *disconnectAct;

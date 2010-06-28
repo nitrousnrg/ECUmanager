@@ -13,3 +13,7 @@ Almost fully multhithreaded communications.
 
 2010-06-23
 *Added configurable main table headers
+
+2010-06-27
+* Basic packet decoding
+* Compiles under windows
