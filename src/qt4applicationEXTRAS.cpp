@@ -134,13 +134,13 @@ void qt4application::configureECUmanager()
 	QWidget *general = new QWidget();
 	general->setLayout(generalLayout);
 
-	QWidget *interface = new QWidget();
-	interface->setLayout(vbox2);
+	QWidget *interfaceTab = new QWidget();
+	interfaceTab->setLayout(vbox2);
 	QWidget *security = new QWidget();
 	security->setLayout(vbox4);
 	tabBar->addTab(general,"General");
 	tabBar->addTab(comm,"Communications");
-	tabBar->addTab(interface,"User Interface");
+	tabBar->addTab(interfaceTab,"User Interface");
 	tabBar->addTab(security,"Security");
 
 	//tabBar->setLayout(vbox);

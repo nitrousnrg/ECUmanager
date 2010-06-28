@@ -3,7 +3,6 @@
 # Subdir relative project main directory: ./src
 # Target is an application: ../bin/qt4application
 HEADERS += qt4application.h \
-    posix_qextserialport.h \
     qextserialbase.h \
     qextserialport.h \
     renderarea.h \
