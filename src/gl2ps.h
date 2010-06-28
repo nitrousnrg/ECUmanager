@@ -39,7 +39,6 @@
 #include <stdlib.h>
 
 /* Define GL2PSDLL at compile time to build a Windows DLL */
-#define GL2PSDLL	//I added it
 
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
 #  if defined(_MSC_VER)

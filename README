@@ -9,7 +9,7 @@ apt-get install qtcreator
 
 For a command line compiling, you are a "make" away.
 
-For windows users, install Qt Creator, but it won't compile, the 3D map isn't portable -yet-
+For windows users, install Qt Creator and open qt4application.pro with it. Then, build it.
 http://qt.nokia.com/downloads
 
 In both cases, make some coffe, or take a shower... it will be compiling for a while the first time (2-5 min).
