@@ -307,27 +307,29 @@ void commThread::sendPeriodicDataRequest()
 void commThread::readPeriodicDataResponse()
 {
 	if( serial->bytesAvailable() > 500)
-		QByteArray buffer = serial->read(serial->bytesAvailable());
-	int index;
-
-
-/*	QFile datalogFile("../Data Examples/comms20100421201222.bin");
-	datalogFile.open(QIODevice::ReadOnly);
-	buffer = datalogFile.readAll();
-	datalogFile.close();
-*/
-	//this Way I will lose bytes!
-	// search occurrences of the end character (0xCC) from the beggining.
-	while( (index = buffer.indexOf(0xCC, 0) ) != -1)
 	{
-		//Start from the end byte. Extract from the last occurence of a start byte, to the first occurence of the end byte
-		//and pass that string to decodeFreeEMSPacket()
-		int packetStart = buffer.lastIndexOf(0xAA,index);
-		if(packetStart == -1)
-			packetStart = 0;
-		decodeFreeEMSPacket(buffer.mid(packetStart, index + 1 - packetStart));
-		qDebug()<<"buffer = "<<buffer.mid(packetStart, index + 1 - packetStart).toHex();
-		buffer.remove(0,index+1);		//extract the decoded packet from the buffer.
+		QByteArray buffer = serial->read(serial->bytesAvailable());
+		int index;
+
+
+	/*	QFile datalogFile("../Data Examples/comms20100421201222.bin");
+		datalogFile.open(QIODevice::ReadOnly);
+		buffer = datalogFile.readAll();
+		datalogFile.close();
+	*/
+		//this Way I will lose bytes!
+		// search occurrences of the end character (0xCC) from the beggining.
+		while( (index = buffer.indexOf(0xCC, 0) ) != -1)
+		{
+			//Start from the end byte. Extract from the last occurence of a start byte, to the first occurence of the end byte
+			//and pass that string to decodeFreeEMSPacket()
+			int packetStart = buffer.lastIndexOf(0xAA,index);
+			if(packetStart == -1)
+				packetStart = 0;
+			decodeFreeEMSPacket(buffer.mid(packetStart, index + 1 - packetStart));
+			qDebug()<<"buffer = "<<buffer.mid(packetStart, index + 1 - packetStart).toHex();
+			buffer.remove(0,index+1);		//extract the decoded packet from the buffer.
+		}
 	}
 }
 
