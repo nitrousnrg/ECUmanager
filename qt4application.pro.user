@@ -230,7 +230,7 @@
   <valuemap type="QVariantMap">
    <value key="ProjectExplorer.BuildConfiguration.DisplayName" type="QString">release</value>
    <valuelist key="abstractProcess.Environment" type="QVariantList">
-    <value type="QString">DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-IP2AtSxbQW,guid=985dc5d035cc44a255f5629d00000022</value>
+    <value type="QString">DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-53FdTz6iFI,guid=d99b0aaaf2d56bed882bff1600000021</value>
     <value type="QString">DESKTOP_SESSION=default</value>
     <value type="QString">DISPLAY=:0.0</value>
     <value type="QString">DM_CONTROL=/var/run/xdmctl</value>
@@ -244,23 +244,22 @@
     <value type="QString">KDE_SESSION_UID=1000</value>
     <value type="QString">KDE_SESSION_VERSION=4</value>
     <value type="QString">LANG=en_US.UTF-8</value>
-    <value type="QString">LANGUAGE=</value>
     <value type="QString">LD_LIBRARY_PATH=/usr/lib/qtcreator:</value>
     <value type="QString">LOGNAME=marcos</value>
     <value type="QString">PATH=/usr/bin:/home/marcos/Microchip/mbed/codesourcery/bin:/home/marcos/Microchip/gcc-arm/bin:/usr/local/bin:/usr/bin:/bin:/usr/games</value>
     <value type="QString">PWD=/home/marcos</value>
     <value type="QString">QTDIR=/usr/share/qt4</value>
     <value type="QString">QT_PLUGIN_PATH=/home/marcos/.kde/lib/kde4/plugins/:/usr/lib/kde4/plugins/</value>
-    <value type="QString">SESSION_MANAGER=local/nitrousPresario:@/tmp/.ICE-unix/2422,unix/nitrousPresario:/tmp/.ICE-unix/2422</value>
+    <value type="QString">SESSION_MANAGER=local/nitrousPresario:@/tmp/.ICE-unix/2428,unix/nitrousPresario:/tmp/.ICE-unix/2428</value>
     <value type="QString">SHELL=/bin/bash</value>
     <value type="QString">SHLVL=1</value>
-    <value type="QString">SSH_AGENT_PID=1916</value>
-    <value type="QString">SSH_AUTH_SOCK=/tmp/ssh-zuNtaf1861/agent.1861</value>
+    <value type="QString">SSH_AGENT_PID=1882</value>
+    <value type="QString">SSH_AUTH_SOCK=/tmp/ssh-skMZNI1832/agent.1832</value>
     <value type="QString">USER=marcos</value>
     <value type="QString">WINDOWPATH=7</value>
     <value type="QString">XCURSOR_THEME=Oxygen_Black</value>
     <value type="QString">XDG_DATA_DIRS=/usr/share:/usr/share:/usr/local/share</value>
-    <value type="QString">XDG_SESSION_COOKIE=977ac3cb50f6d27e6a2b2e6549a3f549-1277482571.200609-1282225747</value>
+    <value type="QString">XDG_SESSION_COOKIE=977ac3cb50f6d27e6a2b2e6549a3f549-1277770311.228085-1560826756</value>
     <value type="QString">XDM_MANAGED=method=classic,auto</value>
    </valuelist>
    <valuelist key="abstractProcess.arguments" type="QVariantList">
@@ -279,7 +278,7 @@
   <valuemap type="QVariantMap">
    <value key="ProjectExplorer.BuildConfiguration.DisplayName" type="QString">release</value>
    <valuelist key="abstractProcess.Environment" type="QVariantList">
-    <value type="QString">DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-IP2AtSxbQW,guid=985dc5d035cc44a255f5629d00000022</value>
+    <value type="QString">DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-53FdTz6iFI,guid=d99b0aaaf2d56bed882bff1600000021</value>
     <value type="QString">DESKTOP_SESSION=default</value>
     <value type="QString">DISPLAY=:0.0</value>
     <value type="QString">DM_CONTROL=/var/run/xdmctl</value>
@@ -293,23 +292,22 @@
     <value type="QString">KDE_SESSION_UID=1000</value>
     <value type="QString">KDE_SESSION_VERSION=4</value>
     <value type="QString">LANG=en_US.UTF-8</value>
-    <value type="QString">LANGUAGE=</value>
     <value type="QString">LD_LIBRARY_PATH=/usr/lib/qtcreator:</value>
     <value type="QString">LOGNAME=marcos</value>
     <value type="QString">PATH=/usr/bin:/home/marcos/Microchip/mbed/codesourcery/bin:/home/marcos/Microchip/gcc-arm/bin:/usr/local/bin:/usr/bin:/bin:/usr/games</value>
     <value type="QString">PWD=/home/marcos</value>
     <value type="QString">QTDIR=/usr/share/qt4</value>
     <value type="QString">QT_PLUGIN_PATH=/home/marcos/.kde/lib/kde4/plugins/:/usr/lib/kde4/plugins/</value>
-    <value type="QString">SESSION_MANAGER=local/nitrousPresario:@/tmp/.ICE-unix/2422,unix/nitrousPresario:/tmp/.ICE-unix/2422</value>
+    <value type="QString">SESSION_MANAGER=local/nitrousPresario:@/tmp/.ICE-unix/2428,unix/nitrousPresario:/tmp/.ICE-unix/2428</value>
     <value type="QString">SHELL=/bin/bash</value>
     <value type="QString">SHLVL=1</value>
-    <value type="QString">SSH_AGENT_PID=1916</value>
-    <value type="QString">SSH_AUTH_SOCK=/tmp/ssh-zuNtaf1861/agent.1861</value>
+    <value type="QString">SSH_AGENT_PID=1882</value>
+    <value type="QString">SSH_AUTH_SOCK=/tmp/ssh-skMZNI1832/agent.1832</value>
     <value type="QString">USER=marcos</value>
     <value type="QString">WINDOWPATH=7</value>
     <value type="QString">XCURSOR_THEME=Oxygen_Black</value>
     <value type="QString">XDG_DATA_DIRS=/usr/share:/usr/share:/usr/local/share</value>
-    <value type="QString">XDG_SESSION_COOKIE=977ac3cb50f6d27e6a2b2e6549a3f549-1277482571.200609-1282225747</value>
+    <value type="QString">XDG_SESSION_COOKIE=977ac3cb50f6d27e6a2b2e6549a3f549-1277770311.228085-1560826756</value>
     <value type="QString">XDM_MANAGED=method=classic,auto</value>
    </valuelist>
    <value key="abstractProcess.IgnoreReturnValue" type="bool">false</value>

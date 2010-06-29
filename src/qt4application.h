@@ -27,7 +27,7 @@
 
 #include <QMainWindow>
 #include <QCloseEvent>
-#include <qextserialport.h>
+#include "qextserialport.h"
 #include <commthread.h>
 //#include "commCore_FreeEMS.h"
 #include <plotter.h>

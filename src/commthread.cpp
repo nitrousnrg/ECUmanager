@@ -306,17 +306,17 @@ void commThread::sendPeriodicDataRequest()
 
 void commThread::readPeriodicDataResponse()
 {
-	if( serial->bytesAvailable() > 500)
+	if( serial->bytesAvailable() > 700)
 	{
 		QByteArray buffer = serial->read(serial->bytesAvailable());
 		int index;
 
 
-	/*	QFile datalogFile("../Data Examples/comms20100421201222.bin");
+		QFile datalogFile("../Data Examples/comms20100421201222.bin");
 		datalogFile.open(QIODevice::ReadOnly);
 		buffer = datalogFile.readAll();
 		datalogFile.close();
-	*/
+
 		//this Way I will lose bytes!
 		// search occurrences of the end character (0xCC) from the beggining.
 		while( (index = buffer.indexOf(0xCC, 0) ) != -1)

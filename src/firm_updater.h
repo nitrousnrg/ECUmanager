@@ -20,7 +20,7 @@
 #ifndef  UPDATER_H
 #define UPDATER_H
 
-#include <qextserialport.h>
+#include "../lib/QExtSerialPort/qextserialport.h"
 
 #include <QTimer>
 //RTS clock

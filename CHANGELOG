@@ -17,3 +17,6 @@ Almost fully multhithreaded communications.
 2010-06-27
 * Basic packet decoding
 * Compiles under windows
+
+2010-06-29
+* Libraries are now separated from my source

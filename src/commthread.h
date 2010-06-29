@@ -34,7 +34,7 @@ commthread handles all communication with the plugged device
 #include <QFile>
 #include <QVariant>
 #include <QMessageBox>
-#include <qextserialport.h>
+#include "qextserialport.h"
 
 //#include "commCore_FreeEMS.h"
 

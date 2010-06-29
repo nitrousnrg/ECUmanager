@@ -22,7 +22,7 @@
 
 #include <QWidget>
 #include <QTimer>
-#include <qextserialport.h>
+#include "qextserialport.h"
 #include <QPushButton>
 #include <QDialogButtonBox>
 #include <QGroupBox>
