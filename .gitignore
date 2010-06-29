@@ -1,13 +1,13 @@
 #Ignore the following files
 
 #binary:
-qt4application
+ECUmanager
 
 #backups:
 *~
 
 #mocs
-moc_*.cpp
+moc_*
 
 #objects:
 *.o

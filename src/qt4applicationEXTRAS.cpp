@@ -56,12 +56,89 @@ void qt4application::configureECUmanager()
 	QGridLayout *vbox1 = new QGridLayout;
 	vbox1->setColumnStretch(0,100);
 	vbox1->setRowStretch(1,100);
-	QLabel *serialPortName = new QLabel(tr("Serial Port"));
-	serialPortEdit = new QLineEdit(serialPort.name);
-	serialPortEdit->setAlignment(Qt::AlignRight);
-								 //default serial port="/dev/ttyUSB0";
-	vbox1->addWidget(serialPortName,0,0);
-	vbox1->addWidget(serialPortEdit,0,1);
+	QLabel *serialPortNameLabel = new QLabel(tr("Serial Port"));		//default serial port="/dev/ttyUSB0";
+	QLabel *serialPortBaudRateLabel = new QLabel(tr("Baudrate"));
+	QLabel *serialPortParityLabel = new QLabel(tr("Parity"));
+	QLabel *serialPortDataBitsLabel = new QLabel(tr("Data Bits"));
+	QLabel *serialPortEndBitsLabel = new QLabel(tr("End Bits"));
+
+
+	serialPortNameEdit = new QLineEdit(serialPort.name);
+	serialPortNameEdit->setAlignment(Qt::AlignRight);
+	serialPortBaudRateEdit = new QComboBox();
+	serialPortParityEdit = new QComboBox();
+	serialPortDataBitsEdit = new QComboBox();
+	serialPortEndBitsEdit = new QComboBox();
+
+	serialPortBaudRateEdit->insertItem(BAUD300,"300");
+	serialPortBaudRateEdit->insertItem(BAUD600,"600");
+	serialPortBaudRateEdit->insertItem(BAUD1200,"1200");
+	serialPortBaudRateEdit->insertItem(BAUD2400,"2400");
+	serialPortBaudRateEdit->insertItem(BAUD4800,"4800");
+	serialPortBaudRateEdit->insertItem(BAUD9600,"9600");
+	serialPortBaudRateEdit->insertItem(BAUD19200,"19200");
+	serialPortBaudRateEdit->insertItem(BAUD57600,"57600");
+	serialPortBaudRateEdit->insertItem(BAUD115200,"115200");
+
+	switch(serialPort.serialPortBaudRate)
+	{
+	case BAUD300:
+		serialPortBaudRateEdit->setCurrentIndex(0);
+		break;
+	case BAUD600:
+		serialPortBaudRateEdit->setCurrentIndex(1);
+		break;
+	case BAUD1200:
+		serialPortBaudRateEdit->setCurrentIndex(2);
+		break;
+	case BAUD2400:
+		serialPortBaudRateEdit->setCurrentIndex(3);
+		break;
+	case BAUD4800:
+		serialPortBaudRateEdit->setCurrentIndex(4);
+		break;
+	case BAUD9600:
+		serialPortBaudRateEdit->setCurrentIndex(5);
+		break;
+	case BAUD19200:
+		serialPortBaudRateEdit->setCurrentIndex(6);
+		break;
+	case BAUD57600:
+		serialPortBaudRateEdit->setCurrentIndex(7);
+		break;
+	case BAUD115200:
+		serialPortBaudRateEdit->setCurrentIndex(8);
+		break;
+	}
+
+	serialPortParityEdit->insertItem(0,"None");
+	serialPortParityEdit->insertItem(1,"Even");
+	serialPortParityEdit->insertItem(2,"Odd");
+	serialPortParityEdit->insertItem(3,"Mark");
+	serialPortParityEdit->insertItem(4,"Space");
+	serialPortParityEdit->setCurrentIndex(serialPort.serialPortParity);
+
+	serialPortDataBitsEdit->insertItem(0,"5");
+	serialPortDataBitsEdit->insertItem(1,"6");
+	serialPortDataBitsEdit->insertItem(2,"7");
+	serialPortDataBitsEdit->insertItem(3,"8");
+	serialPortDataBitsEdit->setCurrentIndex(serialPort.dataBits);
+
+	serialPortEndBitsEdit->insertItem(0,"1");
+	serialPortEndBitsEdit->insertItem(1,"1-5");
+	serialPortEndBitsEdit->insertItem(2,"2");
+	serialPortEndBitsEdit->setCurrentIndex(serialPort.stopBits);
+
+	vbox1->addWidget(serialPortNameLabel,0,0);
+	vbox1->addWidget(serialPortBaudRateLabel,1,0);
+	vbox1->addWidget(serialPortParityLabel,2,0);
+	vbox1->addWidget(serialPortDataBitsLabel,3,0);
+	vbox1->addWidget(serialPortEndBitsLabel,4,0);
+	vbox1->addWidget(serialPortNameEdit,0,1);
+	vbox1->addWidget(serialPortBaudRateEdit,1,1);
+	vbox1->addWidget(serialPortParityEdit,2,1);
+	vbox1->addWidget(serialPortDataBitsEdit,3,1);
+	vbox1->addWidget(serialPortEndBitsEdit,4,1);
 
 	/*  User interface  */
 	QGridLayout *vbox2 = new QGridLayout;
@@ -569,8 +646,8 @@ void qt4application::nitrousDialog()
 void qt4application::readSettings()
 {
 	QSettings settings("FreeEMS", "ECU manager");
-	serialPort.name = settings.value("Serial Port",QString("/dev/ttyUSB0")).toString();
-	serialPort.serialPortBaudRate = settings.value("Serial Port Baudrate",BAUD19200).toInt();
+	serialPort.name = settings.value("Serial Port Name",QString("/dev/ttyUSB0")).toString();
+	serialPort.serialPortBaudRate = settings.value("Serial Port Baudrate",BAUD115200).toInt();
 	serialPort.serialPortParity = settings.value("Serial Port Parity",PAR_NONE).toInt();
 	serialPort.dataBits = settings.value("Serial Port Data Bits",DATA_8).toInt();
 	serialPort.stopBits = settings.value("Serial Port Stop Bits",STOP_1).toInt();
@@ -610,7 +687,11 @@ void qt4application::readSettings()
 void qt4application::writeSettings()
 {
 	QSettings settings("FreeEMS", "ECU manager");
-	settings.setValue("Serial Port",serialPort.name);
+	settings.setValue("Serial Port Name",serialPort.name);
+	settings.setValue("Serial Port Baudrate",serialPort.serialPortBaudRate);
+	settings.setValue("Serial Port Parity",serialPort.serialPortParity);
+	settings.setValue("Serial Port Data Bits",serialPort.dataBits);
+	settings.setValue("Serial Port Stop Bits",serialPort.stopBits);
 	settings.setValue("Hardware Target",hardwareTarget);
 	settings.setValue("pos", pos());
 	settings.setValue("size", size());

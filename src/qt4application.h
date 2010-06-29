@@ -208,7 +208,11 @@ class qt4application:public QMainWindow
 		QLabel *InyTimelabel;
 		QLabel *Dutylabel;
 
-		QLineEdit * serialPortEdit;
+		QLineEdit * serialPortNameEdit;
+		QComboBox * serialPortBaudRateEdit;
+		QComboBox * serialPortParityEdit;
+		QComboBox * serialPortDataBitsEdit;
+		QComboBox * serialPortEndBitsEdit;
 								 //accel pump
 		QLineEdit *enrichFactorEdit;
 		QLineEdit *decayEdit;	 //accel pump

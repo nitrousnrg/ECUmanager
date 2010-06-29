@@ -39,10 +39,10 @@ bool commThread::openPort()
 	online = false;
 
 	serial = new QextSerialPort(serialPort.name);
-	serial->setBaudRate(BAUD19200);
-	serial->setParity(PAR_NONE);
-	serial->setDataBits(DATA_8);
-	serial->setStopBits(STOP_1);
+	serial->setBaudRate( (BaudRateType)serialPort.serialPortBaudRate);
+	serial->setParity( (ParityType)serialPort.serialPortParity);
+	serial->setDataBits( (DataBitsType)serialPort.dataBits);
+	serial->setStopBits( (StopBitsType)serialPort.stopBits);
 	serial->setFlowControl(FLOW_OFF);
 	serial->setTimeout(0,20);
 

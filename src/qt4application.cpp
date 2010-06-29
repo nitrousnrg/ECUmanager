@@ -1124,10 +1124,24 @@ void qt4application::acceptDialog()
 
 	if(configDialogOpen)
 	{
-		serialPort.name = serialPortEdit->text();
+		serialPort.name = serialPortNameEdit->text();
 		hardwareTarget = hardwareTargetBox->itemText(hardwareTargetBox->currentIndex());
-		qDebug()<<"EEESsste"<<hardwareTarget;
 		configDialogOpen = false;
+
+		int baudrate[9] = {BAUD300,
+						BAUD600,
+						BAUD1200,
+						BAUD2400,
+						BAUD4800,
+						BAUD9600,
+						BAUD19200,
+						BAUD57600,
+						BAUD115200};
+
+		serialPort.serialPortBaudRate = baudrate[serialPortBaudRateEdit->currentIndex()];
+		serialPort.serialPortParity = serialPortParityEdit->currentIndex();
+		serialPort.dataBits = serialPortDataBitsEdit->currentIndex();
+		serialPort.stopBits = serialPortEndBitsEdit->currentIndex();
 	}
 
 	dialog->accept();
