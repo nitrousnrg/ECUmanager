@@ -13,6 +13,7 @@ For windows users, install Qt Creator and open qt4application.pro with it. Then,
 http://qt.nokia.com/downloads
 
 In both cases, make some coffe, or take a shower... it will be compiling for a while the first time (2-5 min).
+Tip: Parallelize the compilation through N threads using "make -jN" ;-)
 
 /DataExamples/Fiat Palio FIRE lean.txt is the config file I use in my car. Try it (File->Open)
 

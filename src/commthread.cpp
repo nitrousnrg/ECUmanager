@@ -47,7 +47,6 @@ bool commThread::openPort()
 	serial->setTimeout(0,20);
 
 	qDebug() << "Listening on " << serialPort.name;
-	//qDebug( serialPort.latin1());
 	buffer = "";
 
 	if(serial->open(QIODevice::ReadWrite))
@@ -280,16 +279,6 @@ void commThread::read_PIC_data()
 }
 
 
-/* This is the biggest TODO: Create the interface between packet reception and the GUI
-   I have to make FreeEMS speak, its not a matter of just listen. This happens when I "connect" the device,
-   just to make the gauges show something.
-
-   How to?
-	*Create a timer that periodically makes ECUmanager send request packets.
-	*Create a timer that periodically reads from the serial port, extracting packets.
-	*Decode the packet and present information.
-
-*/
 void commThread::read_FreeEMS_data()
 {
 	readPeriodicDataResponse();
@@ -306,9 +295,9 @@ void commThread::sendPeriodicDataRequest()
 
 void commThread::readPeriodicDataResponse()
 {
-	if( serial->bytesAvailable() > 700)
+	//if( serial->bytesAvailable() > 700)
 	{
-		QByteArray buffer = serial->read(serial->bytesAvailable());
+		buffer = serial->read(serial->bytesAvailable());
 		int index;
 
 
@@ -327,7 +316,7 @@ void commThread::readPeriodicDataResponse()
 			if(packetStart == -1)
 				packetStart = 0;
 			decodeFreeEMSPacket(buffer.mid(packetStart, index + 1 - packetStart));
-			qDebug()<<"buffer = "<<buffer.mid(packetStart, index + 1 - packetStart).toHex();
+//			qDebug()<<"buffer = "<<buffer.mid(packetStart, index + 1 - packetStart).toHex();
 			buffer.remove(0,index+1);		//extract the decoded packet from the buffer.
 		}
 	}
@@ -346,6 +335,7 @@ void commThread::decodeFreeEMSPacket(QByteArray buffer)
 		qDebug("bad packet");
 		return;
 	}
+	qDebug("good packet");
 
 	char *payload;
 	char *payloadIndex;
@@ -353,9 +343,6 @@ void commThread::decodeFreeEMSPacket(QByteArray buffer)
 	switch(packet.getPayloadID())
 	{
 		case responseBasicDatalog:
-			qDebug("basic datalog received");
-
-
 			payload = packet.getPayload().data();
 			payloadIndex = payload;
 			memcpy(CoreVars,payloadIndex,sizeof(CoreVar));
@@ -363,9 +350,6 @@ void commThread::decodeFreeEMSPacket(QByteArray buffer)
 			memcpy(DerivedVars,payloadIndex,sizeof(DerivedVar));
 			payloadIndex += sizeof(DerivedVar);
 			memcpy(ADCArrays,payloadIndex,sizeof(ADCArray));
-			qDebug("\nRPM = %d\nMAP = %f", CoreVars->RPM,(float)CoreVars->MAP/512);
-			qDebug("\nMAT = %f\nCHT = %f", (float)CoreVars->MAT/512,(float)CoreVars->CHT/512);
-			qDebug("\nTPS = %f\nFinalPW = %f", (float)CoreVars->TPS/512,(float)DerivedVars->FinalPW/512);
 
 			channel[RPM] = CoreVars->RPM;
 			channel[MAP] = CoreVars->MAP/512;

@@ -233,7 +233,20 @@ bool aPacket::removeEscape()
    otherwise, the packet is corrupted and check returns false */
 bool aPacket::check()
 {
-	return true;
+	/*calculate checksum: it includes the header, adrress/length, payloadID and payload.
+	 i.e., the fullPacket but the last byte	 */
+	unsigned char sum=0;
+	int i;
+	for(i=0; i < (fullPacket.size() -1); ++i)
+		sum += fullPacket.at(i);
+
+	if(sum == (unsigned char)fullPacket.at(i))
+		return true;		/*Correct checksum*/
+	else
+	{
+		qDebug("bad checksum:\ncalculated: %x\tgot:%x",sum,fullPacket.at(i));
+		return false;		/*Bad Checksum*/
+	}
 }
 
 void aPacket::setChecksum()
