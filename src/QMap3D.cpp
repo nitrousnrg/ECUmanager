@@ -24,6 +24,7 @@
 // #include <qwt3d_function.h>
 #include <QMap3D.h>
 #include <QColorDialog>
+#include <QStyle>
 
 // using namespace Qwt3D;
 /*
@@ -63,7 +64,8 @@ QMap3D::QMap3D()
 
 	RGBA rgb = Qt2GL(QColor(210,209,208));
 	setBackgroundColor(rgb);
-	setTitle("VE");
+	//setTitle("VE");
+
 	//coordinates()->axes[X1].setLabelString("MAP");
 	//coordinates()->axes[Y1].setLabelString("RPM");
 
@@ -85,6 +87,12 @@ QMap3D::QMap3D()
 
 	updateData();
 	updateGL();
+}
+
+void QMap3D::setBackground(QColor color)
+{
+	RGBA rgb = Qt2GL(color);
+	setBackgroundColor(rgb);
 }
 
 

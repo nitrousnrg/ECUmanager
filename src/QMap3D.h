@@ -40,6 +40,7 @@ class QMap3D: public SurfacePlot
 		QSize minimumSizeHint() const;
 		QSize sizeHint() const;
 		bool loadData(double data,int, int);
+		void setBackground(QColor color);
 		void update();
 
 };

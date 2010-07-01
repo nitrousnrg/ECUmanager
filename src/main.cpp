@@ -20,17 +20,16 @@
 
 #include <QApplication>
 #include "qt4application.h"
-
 int main(int argc, char *argv[])
 {
 	Q_INIT_RESOURCE(application);
 	QApplication app(argc, argv);
-
+	QPalette  appPalette = app.palette();
 	//QTranslator translator;
 	//translator.load("/home/marcos/.config/MyEnterprise/ECUmanager_spanish");
 	//app.installTranslator(&translator);
 
-	qt4application * mw = new qt4application();
+	qt4application * mw = new qt4application(appPalette);
 	mw->show();
 	return app.exec();
 }

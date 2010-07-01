@@ -20,7 +20,7 @@
 
 #include "qt4application.h"
 
-qt4application::qt4application()
+qt4application::qt4application(QPalette appPalette)
 {
 	//init!
 	RPM.entero = 0;
@@ -100,6 +100,7 @@ qt4application::qt4application()
 	logbuffer[3] = 60;
 
 	map3D = new QMap3D();		 //This is the openGL 3D surface.
+	map3D->setBackground(appPalette.button().color());
 
 	for(int row = 0;row<12;++row)
 		for(int column = 0;column<21;++column)
@@ -138,7 +139,7 @@ qt4application::qt4application()
 }
 
 
-void qt4application::refresh()	 //Here every data (bars, gauges, plots) is updated every 100msec
+void qt4application::refresh()	 //Here all data (bars, gauges, plots) is updated every 100msec
 {
 	if( plot1 != NULL )			 //Viewer was opened
 	{

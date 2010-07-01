@@ -24,7 +24,6 @@
 #define QT4APPLICATION_H
 
 #include <QtGui>
-
 #include <QMainWindow>
 #include <QCloseEvent>
 #include "qextserialport.h"
@@ -63,7 +62,7 @@ class qt4application:public QMainWindow
 	Q_OBJECT
 
 		public:
-		qt4application();
+		qt4application(QPalette appPalette);
 		~qt4application();
 
 	protected:

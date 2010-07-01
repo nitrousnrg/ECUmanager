@@ -253,7 +253,7 @@ void aPacket::setChecksum()
 {
 	unsigned char sum = 0;
 	for( int i=0; i<fullPacket.size(); i++ )
-		sum += fullPacket[i];
+		sum += (unsigned char)fullPacket[i];
 	fullPacket.append(sum);
 }
 

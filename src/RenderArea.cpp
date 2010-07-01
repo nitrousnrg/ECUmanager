@@ -31,7 +31,6 @@
 RenderArea::RenderArea(QWidget *parent,int limit, int redLine, int initialAngle, int finalAngle)
 : QWidget(parent)
 {
-	setBackgroundRole(QPalette::Base);
 	setAutoFillBackground(false);
 	Limit = limit/1000;
 	RedLine = redLine/1000;
