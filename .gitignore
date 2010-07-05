@@ -12,3 +12,9 @@ moc_*
 
 #objects:
 *.o
+
+#my config file
+qt4application.pro.*
+
+#Ignore the following directories
+screenshots/

@@ -29,6 +29,7 @@ void qt4application::createVEtable()
 	QStringList RPMheader;
 	QStringList MAPheader;
 	QString num;
+//	VEtableItem = new QTableWidgetItem[25][25];
 	headerTableRPM = new QTableWidget(1,21);
 	headerTableMAP = new QTableWidget(1,21);
 	headerContentsRPM = new QTableWidgetItem[21];

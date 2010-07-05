@@ -46,9 +46,6 @@ bool commThread::openPort()
 	serial->setFlowControl(FLOW_OFF);
 	serial->setTimeout(0,20);
 
-	qDebug() << "Listening on " << serialPort.name;
-	buffer = "";
-
 	if(serial->open(QIODevice::ReadWrite))
 	{
 		timer->start();
@@ -278,22 +275,7 @@ void commThread::read_PIC_data()
 	buffer.clear();
 }
 
-
 void commThread::read_FreeEMS_data()
-{
-	readPeriodicDataResponse();
-}
-
-
-void commThread::sendPeriodicDataRequest()
-{
-	aPacket packet;
-	packet.setPacket("soy un paquete");
-	//serial->write(packet.getPacket());
-}
-
-
-void commThread::readPeriodicDataResponse()
 {
 	if( serial->bytesAvailable() > 700)
 	{
@@ -306,12 +288,12 @@ void commThread::readPeriodicDataResponse()
 		buffer = datalogFile.readAll();
 		datalogFile.close();
 */
-		//this Way I will lose bytes!
+
 		// search occurrences of the end character (0xCC) from the beggining.
 		while( (index = buffer.indexOf(0xCC, 0) ) != -1)
 		{
-			//Start from the end byte. Extract from the last occurence of a start byte, to the first occurence of the end byte
-			//and pass that string to decodeFreeEMSPacket()
+			/*Start from the end byte. Extract from the last occurence of a start byte, to the first occurence of the end byte
+			and pass that string to decodeFreeEMSPacket() */
 			int packetStart = buffer.lastIndexOf(0xAA,index);
 			if(packetStart == -1)
 				packetStart = 0;
@@ -330,11 +312,8 @@ void commThread::decodeFreeEMSPacket(QByteArray buffer)
 
 
 	aPacket packet;
-	if( !packet.setPacket(buffer) )
-	{
-		qDebug("bad packet");
-		return;
-	}
+	if( packet.setPacket(buffer) )
+		return;		//bad packet
 	//qDebug("good packet");
 
 	char *payload;

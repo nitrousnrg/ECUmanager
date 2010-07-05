@@ -11,16 +11,15 @@ aPacket::aPacket()
 }
 
 
-bool aPacket::setPacket(QByteArray newPacket)
+int aPacket::setPacket(QByteArray newPacket)
 {
 	fullPacket = newPacket;
-	if(removeEscape() == false)
-		return false;
-	if( check() == false )
-	{
-		qDebug("Packet corrupted (bad checksum)");
-		return false;
-	}
+
+	if(int error = removeEscape())
+		return error;
+	if(int error = check() )
+		return error;
+
 	headerFlags = fullPacket[0];
 	payloadID = (unsigned char)fullPacket[1]*256 + (unsigned char)fullPacket.at(2);
 
@@ -37,15 +36,14 @@ bool aPacket::setPacket(QByteArray newPacket)
 	}
 	payload = fullPacket.mid(index,payloadLength);
 	if((unsigned int)fullPacket.size() != (index + payloadLength + 1))
-		qDebug("Wrong payload size");
+		return payload_size_inconsistency;
+
 	//success!
-	return true;
+	return 0;
 }
 
 QByteArray aPacket::getPacket()
-{
-	return fullPacket;
-}
+{	return fullPacket;	}
 
 
 void aPacket::setHeaderAckFlag(bool bit)
@@ -58,9 +56,7 @@ void aPacket::setHeaderAckFlag(bool bit)
 
 
 bool aPacket::hasHeaderAckFlag()
-{
-	return headerFlags &= 0x40;
-}
+{	return headerFlags &= 0x40;	}
 
 
 void aPacket::setHeaderLengthFlag(bool bit)
@@ -73,40 +69,27 @@ void aPacket::setHeaderLengthFlag(bool bit)
 
 
 bool aPacket::hasHeaderLengthFlag()
-{
-	return headerFlags &= 0x10;
-}
+{	return headerFlags &= 0x10;	}
 
 
 unsigned int aPacket::getPayloadID()
-{
-								 //2nd and 3rd bytes correspond to the payloadID *always*
-	return payloadID;
-}
+{	return payloadID;	}
 
 
 void aPacket::setPayloadID(unsigned int newID)
-{
-	payloadID = newID;
-}
+{	payloadID = newID;	}
 
 
 void aPacket::setPayload(QByteArray newPayload)
-{
-	payload = newPayload;
-}
+{	payload = newPayload;	}
 
 
 QByteArray aPacket::getPayload()
-{
-	return payload;
-}
+{	return payload;	}
 
 
 void aPacket::setPayloadLength(int newLength)
-{
-	payloadLength = newLength;
-}
+{	payloadLength = newLength;	}
 
 
 unsigned int aPacket::getPayloadLength()
@@ -125,9 +108,7 @@ unsigned int aPacket::getPayloadLength()
 
 
 int aPacket::getCalculatedPayloadLength()
-{
-	return payload.size();
-}
+{	return payload.size();	}
 
 
 void aPacket::buildPacket()
@@ -149,73 +130,58 @@ void aPacket::buildPacket()
 void aPacket::addEscape()	 //to send trough RS232 we need to add start/stop bytes
 {
 	/* add escaping scheme */
-	char startPair[2];
-	char escapePair[2];
-	char endPair[2];
+	const char escapedStart[2]  = {0xBB,0x55};
+	const char escapedEscape[2] = {0xBB,0x44};
+	const char escapedEnd[2] = {0xBB,0x33};
+	const char start  = 0xAA;
+	const char escape = 0xBB;
+	const char end = 0xCC;
 
-	startPair[0] = 0xBB;
-	startPair[1] = 0x55;
-	escapePair[0] = 0xBB;
-	escapePair[1] = 0x44;
-	endPair[0] = 0xBB;
-	endPair[1] = 0x33;
+	/*replace start byte with the respective start pair*/
+	fullPacket.replace(start, escapedStart);
+	fullPacket.replace(escape, escapedEscape);
+	fullPacket.replace(end, escapedEnd);
 
-								 //replace start byte with the respective start pair
-	fullPacket.replace(0xAA, startPair);
-	fullPacket.replace(0xBB, escapePair);
-	fullPacket.replace(0xCC, endPair);
-
-	fullPacket.prepend(0xAA);	 //prepend a start byte
-	fullPacket.append(0xCC);	 //append an end byte
+	/* Add start and end bytes to the stream */
+	fullPacket.prepend(0xAA);
+	fullPacket.append(0xCC);
 
 	/* the packet is now ready to send */
-
 }
 
 
-bool aPacket::removeEscape()
+int aPacket::removeEscape()
 {
-	/* remove escaping scheme */
+	const char escapedStart[2]  = {0xBB,0x55};
+	const char escapedEscape[2] = {0xBB,0x44};
+	const char escapedEnd[2] = {0xBB,0x33};
+	const char start  = 0xAA;
+	const char escape = 0xBB;
+	const char end = 0xCC;
 
-	QByteArray escapedStart;
-	escapedStart[0] = 0xBB;
-	escapedStart[1] = 0x55;
-	QByteArray start;
-	start[0] = 0xAA;
-
-	QByteArray escapedEscape;
-	escapedEscape[0] = 0xBB;
-	escapedEscape[1] = 0x44;
-	QByteArray escape;
-	escape[0] = 0xBB;
-
-	QByteArray escapedEnd;
-	escapedEnd[0] = 0xBB;
-	escapedEnd[1] = 0x33;
-	QByteArray end;
-	end[0] = 0xCC;
-
-	//Check if it is a valid scaping scheme. It must have both start and end chars
-	if((fullPacket.count(0xAA) ) != 1)
+	/* Check if it is a valid scaping scheme. It must have both start and end chars */
+	if((fullPacket.count(start) ) != 1)
+		return start_byte_inconsistency;
+	if((fullPacket.count(end) ) != 1)
+		return stop_byte_inconsistency;
+	/* 0xBB can only be followed by 0x55,0x44 or 0x33, but that error is detected in the checksum too*/
+	/*while(index = fullPacket.indexOf(escape) != -1)
 	{
-		qDebug("0xAA Escape characters inconsistency (%d)",fullPacket.count(0xAA) );
-		return false;
-	}
-	if((fullPacket.count(0xCC) ) != 1)
-	{
-		qDebug("0xCC Escape characters inconsistency (%d)",fullPacket.count(0xCC));
-		return false;
-	}
+		char byte = fullPacket.at(index);
+		if( (byte == 0x55)	&& (byte == 0x44) && (byte == 0x33))
+			return;
+	}*/
 
-	fullPacket.replace(escapedStart, start);
-	fullPacket.replace(escapedEscape, escape);
-	fullPacket.replace(escapedEnd, end);
+	/* Replace the escaped byte pairs with the original bytes */
+	fullPacket.replace(escapedStart, &start);
+	fullPacket.replace(escapedEscape, &escape);
+	fullPacket.replace(escapedEnd, &end);
 
-								 //remove start byte (0xAA = start)
+	/* Remove start and end bytes */
 	fullPacket= fullPacket.right(fullPacket.size()-1);
-	fullPacket.chop(1);			 //remove last byte (0xCC = end)
+	fullPacket.chop(1);
 	
-	return true;
+	return 0;
 }
 
 
@@ -231,7 +197,7 @@ bool aPacket::removeEscape()
 
 /* If the checksum, payload length and escaping characters make sense, the packet is correct and check() returns true
    otherwise, the packet is corrupted and check returns false */
-bool aPacket::check()
+int aPacket::check()
 {
 	/*calculate checksum: it includes the header, adrress/length, payloadID and payload.
 	 i.e., the fullPacket but the last byte	 */
@@ -241,11 +207,11 @@ bool aPacket::check()
 		sum += fullPacket.at(i);
 
 	if(sum == (unsigned char)fullPacket.at(i))
-		return true;		/*Correct checksum*/
+		return 0;		/*Correct checksum*/
 	else
 	{
 		qDebug("bad checksum:\ncalculated: %x\tgot:%x",sum,fullPacket.at(i));
-		return false;		/*Bad Checksum*/
+		return checksum_error;		/*Bad Checksum*/
 	}
 }
 

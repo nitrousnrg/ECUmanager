@@ -47,7 +47,7 @@ class aPacket
 {
 	public:
 		aPacket();
-		bool setPacket(QByteArray);
+		int setPacket(QByteArray);
 		QByteArray getPacket();
 		void setHeaderAckFlag(bool);
 		bool hasHeaderAckFlag();
@@ -61,11 +61,11 @@ class aPacket
 		unsigned int  getPayloadLength();
 		int  getCalculatedPayloadLength();
 		//   unsigned char checksum(QByteArray data);
-		bool check();
+		int check();
 		void setChecksum();
 		void buildPacket();
 		void addEscape();	 //to send through rs232
-		bool removeEscape();	 //to be parsed after rs232
+		int removeEscape();	 //to be parsed after rs232
 
 	private:
 		unsigned char headerFlags;
@@ -122,8 +122,6 @@ class commThread : public QThread
 		/*FreeEMS stuff */
 		void getInterfaceVersion();
 		void getFirmwareVersion();
-		void sendPeriodicDataRequest();
-		void readPeriodicDataResponse();
 		void decodeFreeEMSPacket(QByteArray buffer);
 		void sendFreeEMSDatalogRequest();
 

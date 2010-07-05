@@ -320,4 +320,12 @@ typedef struct {
 	unsigned char Values[TWODTABLEUC_LENGTH];
 } twoDTableUC;
 
+/* ECUmanager error codes for protocol */
+#define start_byte_inconsistency 1
+#define stop_byte_inconsistency 2
+#define escape_byte_inconsistency 3
+#define checksum_error 4
+#define payload_size_inconsistency 5
+
+
 #endif // FREEEMSSTRUCTS_H

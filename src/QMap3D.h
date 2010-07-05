@@ -34,13 +34,12 @@ class QMap3D: public SurfacePlot
 			int entero;
 		};
 	public:
-		QMap3D();
+		QMap3D(QPalette palette);
 		~QMap3D();
 
 		QSize minimumSizeHint() const;
 		QSize sizeHint() const;
 		bool loadData(double data,int, int);
-		void setBackground(QColor color);
 		void update();
 
 };

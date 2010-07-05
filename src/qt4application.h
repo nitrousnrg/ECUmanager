@@ -175,9 +175,9 @@ class qt4application:public QMainWindow
 		QTableWidget *fuelAdvTable;
 		QTableWidget *packetTable;
 
-		QTableWidgetItem VEtableItem[16][25];
-		QTableWidgetItem ignTableItem[12][21];
-		QTableWidgetItem fuelAdvTableItem[12];
+		QTableWidgetItem VEtableItem[25][25];
+		QTableWidgetItem ignTableItem[25][25];
+		QTableWidgetItem fuelAdvTableItem[25];
 		QTableWidget *headerTableRPM;
 		QTableWidget *headerTableMAP;
 		QTableWidgetItem *packetTableItem;

@@ -99,8 +99,11 @@ qt4application::qt4application(QPalette appPalette)
 	logbuffer[2] = 60;
 	logbuffer[3] = 60;
 
-	map3D = new QMap3D();		 //This is the openGL 3D surface.
-	map3D->setBackground(appPalette.button().color());
+	map3D = new QMap3D(appPalette);		 //This is the openGL 3D surface.
+
+
+//	map3D->setBackground(appPalette.button().color());
+//	map3D->setBackground(QColor(210,209,208));//comment this for a better backgrpund integration
 
 	for(int row = 0;row<12;++row)
 		for(int column = 0;column<21;++column)
@@ -730,14 +733,13 @@ void qt4application::process_line(QByteArray line,int i)
 			QColor cellColor;
 			cellColor.setHsv( (1000 - VEtable[row][column].entero) / 3, 230, 200);
 			VEtableItem[row][column].setBackground(QBrush(cellColor) );
-
 			VE_table->setItem(row,column,&(VEtableItem[row][column]));
-
 		}
 		for(int row = 0;row<12;++row)
 			for(int column = 0;column<21 ;++column)
 				map3D->loadData((double)VEtable[row][column].entero/100,row,column);
 		VE_table_ON = true;
+
 	}
 
 	if(i>=17 && i<29)

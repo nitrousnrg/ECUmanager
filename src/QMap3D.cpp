@@ -51,7 +51,7 @@
   };
 */
 
-QMap3D::QMap3D()
+QMap3D::QMap3D(QPalette palette)
 {
 
 	dataTable = (double **) malloc(12*sizeof(double*));
@@ -62,7 +62,9 @@ QMap3D::QMap3D()
 			dataTable[row][col]=0;
 	//loadFromData(dataTable,12,21,0,21,0,12);
 
-	RGBA rgb = Qt2GL(QColor(210,209,208));
+
+	RGBA rgb = Qt2GL(palette.window().color());
+	//RGBA rgb = Qt2GL(QColor(210,209,208));
 	setBackgroundColor(rgb);
 	//setTitle("VE");
 
@@ -87,12 +89,6 @@ QMap3D::QMap3D()
 
 	updateData();
 	updateGL();
-}
-
-void QMap3D::setBackground(QColor color)
-{
-	RGBA rgb = Qt2GL(color);
-	setBackgroundColor(rgb);
 }
 
 
