@@ -181,7 +181,7 @@ class commThread : public QThread
 			unsigned int deadTime;
 
 			unsigned char accel_pump_source;
-			unsigned char accel_pump_treshold;
+			unsigned char accel_pump_threshold;
 			unsigned char accel_pump_decay;
 			unsigned char accel_pump_enrich_factor;
 

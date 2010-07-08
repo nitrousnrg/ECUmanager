@@ -216,7 +216,7 @@ class qt4application:public QMainWindow
 		QLineEdit *enrichFactorEdit;
 		QLineEdit *decayEdit;	 //accel pump
 								 //accel pump
-		QLineEdit *accelTresholdEdit;
+		QLineEdit *accelThresholdEdit;
 		QLineEdit *editDisplacement;
 		QLineEdit *editCyl;
 		QLineEdit *editIdle;
@@ -306,7 +306,7 @@ class qt4application:public QMainWindow
 			unsigned int deadTime;
 
 			unsigned char accel_pump_source;
-			unsigned char accel_pump_treshold;
+			unsigned char accel_pump_threshold;
 			unsigned char accel_pump_decay;
 			unsigned char accel_pump_enrich_factor;
 

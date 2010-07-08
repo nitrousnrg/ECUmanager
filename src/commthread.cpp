@@ -578,7 +578,7 @@ void commThread::process_line(QByteArray line,int i)
 	if(i==87)
 	{
 		char rockandrollnenene[15];
-		sscanf(line,"%[^\t]%c",(char*)rockandrollnenene,&(confParameter.accel_pump_treshold));
+		sscanf(line,"%[^\t]%c",(char*)rockandrollnenene,&(confParameter.accel_pump_threshold));
 	}
 	if(i==88)
 	{
@@ -742,7 +742,7 @@ void commThread::sendFile()
 
 	if( byteCounter == 1073 )
 	{
-		;						 //	const char dato = confParameter.accel_pump_treshold;
+		;						 //	const char dato = confParameter.accel_pump_threshold;
 		//		serial->write(&dato,1);
 	}
 

@@ -19,4 +19,8 @@ Almost fully multhithreaded communications.
 * Compiles under windows
 
 2010-06-29
-* Libraries are now separated from my source
+* Libraries are now separated from the source
+
+2010-07-07
+* Configurable serial port
+* deb package created

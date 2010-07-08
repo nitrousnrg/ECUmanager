@@ -65,7 +65,7 @@ qt4application::qt4application(QPalette appPalette)
 	for(int i=0; i<12; ++i)
 		confParameter.headerMAP[i] = 10*i+20;
 
-	confParameter.accel_pump_treshold = 100;
+	confParameter.accel_pump_threshold = 100;
 	confParameter.accel_pump_enrich_factor = 0;
 	confParameter.accel_pump_decay = 0;
 
@@ -901,7 +901,7 @@ void qt4application::process_line(QByteArray line,int i)
 	if(i==87)
 	{
 		char rockandrollnenene[15];
-		sscanf(line,"%[^\t]%c",rockandrollnenene,&(confParameter.accel_pump_treshold));
+		sscanf(line,"%[^\t]%c",rockandrollnenene,&(confParameter.accel_pump_threshold));
 	}
 	if(i==88)
 	{
@@ -1015,8 +1015,8 @@ bool qt4application::saveFile(const QString &fileName)
 		file.write("MAP\n");
 	else
 		file.write("TPS\n");
-	file.write("Treshold:\t");
-	file.write(array.setNum(confParameter.accel_pump_treshold)+"\n");
+	file.write("Threshold:\t");
+	file.write(array.setNum(confParameter.accel_pump_threshold)+"\n");
 	file.write("Decay:\t\t");
 	file.write(array.setNum(confParameter.accel_pump_decay)+"\n");
 	file.write("Amplifier:\t");
@@ -1093,8 +1093,8 @@ void qt4application::acceptDialog()
 		string1 = decayEdit->text();
 		confParameter.accel_pump_decay = string1.toUInt();
 
-		string1 = accelTresholdEdit->text();
-		confParameter.accel_pump_treshold = string1.toUInt();
+		string1 = accelThresholdEdit->text();
+		confParameter.accel_pump_threshold = string1.toUInt();
 		accelEnrichDialogOpen = false;
 
 	}

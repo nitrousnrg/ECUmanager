@@ -871,10 +871,8 @@ bool Posix_QextSerialPort::open(OpenMode mode)
 	{
 		/*open the port*/
 		Posix_File->setFileName(port);
-		qDebug("Trying to open File");
 		if (Posix_File->open(QIODevice::ReadWrite|QIODevice::Unbuffered))
 		{
-			qDebug("Opened File succesfully");
 			/*set open mode*/
 			QIODevice::open(mode);
 
@@ -899,10 +897,6 @@ bool Posix_QextSerialPort::open(OpenMode mode)
 			setFlowControl(Settings.FlowControl);
 			setTimeout(Settings.Timeout_Sec, Settings.Timeout_Millisec);
 			tcsetattr(Posix_File->handle(), TCSAFLUSH, &Posix_CommConfig);
-		}
-		else
-		{
-			qDebug("Could not open File! Error code : %d", Posix_File->error());
 		}
 	}
 	UNLOCK_MUTEX();

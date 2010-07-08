@@ -492,13 +492,13 @@ void qt4application::accelDialog()
 	QPixmap image(":/step_response.png");
 
 	QLabel *imageLabel = new QLabel;
-	QLabel *tresholdLabel = new QLabel("Treshold (kPa/sec)");
+	QLabel *thresholdLabel = new QLabel("Threshold (kPa/sec)");
 	QLabel *initialEnrichLabel = new QLabel("Initial enrichment factor");
 	QLabel *decayLabel = new QLabel("Decay (revs)");
 
 	enrichFactorEdit = new QLineEdit(string1.setNum(confParameter.accel_pump_enrich_factor));
 	decayEdit = new QLineEdit(string1.setNum(confParameter.accel_pump_decay));
-	accelTresholdEdit = new QLineEdit(string1.setNum(confParameter.accel_pump_treshold));
+	accelThresholdEdit = new QLineEdit(string1.setNum(confParameter.accel_pump_threshold));
 
 	QRadioButton *MAPradio = new QRadioButton(tr("MAP"));
 	QRadioButton *TPSradio = new QRadioButton(tr("TPS"));
@@ -508,8 +508,8 @@ void qt4application::accelDialog()
 	else
 		TPSradio->setChecked(true);
 
-	grid->addWidget(tresholdLabel,2,0);
-	grid->addWidget(accelTresholdEdit,2,1);
+	grid->addWidget(thresholdLabel,2,0);
+	grid->addWidget(accelThresholdEdit,2,1);
 	grid->addWidget(initialEnrichLabel,3,0);
 	grid->addWidget(enrichFactorEdit,3,1);
 	grid->addWidget(decayLabel,4,0);

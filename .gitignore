@@ -18,3 +18,7 @@ qt4application.pro.*
 
 #Ignore the following directories
 screenshots/
+
+#ignore debian packaging
+debian/
+*.deb
