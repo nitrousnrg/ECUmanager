@@ -28,7 +28,7 @@ void qt4application::configureECUmanager()
 	dialog->setModal(true);
 	//nitrousDialogOpen = true;
 	dialog->setSizeGripEnabled(false);
-	dialog->resize(380,360);
+	dialog->resize(480,360);
 	dialog->setWindowTitle(tr("Configure ECU manager"));
 	configDialogOpen = true;
 

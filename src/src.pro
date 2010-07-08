@@ -104,7 +104,6 @@ CONFIG += warn_on \
     thread \
     qt \
     debug \
-    opengl
 TARGET = ../bin/ECUmanager
 RESOURCES = application.qrc
 LIBS += -L/usr/lib

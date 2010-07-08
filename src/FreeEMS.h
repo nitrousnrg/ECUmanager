@@ -321,11 +321,19 @@ typedef struct {
 } twoDTableUC;
 
 /* ECUmanager error codes for protocol */
-#define start_byte_inconsistency 1
-#define stop_byte_inconsistency 2
-#define escape_byte_inconsistency 3
-#define checksum_error 4
-#define payload_size_inconsistency 5
+#define start_byte_inconsistency_error 1
+#define stop_byte_inconsistency_error 2
+#define escape_byte_inconsistency_error 3
+#define bad_checksum_error 4
+#define payload_size_inconsistency_error 5
 
 
+typedef struct {
+	unsigned long good;
+	unsigned long start_byte_inconsistency;
+	unsigned long stop_byte_inconsistency;
+	unsigned long escape_byte_inconsistency;
+	unsigned long bad_checksum;
+	unsigned long payload_size_inconsistency;
+}statistic_t;
 #endif // FREEEMSSTRUCTS_H

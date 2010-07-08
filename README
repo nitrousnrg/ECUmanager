@@ -1,6 +1,7 @@
+To install ECUmanager in a x86 debian/ubuntu box, use the deb package available in the Downloads section.
+
 ECUmanager uses Qt4, so you need to have installed libqt4-dev in order to compile it under gnu/linux.
 
-apt-get install qt4-qmake
 apt-get install libqt4-dev
 
 If you use QtCreator, just open qt4application.pro, and enjoy.

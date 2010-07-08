@@ -91,7 +91,7 @@ class commThread : public QThread
 {
 	Q_OBJECT
 		public:
-		commThread(){serial=0;logging=0;};
+		commThread();
 		bool openPort();
 		void run();
 								 //needed before run()
@@ -150,6 +150,8 @@ class commThread : public QThread
 		int byteCounter;
 		int available;
 		char logbuffer[4];
+
+		statistic_t communicationStatistics;
 
 		union  transformer
 		{

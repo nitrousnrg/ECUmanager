@@ -24,3 +24,10 @@ Almost fully multhithreaded communications.
 2010-07-07
 * Configurable serial port
 * deb package created
+
+2010-07-08
+* Compiled in debug mode, then stripped to be lintian compliant.
+* man page created
+* changelog for debian package created. It must be merged with this changelog eventually.
+* lintian compliant!
+* wider config dialog

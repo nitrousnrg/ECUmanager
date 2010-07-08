@@ -36,7 +36,7 @@ int aPacket::setPacket(QByteArray newPacket)
 	}
 	payload = fullPacket.mid(index,payloadLength);
 	if((unsigned int)fullPacket.size() != (index + payloadLength + 1))
-		return payload_size_inconsistency;
+		return payload_size_inconsistency_error;
 
 	//success!
 	return 0;
@@ -161,9 +161,9 @@ int aPacket::removeEscape()
 
 	/* Check if it is a valid scaping scheme. It must have both start and end chars */
 	if((fullPacket.count(start) ) != 1)
-		return start_byte_inconsistency;
+		return start_byte_inconsistency_error;
 	if((fullPacket.count(end) ) != 1)
-		return stop_byte_inconsistency;
+		return stop_byte_inconsistency_error;
 	/* 0xBB can only be followed by 0x55,0x44 or 0x33, but that error is detected in the checksum too*/
 	/*while(index = fullPacket.indexOf(escape) != -1)
 	{
@@ -211,7 +211,7 @@ int aPacket::check()
 	else
 	{
 		qDebug("bad checksum:\ncalculated: %x\tgot:%x",sum,fullPacket.at(i));
-		return checksum_error;		/*Bad Checksum*/
+		return bad_checksum_error;		/*Bad Checksum*/
 	}
 }
 

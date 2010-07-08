@@ -22,6 +22,19 @@
 /* write down here all communications protocols.
 los datos deben salir por algn lado hacia qt4application. TODO: send 'U' when escaping */
 
+commThread::commThread()
+{
+	/* Initialize variables */
+	serial=0;
+	logging=0;
+	communicationStatistics.good = 0;
+	communicationStatistics.start_byte_inconsistency = 0;
+	communicationStatistics.stop_byte_inconsistency = 0;
+	communicationStatistics.escape_byte_inconsistency = 0;
+	communicationStatistics.bad_checksum = 0;
+	communicationStatistics.payload_size_inconsistency = 0;
+}
+
 void commThread::run()
 {
 	exec();
@@ -289,7 +302,7 @@ void commThread::read_FreeEMS_data()
 		datalogFile.close();
 */
 
-		// search occurrences of the end character (0xCC) from the beggining.
+		/* search occurrences of the end character (0xCC) from the beggining. */
 		while( (index = buffer.indexOf(0xCC, 0) ) != -1)
 		{
 			/*Start from the end byte. Extract from the last occurence of a start byte, to the first occurence of the end byte
@@ -310,11 +323,30 @@ void commThread::decodeFreeEMSPacket(QByteArray buffer)
 	DerivedVar *DerivedVars = (DerivedVar *)malloc(sizeof(DerivedVar));;
 	ADCArray *ADCArrays = (ADCArray *)malloc(sizeof(ADCArray));;
 
-
 	aPacket packet;
-	if( packet.setPacket(buffer) )
+	if( int error = packet.setPacket(buffer) )
+	{
+		switch(error)
+		{
+		case start_byte_inconsistency_error:
+			++ communicationStatistics.start_byte_inconsistency;
+			break;
+		case stop_byte_inconsistency_error:
+			++ communicationStatistics.stop_byte_inconsistency;
+			break;
+		case escape_byte_inconsistency_error:
+			++ communicationStatistics.escape_byte_inconsistency;
+			break;
+		case bad_checksum_error:
+			++ communicationStatistics.bad_checksum;
+			break;
+		case payload_size_inconsistency_error:
+			++ communicationStatistics.payload_size_inconsistency;
+			break;
+		}
 		return;		//bad packet
-	//qDebug("good packet");
+	}
+	++ communicationStatistics.good;
 
 	char *payload;
 	char *payloadIndex;
