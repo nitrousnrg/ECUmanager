@@ -241,6 +241,7 @@ void qt4application::setMainTableSize()
 	connect(dialog, SIGNAL(rejected()), this, SLOT(acceptDialog()));
 
 	headerTableRPM->setRowHeight(0,18);
+	headerTableRPM->setInputMethodHints(Qt::ImhFormattedNumbersOnly);
 	for(int i=0; i<21; ++i)
 	{
 		headerContentsRPM[i].setText(num.setNum(confParameter.headerRPM[i]));
@@ -249,6 +250,7 @@ void qt4application::setMainTableSize()
 	}
 
 	headerTableMAP->setRowHeight(0,18);
+	headerTableMAP->setInputMethodHints(Qt::ImhFormattedNumbersOnly);
 	for(int i=0; i<21; ++i)
 	{
 		headerContentsMAP[i].setText(num.setNum(confParameter.headerMAP[i]));

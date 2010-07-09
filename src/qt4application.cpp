@@ -410,6 +410,18 @@ void qt4application::checkChange(QTableWidgetItem *item)
 {
 	int row = item->row();
 	int column= item->column();
+
+	QIntValidator validator(0,1800,this);
+	QString str;
+	str = item->text();
+	int pos=0;
+	if(validator.validate(str,pos) != QValidator::Acceptable)
+	{
+		//qDebug("Your input must be a number. Check it. (row: %d column: %d)",row, column);
+		item->setText("");		//I'd like to show the previous value...
+		return;
+	}
+
 	if(VE_table_ON)
 	{
 		QVariant var = VEtableItem[row][column].data(Qt::DisplayRole);
@@ -1068,15 +1080,34 @@ void qt4application::acceptDialog()
 
 		for(int i=0; i<21; ++i)
 		{
-			confParameter.headerRPM[i] = headerContentsRPM[i].text().toUInt();
-			RPMheader.append(num.setNum(confParameter.headerRPM[i]));
+			QIntValidator validator(0,18000,this);
+			QString str;
+			str = headerContentsRPM[i].text();
+			int pos=0;
+			if(validator.validate(str,pos) == QValidator::Acceptable)
+			{
+				confParameter.headerRPM[i] = headerContentsRPM[i].text().toUInt();
+				RPMheader.append(num.setNum(confParameter.headerRPM[i]));
+			}
+			else
+				qDebug("only number inputs are accepted");
 		}
+
 		VE_table->setHorizontalHeaderLabels ( RPMheader );
 
 		for(int i=0; i<12; ++i)
 		{
-			confParameter.headerMAP[i] = headerContentsMAP[i].text().toUInt();
-			MAPheader.append(num.setNum(confParameter.headerMAP[i]));
+			QIntValidator validator(0,18000,this);
+			QString str;
+			str = headerContentsMAP[i].text();
+			int pos=0;
+			if(validator.validate(str,pos) == QValidator::Acceptable)
+			{
+				confParameter.headerMAP[i] = headerContentsMAP[i].text().toUInt();
+				MAPheader.append(num.setNum(confParameter.headerMAP[i]));
+			}
+			else
+				qDebug("only number inputs are accepted");
 		}
 		VE_table->setVerticalHeaderLabels ( MAPheader );
 		setMainTableSizeDialogOpen = false;

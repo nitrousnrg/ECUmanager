@@ -36,6 +36,7 @@ void qt4application::createVEtable()
 	headerContentsMAP = new QTableWidgetItem[21];   VE_table = new QTableWidget(12, 21, this);
 								 //This enables the right click pop up
 	VE_table->setContextMenuPolicy(Qt::CustomContextMenu);
+	VE_table->setInputMethodHints(Qt::ImhFormattedNumbersOnly);
 	VE_table_ON = true;
 	connect(VE_table,SIGNAL(customContextMenuRequested(QPoint)),this,SLOT(setMainTableSize()));
 
