@@ -104,6 +104,7 @@ class commThread : public QThread
 		}
 								 //puede acceder a todos los datos recibidos desde aqui
 		int getChannel(int channel);
+		statistic_t* getStatistics(){return &communicationStatistics;};
 		QextSerialPort * getQextSerialPort(){return serial;};
 		bool isOnline(){return online;};
 		void replayLog(QString fileName);

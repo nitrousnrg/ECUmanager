@@ -27,6 +27,7 @@
 #include <QMainWindow>
 #include <QCloseEvent>
 #include "qextserialport.h"
+#include "FreeEMS.h"
 #include <commthread.h>
 //#include "commCore_FreeEMS.h"
 #include <plotter.h>
@@ -206,6 +207,7 @@ class qt4application:public QMainWindow
 		QLabel *AirFuellabel;
 		QLabel *InyTimelabel;
 		QLabel *Dutylabel;
+		QLabel *goodPacketsLabel;
 
 		QLineEdit * serialPortNameEdit;
 		QComboBox * serialPortBaudRateEdit;

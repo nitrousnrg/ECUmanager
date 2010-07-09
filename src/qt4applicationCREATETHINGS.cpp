@@ -452,6 +452,7 @@ void qt4application::createActions()
 
 	openDebugWindowAct = new QAction(tr("De&bug"), this);
 	openDebugWindowAct ->setStatusTip(tr("Open debug window"));
+	openDebugWindowAct->setDisabled(true);
 	connect(openDebugWindowAct, SIGNAL(triggered()), this, SLOT(debugFreeEMS()));
 
 }

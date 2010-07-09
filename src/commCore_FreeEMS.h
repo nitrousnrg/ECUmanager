@@ -2,7 +2,6 @@
 #define COMMCORE_FREEEMS_H
 
 #include "qt4application.h"
-#include "FreeEMS.h"
 #include "commthread.h"
 
 

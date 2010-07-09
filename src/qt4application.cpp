@@ -353,6 +353,8 @@ void qt4application::connectECU()
 		injectorTestAct->setDisabled(false);
 		connectAct->setDisabled(true);
 		disconnectAct->setDisabled(false);
+		openDebugWindowAct->setDisabled(false);
+
 
 		//FreeEMS:
 		sendResetAct->setDisabled(false);
@@ -395,6 +397,7 @@ void qt4application::disconnectECU()
 	getFirmwareVersionAct->setDisabled(true);
 	getInterfaceVersionAct->setDisabled(true);
 	sendDatalogRequestAct->setDisabled(true);
+	openDebugWindowAct->setDisabled(true);
 
 	refreshTimer->stop();
 

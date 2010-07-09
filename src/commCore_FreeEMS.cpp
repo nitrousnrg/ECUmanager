@@ -303,7 +303,7 @@ void qt4application::showPacket(QByteArray dataArray)
 
 void qt4application::debugFreeEMS()
 {
-	// if( serialThread )
+	 if( serialThread )
 	{
 		dialog = new QDialog(this);
 		dialog->setModal(false);
@@ -328,26 +328,35 @@ void qt4application::debugFreeEMS()
 		packetTable->setColumnWidth(3,360);
 		packetTable->setRowHeight(0,20);
 
-		QGridLayout *vbox1 = new QGridLayout;
-		vbox1->addWidget(packetTable,0,1);
-		//     vbox1->setRowStretch(1,100);
+		QGridLayout *packetsGrid = new QGridLayout;
+		packetsGrid->addWidget(packetTable,0,1);
 
-		/*  stage 1  */
-		QGridLayout *vbox2 = new QGridLayout;
-		/*        vbox2->addWidget(flow1,0,0);
-				vbox2->addWidget(editNitrousFlow1,0,1);
-				vbox2->addWidget(retard1,1,0);
-				vbox2->addWidget(editNitrousRetard1,1,1);
-		*/
+		/* Statistics */
+		QGridLayout *statsGrid = new QGridLayout;
+		statistic_t *communicationStatistics = serialThread->getStatistics();
+
+		QLabel *goodPacketsLabel = new QLabel("Good packets:  " + QString().setNum(communicationStatistics->good));
+		QLabel *startByteInconsistencyLabel = new QLabel("Start byte error:  " + QString().number(communicationStatistics->start_byte_inconsistency));
+		QLabel *stopByteInconsistencyLabel = new QLabel("Stop byte error:  " + QString().number(communicationStatistics->stop_byte_inconsistency));
+		QLabel *escapeByteInconsistencyLabel = new QLabel("Escape byte error:  " + QString().number(communicationStatistics->escape_byte_inconsistency));
+		QLabel *badChecksumLabel = new QLabel("Bad checksum:  " + QString().number(communicationStatistics->bad_checksum));
+		QLabel *payloadSizeInconsistencyLabel = new QLabel( "Payload size error:  " + QString().number(communicationStatistics->payload_size_inconsistency));
+
+		statsGrid->addWidget(goodPacketsLabel, 0, 0);
+		statsGrid->addWidget(startByteInconsistencyLabel, 1, 0);
+		statsGrid->addWidget(stopByteInconsistencyLabel,2,0);
+		statsGrid->addWidget(escapeByteInconsistencyLabel, 3, 0);
+		statsGrid->addWidget(badChecksumLabel, 4, 0);
+		statsGrid->addWidget(payloadSizeInconsistencyLabel, 5, 0);
+
 		QTabWidget *tabBar = new QTabWidget();
-		QWidget *conditions = new QWidget();
-		conditions->setLayout(vbox1);
-		QWidget *tests = new QWidget();
-		tests->setLayout(vbox2);
-		tabBar->addTab(conditions,"Packets");
-		tabBar->addTab(tests,"Tests");
+		QWidget *packetsWidget = new QWidget();
+		packetsWidget->setLayout(packetsGrid);
+		QWidget *statsTab = new QWidget();
+		statsTab->setLayout(statsGrid);
 
-		//tabBar->setLayout(vbox);
+		tabBar->addTab(packetsWidget,"Packets");
+		tabBar->addTab(statsTab,"Statistics");
 
 		grid->addWidget(tabBar,1,0,1,2);
 		grid->addWidget(accept,3,1);
