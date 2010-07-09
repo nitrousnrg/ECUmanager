@@ -680,8 +680,8 @@ void qt4application::process_line(QByteArray line,int i)
 			&(confParameter.headerRPM[16]),
 			&(confParameter.headerRPM[17]),
 			&(confParameter.headerRPM[18]),
-			&(confParameter.headerRPM[18]),
-			&(confParameter.headerRPM[19]));
+			&(confParameter.headerRPM[19]),
+			&(confParameter.headerRPM[20]));
 	}
 
 	if(i>=2 && i<14)
