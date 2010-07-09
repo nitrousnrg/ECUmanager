@@ -296,7 +296,7 @@ void qt4application::newFile()
 
 void qt4application::open()
 {
-	QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"),confFile,tr("Config(*.txt);;Logged Data(*.log)"));
+	QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"),confFile,tr("Config(*.cfg);;Logged Data(*.log)"));
 	if (!fileName.isEmpty())
 	{
 		confFile = fileName;	 //wrong!
