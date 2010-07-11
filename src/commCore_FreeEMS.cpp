@@ -264,6 +264,10 @@ void commThread::getFirmwareVersion()
 	emit packetArrived(packet.getPacket());
 }
 
+void commThread::adjustMainTable()
+{
+}
+
 /* This will be moved inside qt4application, and the packet decoding has to be
 	done only once, in decodeFreeEMSPacket() */
 void qt4application::showPacket(QByteArray dataArray)

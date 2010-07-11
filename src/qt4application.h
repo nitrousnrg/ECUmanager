@@ -205,7 +205,7 @@ class qt4application:public QMainWindow
 		QLabel *TEMPlabel;
 		QLabel *throttleLabel;
 		QLabel *AirFuellabel;
-		QLabel *InyTimelabel;
+		QLabel *InjTimelabel;
 		QLabel *Dutylabel;
 		QLabel *goodPacketsLabel;
 
@@ -233,7 +233,7 @@ class qt4application:public QMainWindow
 		QProgressBar *MAPbar;
 		QProgressBar *TEMPbar;
 		QProgressBar *AirFuelbar;
-		QProgressBar *InyTimebar;
+		QProgressBar *InjTimebar;
 		QProgressBar *Dutybar;
 		QProgressBar *throttleBar;
 		QProgressBar *AirTempbar;

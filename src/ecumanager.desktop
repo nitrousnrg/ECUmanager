@@ -1,0 +1,12 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=ECUmanager
+Comment=Engine Management System GUI
+Comment[es]=Interfaz gráfica para el control de sistemas de inyección electrónica
+GenericName=Tuning Application
+Exec=ecumanager
+Terminal=false
+Type=Application
+Icon=ecumanager-icon.xpm
+Categories=Utility;Science;Engineering;
+StartupNotify=true

@@ -1,0 +1,17 @@
+Source: ecumanager
+Section: utils
+Priority: extra
+Maintainer: Marcos Ariel Chaparro <marcus.chaparro@gmail.com>
+Build-Depends: debhelper (>= 7.4.12), libqt4-dev, libqt4-opengl-dev
+Standards-Version: 3.9.0
+Vcs-Git: http://github.com/nitrousnrg/ECUmanager.git
+
+Package: ecumanager
+Architecture: i386
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Engine Management System tuning tool.
+ .
+ Aimed to interact with FreeEMS, ECUmanager can display,
+ datalog and configure the ECU parameters.
+ .
+ For more information visit www.diyefi.org/forum.

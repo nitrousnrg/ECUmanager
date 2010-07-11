@@ -123,6 +123,7 @@ class commThread : public QThread
 		/*FreeEMS stuff */
 		void getInterfaceVersion();
 		void getFirmwareVersion();
+		void adjustMainTable();
 		void decodeFreeEMSPacket(QByteArray buffer);
 		void sendFreeEMSDatalogRequest();
 

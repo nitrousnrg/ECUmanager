@@ -270,8 +270,8 @@ void qt4application::refresh()	 //Here all data (bars, gauges, plots) is updated
 	throttleLabel->setText("Throttle\n"+auxiliarByteArray+"%");
 
 	auxiliarByteArray.setNum(serialThread->getFChannel(commThread::FUEL)/625,'f',1);
-	InyTimebar->setValue(serialThread->getFChannel(commThread::FUEL)/625);
-	InyTimelabel->setText("Inj\nTime\n"+auxiliarByteArray+"ms");
+	InjTimebar->setValue(serialThread->getFChannel(commThread::FUEL)/625);
+	InjTimelabel->setText("Inj\nTime\n"+auxiliarByteArray+"ms");
 
 	auxiliarByteArray.setNum(serialThread->getFChannel(commThread::DUTY),'f',1);
 	Dutybar->setValue(serialThread->getChannel(commThread::DUTY));

@@ -110,8 +110,8 @@ void qt4application::createLayout()
 	mainLayout->addSpacing(15);
 	mainLayout->addWidget(Dutylabel);
 	mainLayout->addWidget(Dutybar);
-	mainLayout->addWidget(InyTimelabel);
-	mainLayout->addWidget(InyTimebar);
+	mainLayout->addWidget(InjTimelabel);
+	mainLayout->addWidget(InjTimebar);
 	mainLayout->addSpacing(20);
 	mainLayout->addLayout(cornerLayout);
 
@@ -167,9 +167,9 @@ void qt4application::createLabels()
 	throttleLabel->setText("Throttle");
 	throttleLabel->setAlignment(Qt::AlignCenter | Qt::AlignRight);
 
-	InyTimelabel = new QLabel(this);
-	InyTimelabel->setText("Iny Time");
-	InyTimelabel->setAlignment(Qt::AlignCenter | Qt::AlignRight);
+	InjTimelabel = new QLabel(this);
+	InjTimelabel->setText("Pulse\nWidth");
+	InjTimelabel->setAlignment(Qt::AlignCenter | Qt::AlignRight);
 
 	AirTemplabel = new QLabel(this);
 	AirTemplabel->setText("Air\nTemp");
@@ -231,11 +231,11 @@ void qt4application::createBars()
 	AirFuelbar->show();
 	AirFuelbar->setOrientation(Qt::Vertical);
 
-	InyTimebar= new QProgressBar(this);
-	InyTimebar->setRange(0,20);
-	InyTimebar->setTextVisible(FALSE);
-	InyTimebar->show();
-	InyTimebar->setOrientation(Qt::Vertical);
+	InjTimebar= new QProgressBar(this);
+	InjTimebar->setRange(0,20);
+	InjTimebar->setTextVisible(FALSE);
+	InjTimebar->show();
+	InjTimebar->setOrientation(Qt::Vertical);
 
 	Dutybar= new QProgressBar(this);
 	//Dutybar->setRange(0,300);

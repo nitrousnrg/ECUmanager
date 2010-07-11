@@ -162,7 +162,7 @@ void qt4application::configureECUmanager()
 	AFcheckbox->setChecked(AirFuelbar->isVisible());
 	throttleCheckbox->setChecked(throttleBar->isVisible());
 	dutyCheckbox->setChecked(Dutybar->isVisible());
-	injTimeCheckbox->setChecked(InyTimebar->isVisible());
+	injTimeCheckbox->setChecked(InjTimebar->isVisible());
 	plotCheckbox->setChecked(plot->isVisible());
 	plot3Dcheckbox->setChecked(map3D->isVisible());
 	tableCheckbox->setChecked(VE_table->isVisible());
@@ -182,8 +182,8 @@ void qt4application::configureECUmanager()
 	connect(throttleCheckbox,SIGNAL(clicked(bool)),throttleLabel,SLOT(setVisible(bool)));
 	connect(dutyCheckbox,SIGNAL(clicked(bool)),Dutybar,SLOT(setVisible(bool)));
 	connect(dutyCheckbox,SIGNAL(clicked(bool)),Dutylabel,SLOT(setVisible(bool)));
-	connect(injTimeCheckbox,SIGNAL(clicked(bool)),InyTimebar,SLOT(setVisible(bool)));
-	connect(injTimeCheckbox,SIGNAL(clicked(bool)),InyTimelabel,SLOT(setVisible(bool)));
+	connect(injTimeCheckbox,SIGNAL(clicked(bool)),InjTimebar,SLOT(setVisible(bool)));
+	connect(injTimeCheckbox,SIGNAL(clicked(bool)),InjTimelabel,SLOT(setVisible(bool)));
 	connect(plotCheckbox,SIGNAL(clicked(bool)),plot,SLOT(setVisible(bool)));
 	connect(plot3Dcheckbox,SIGNAL(clicked(bool)),map3D,SLOT(setVisible(bool)));
 	connect(tableCheckbox,SIGNAL(clicked(bool)),VE_table,SLOT(setVisible(bool)));
@@ -677,8 +677,8 @@ void qt4application::readSettings()
 	throttleLabel-> setVisible(settings.value("Show throttle bar",true).toBool());
 	Dutybar->       setVisible(settings.value("Show duty cycle bar",true).toBool());
 	Dutylabel->     setVisible(settings.value("Show duty cycle bar",true).toBool());
-	InyTimebar->    setVisible(settings.value("Show injection time bar",true).toBool());
-	InyTimelabel->  setVisible(settings.value("Show injection time bar",true).toBool());
+	InjTimebar->    setVisible(settings.value("Show injection time bar",true).toBool());
+	InjTimelabel->  setVisible(settings.value("Show injection time bar",true).toBool());
 	plot->          setVisible(settings.value("Show 2D plot",true).toBool());
 	map3D->         setVisible(settings.value("Show 3D plot",true).toBool());
 	renderArea->    setVisible(settings.value("Show RPM",true).toBool());
@@ -709,7 +709,7 @@ void qt4application::writeSettings()
 	settings.setValue("Show Air/fuel bar",AirFuelbar->isVisible());
 	settings.setValue("Show throttle bar",throttleBar->isVisible());
 	settings.setValue("Show duty cycle bar",Dutybar->isVisible());
-	settings.setValue("Show injection time bar",InyTimebar->isVisible());
+	settings.setValue("Show injection time bar",InjTimebar->isVisible());
 	settings.setValue("Show 2D plot",plot->isVisible());
 	settings.setValue("Show 3D plot",map3D->isVisible());
 	settings.setValue("Show table",VE_table->isVisible());
