@@ -488,7 +488,6 @@ void qt4application::showFuel()
 		{
 			VEtableItem[row][column].setTextAlignment(Qt::AlignVCenter);
 			VEtableItem[row][column].setData(0, QVariant( ( (float)(VEtable[row][column].entero)/10 ) ));
-			VE_table->setItem(row,column,&(VEtableItem[row][column]));
 		}
 		VE_table->update();
 		VE_table->show();
@@ -523,7 +522,6 @@ void qt4application::showIgnition()
 		{
 			VEtableItem[row][column].setTextAlignment(Qt::AlignVCenter);
 			VEtableItem[row][column].setData(0, QVariant( ( (float)(IgnTable[row][column].angle) ) ));
-			VE_table->setItem(row,column,&(VEtableItem[row][column]));
 		}
 		VE_table->update();
 		VE_table->show();
@@ -723,7 +721,7 @@ void qt4application::process_line(QByteArray line,int i)
 			&(VEtable[i-2][20].entero));
 
 	}
-								 //mal
+
 	if( (i==13) && (VE_table_ON == true) )
 	{
 		QStringList RPMheader;
@@ -741,15 +739,14 @@ void qt4application::process_line(QByteArray line,int i)
 		VE_table_ON = false;
 		for(int row = 0;row<12;++row)
 			for(int column = 0;column<21;++column)
-		{
-			VEtableItem[row][column].setTextAlignment(Qt::AlignVCenter);
-			VEtableItem[row][column].setData(0, QVariant( (float)(VEtable[row][column].entero)/10  ));
+			{
+				VEtableItem[row][column].setTextAlignment(Qt::AlignVCenter);
+				VEtableItem[row][column].setData(0, QVariant( (float)(VEtable[row][column].entero)/10  ));
 
-			QColor cellColor;
-			cellColor.setHsv( (1000 - VEtable[row][column].entero) / 3, 230, 200);
-			VEtableItem[row][column].setBackground(QBrush(cellColor) );
-			VE_table->setItem(row,column,&(VEtableItem[row][column]));
-		}
+				QColor cellColor;
+				cellColor.setHsv( (1000 - VEtable[row][column].entero) / 3, 230, 200);
+				VEtableItem[row][column].setBackground(QBrush(cellColor) );
+			}
 		for(int row = 0;row<12;++row)
 			for(int column = 0;column<21 ;++column)
 				map3D->loadData((double)VEtable[row][column].entero/100,row,column);
@@ -797,7 +794,6 @@ void qt4application::process_line(QByteArray line,int i)
 				{
 					VEtableItem[row][column].setTextAlignment(Qt::AlignVCenter);
 					VEtableItem[row][column].setData( 0,QVariant( ( IgnTable[row][column].angle ) ));
-					VE_table->setItem(row,column,&(VEtableItem[row][column]));
 				}
 	}
 

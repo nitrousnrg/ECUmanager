@@ -1,5 +1,10 @@
 ecumanager (0.6) UNRELEASED; urgency=low
 
   * Initial release.
+  * Configurable serial port
+  * man page created
+  * Lintian compliant
+  * Wider configuration dialog
+  * debuild-able
 
- -- Marcos Ariel Chaparro <marcus.chaparro@gmail.com>  Fri, 09 Jul 2010 22:05:15 -0300
+ -- Marcos Ariel Chaparro <marcus.chaparro@gmail.com>  Mon, 12 Jul 2010 11:57:29 -0300

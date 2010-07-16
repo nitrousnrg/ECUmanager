@@ -55,6 +55,12 @@ void qt4application::createVEtable()
 	VE_table->setVerticalHeaderLabels ( MAPheader );
 	VE_table->setMaximumHeight( 275 );
 
+	for(int row = 0;row<12;++row)
+		for(int column = 0;column<21;++column)
+		{
+			VE_table->setItem(row,column,&(VEtableItem[row][column]));
+		}
+
 	connect(VE_table,SIGNAL(itemChanged(QTableWidgetItem * )),this, SLOT(checkChange(QTableWidgetItem *)));
 }
 

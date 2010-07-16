@@ -101,7 +101,7 @@ unix {
 INCPATH += ../lib/QExtSerialPort ../lib/qwtplot3d
 RESOURCES = application.qrc
 TARGET = ecumanager
-#DESTDIR = ../bin/
+DESTDIR = ../bin/
 CONFIG += warn_on \
     thread \
     qt
