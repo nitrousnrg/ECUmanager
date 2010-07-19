@@ -114,7 +114,7 @@ qt4application::qt4application(QPalette appPalette)
 	connectedECU = FALSE;
 
 	setWindowTitle(tr("%1[*] - %2").arg("ECU manager").arg(tr("FreeEMS")));
-	setWindowIcon(QIcon(":/amarok_configure.png"));
+	setWindowIcon(QIcon(":/icons/amarok_configure.png"));
 
 	logEnabled = false;
 	Ign_table_ON = false;

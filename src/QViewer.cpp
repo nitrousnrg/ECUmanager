@@ -23,13 +23,13 @@ QViewer::QViewer()
 {
 	versionName = "QViewer v0.2";
 	setWindowTitle(versionName);
-	setWindowIcon(QIcon(":/amarok_visualizations.png"));
+	setWindowIcon(QIcon(":/icons/amarok_visualizations.png"));
 	setGeometry(300,100,600,600);
 
 	fileName = "";
 	online = false;
 
-	openFileAct = new QAction(QIcon(":/fileopen.xpm"), tr("&Open..."), this);
+	openFileAct = new QAction(QIcon(":/icons/fileopen.xpm"), tr("&Open..."), this);
 	openFileAct->setShortcut(tr("Ctrl+O"));
 	openFileAct->setStatusTip(tr("Open an existing file"));
 	connect(openFileAct, SIGNAL(triggered()), this, SLOT(openFile()));

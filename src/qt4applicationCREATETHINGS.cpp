@@ -265,11 +265,11 @@ void qt4application::createActions()
 	connect(refreshTimer, SIGNAL(timeout()), this, SLOT(refresh()));
 	refreshTimer->setInterval(80);
 
-	connectAct = new QAction(QIcon(":/network-wired.png"),tr("&Connect ECU"), this);
+	connectAct = new QAction(QIcon(":/icons/network-wired.png"),tr("&Connect ECU"), this);
 	connectAct->setStatusTip(tr("Starts communication with ECU"));
 	connect(connectAct, SIGNAL(triggered()), this, SLOT(connectECU()));
 
-	disconnectAct = new QAction(QIcon(":/network-wired.png"),tr("&Disconnect ECU"), this);
+	disconnectAct = new QAction(QIcon(":/icons/network-wired.png"),tr("&Disconnect ECU"), this);
 	disconnectAct->setStatusTip(tr("Stop communications"));
 	disconnectAct->setDisabled(true);
 	connect(disconnectAct, SIGNAL(triggered()), this, SLOT(disconnectECU()));
@@ -279,7 +279,7 @@ void qt4application::createActions()
 	fetchAct->setDisabled(true);
 	connect(fetchAct, SIGNAL(triggered()), this, SLOT(openECU()));
 
-	sendfileAct = new QAction(QIcon(":/amarok_burn.png"),tr("Send File"),this);
+	sendfileAct = new QAction(QIcon(":/icons/amarok_burn.png"),tr("Send File"),this);
 	sendfileAct->setStatusTip(tr("Send config file to ECU"));
 	sendfileAct->setDisabled(true);
 	connect(sendfileAct, SIGNAL(triggered()),this,SLOT(sendFilesInit()));
@@ -351,7 +351,7 @@ void qt4application::createActions()
 	connect(startLogAct, SIGNAL(triggered()),this,SLOT(startLog()));
 
 								 // if logenabled = false -> disabed!
-	saveLogAct = new QAction(QIcon(":/amarok_burn.png"), tr("Save Log"), this);
+	saveLogAct = new QAction(QIcon(":/icons/amarok_burn.png"), tr("Save Log"), this);
 	saveLogAct->setDisabled(true);
 	saveLogAct->setStatusTip(tr("Ends log & save"));
 	connect(saveLogAct, SIGNAL(triggered()),this,SLOT(saveLog()));
@@ -362,7 +362,7 @@ void qt4application::createActions()
 	//printAct->setStatusTip(tr("Prin"));
 	connect(printAct, SIGNAL(triggered()),this,SLOT(printDialog()));
 
-	replayAct = new QAction(QIcon(":/amarok_play.png"),tr("Replay"), this);
+	replayAct = new QAction(QIcon(":/icons/amarok_play.png"),tr("Replay"), this);
 	replayAct->setStatusTip(tr("Reproduces logged file"));
 	connect(replayAct, SIGNAL(triggered()),this,SLOT(replay()));
 
@@ -375,25 +375,25 @@ void qt4application::createActions()
 	injectorTestAct->setStatusTip(tr("Force ECU to generate injection pulses"));
 	connect(injectorTestAct, SIGNAL(triggered()),this,SLOT(injectorTestDialog()));
 
-	viewAct = new QAction(QIcon(":/amarok_visualizations.png"), tr("QViewer"), this);
+	viewAct = new QAction(QIcon(":/icons/amarok_visualizations.png"), tr("QViewer"), this);
 	viewAct->setStatusTip(tr("Open data viewing tool"));
 	connect(viewAct, SIGNAL(triggered()),this,SLOT(viewData()));
 
-	configureECUManagerAct = new QAction(QIcon(":/amarok_configure.png"), tr("Configure manager"), this);
+	configureECUManagerAct = new QAction(QIcon(":/icons/amarok_configure.png"), tr("Configure manager"), this);
 	configureECUManagerAct->setStatusTip(tr("Engine temp enrichment"));
 	connect(configureECUManagerAct, SIGNAL(triggered()),this,SLOT(configureECUmanager()));
 
-	newAct = new QAction(QIcon(":/filenew.xpm"), tr("&New"), this);
+	newAct = new QAction(QIcon(":/icons/filenew.xpm"), tr("&New"), this);
 	newAct->setShortcut(tr("Ctrl+N"));
 	newAct->setStatusTip(tr("Create a new file"));
 	connect(newAct, SIGNAL(triggered()), this, SLOT(newFile()));
 
-	openAct = new QAction(QIcon(":/fileopen.xpm"), tr("&Open..."), this);
+	openAct = new QAction(QIcon(":/icons/fileopen.xpm"), tr("&Open..."), this);
 	openAct->setShortcut(tr("Ctrl+O"));
 	openAct->setStatusTip(tr("Open an existing file"));
 	connect(openAct, SIGNAL(triggered()), this, SLOT(open()));
 
-	saveAct = new QAction(QIcon(":/filesave.xpm"), tr("&Save"), this);
+	saveAct = new QAction(QIcon(":/icons/filesave.xpm"), tr("&Save"), this);
 	saveAct->setShortcut(tr("Ctrl+S"));
 	saveAct->setStatusTip(tr("Save the document to disk"));
 	connect(saveAct, SIGNAL(triggered()), this, SLOT(save()));
@@ -407,19 +407,19 @@ void qt4application::createActions()
 	exitAct->setStatusTip(tr("Exit the application"));
 	connect(exitAct, SIGNAL(triggered()), this, SLOT(close()));
 
-	/*    cutAct = new QAction(QIcon(":/editcut.xpm"), tr("Cu&t"), this);
+	/*    cutAct = new QAction(QIcon(":/icons/editcut.xpm"), tr("Cu&t"), this);
 		  cutAct->setShortcut(tr("Ctrl+X"));
 		  cutAct->setStatusTip(tr("Cut the current selection's contents to the "
 								  "clipboard"));
 		  connect(cutAct, SIGNAL(triggered()), textEdit, SLOT(cut()));
 
-		  copyAct = new QAction(QIcon(":/editcopy.xpm"), tr("&Copy"), this);
+		  copyAct = new QAction(QIcon(":/icons/editcopy.xpm"), tr("&Copy"), this);
 		  copyAct->setShortcut(tr("Ctrl+C"));
 		  copyAct->setStatusTip(tr("Copy the current selection's contents to the "
 								  "clipboard"));
 		  connect(copyAct, SIGNAL(triggered()), textEdit, SLOT(copy()));
 
-		  pasteAct = new QAction(QIcon(":/editpaste.xpm"), tr("&Paste"), this);
+		  pasteAct = new QAction(QIcon(":/icons/editpaste.xpm"), tr("&Paste"), this);
 		  pasteAct->setShortcut(tr("Ctrl+V"));
 		  pasteAct->setStatusTip(tr("Paste the clipboard's contents into the current "
 								  "selection"));

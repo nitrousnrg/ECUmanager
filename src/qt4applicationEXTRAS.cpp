@@ -491,7 +491,7 @@ void qt4application::accelDialog()
 	connect(accept, SIGNAL(accepted()), this, SLOT(acceptDialog()));
 	connect(accept, SIGNAL(rejected()), this, SLOT(rejectDialog()));
 
-	QPixmap image(":/step_response.png");
+	QPixmap image(":/icons/step_response.png");
 
 	QLabel *imageLabel = new QLabel;
 	QLabel *thresholdLabel = new QLabel("Threshold (kPa/sec)");

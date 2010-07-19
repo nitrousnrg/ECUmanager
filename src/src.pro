@@ -112,6 +112,14 @@ unix {
     target.path = $${PREFIX}/bin
     INSTALLS = target
     
+	# Shared library installation
+	SHLIBS_PATH = $${PREFIX}/lib
+	shlibs_path.path = $${SHLIBS_PATH}
+	shlibs_path.files =	libqextserialport.so \
+						libqextserialport.so.1 \
+						libqextserialport.so.1.2 \
+						libqextserialport.so.1.2.0
+
     # Menu entry
     MENU_ENTRY_PATH = $${PREFIX}/share/applications
     menu_entry.path = $${MENU_ENTRY_PATH}
@@ -121,7 +129,7 @@ unix {
     # ECUmanager Icon
     ICON_PATH = $${PREFIX}/share/pixmaps
     ecum_icon.path = $${ICON_PATH}
-    ecum_icon.files = ecumanager-icon.png
+	ecum_icon.files = icons/ecumanager-icon.png
     INSTALLS += ecum_icon
 }
 LIBS += -L/usr/lib

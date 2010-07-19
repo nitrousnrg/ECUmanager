@@ -35,8 +35,8 @@ QPlayer::QPlayer(QTimer *timer1, QTimer *timer2, QFile *file1)
 	busy = false;
 
 	slider = new QSlider(Qt::Horizontal,this);
-	QPushButton *playButton = new QPushButton(QIcon(":/amarok_play.png"),"");
-	QPushButton *pauseButton = new QPushButton(QIcon(":/amarok_pause.png"),"");
+	QPushButton *playButton = new QPushButton(QIcon(":/icons/amarok_play.png"),"");
+	QPushButton *pauseButton = new QPushButton(QIcon(":/icons/amarok_pause.png"),"");
 	playButton->setFlat(true);
 	pauseButton->setFlat(true);
 	QHBoxLayout *layout = new QHBoxLayout;
