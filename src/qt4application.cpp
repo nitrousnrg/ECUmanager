@@ -335,7 +335,7 @@ void qt4application::connectECU()
 	serialThread = new commThread();
 	serialThread->setPort(serialPort);
 	serialThread->setTarget(hardwareTarget);
-	serialThread->openPort();
+	//serialThread->openPort();
 	//	serialThread->setPort(serialPort);
 
 	/* FreeEMS stuff */

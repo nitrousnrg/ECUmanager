@@ -144,12 +144,12 @@ void qt4application::configureECUmanager()
 	QGridLayout *vbox2 = new QGridLayout;
 	QCheckBox *VEcheckbox = new QCheckBox("VE", this);
 	QCheckBox *MAPcheckbox = new QCheckBox("MAP", this);
-	QCheckBox *AirTempcheckbox = new QCheckBox("Air Temp", this);
+	QCheckBox *AirTempcheckbox = new QCheckBox("MAT", this);
 	QCheckBox *WaterTempcheckbox = new QCheckBox("Water Temp", this);
 	QCheckBox *AFcheckbox = new QCheckBox("Air/Fuel", this);
 	QCheckBox *throttleCheckbox = new QCheckBox("Throttle", this);
 	QCheckBox *dutyCheckbox = new QCheckBox("Duty cycle", this);
-	QCheckBox *injTimeCheckbox = new QCheckBox("Injection time", this);
+	QCheckBox *injTimeCheckbox = new QCheckBox("Pulse Width", this);
 	QCheckBox *RPMcheckbox = new QCheckBox("RPM", this);
 	QCheckBox *plotCheckbox = new QCheckBox("2D plot", this);
 	QCheckBox *plot3Dcheckbox = new QCheckBox("3D plot", this);

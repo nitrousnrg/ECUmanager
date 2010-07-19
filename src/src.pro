@@ -2,10 +2,13 @@
 # -------------------------------------------
 # Subdir relative project main directory: ./src
 # Target is an application: ../bin/ecumanager
+PROJECT = ecumanager
+TEMPLATE = app
+DEPENDPATH += .
+OBJECTS_DIR             = tmp
+MOC_DIR                 = tmp
 HEADERS += qt4application.h \
-    ../lib/QExtSerialPort/qextserialbase.h \
-    ../lib/QExtSerialPort/qextserialport.h \
-    renderarea.h \
+	renderarea.h \
     plotter.h \
     2Dgraph.h \
     firm_updater.h \
@@ -46,11 +49,9 @@ HEADERS += qt4application.h \
     QInjectorTest.h \
     commthread.h \
     commCore_FreeEMS.h \
-    FreeEMS.h
+	FreeEMS.h
 SOURCES += qt4application.cpp \
     main.cpp \
-    ../lib/QExtSerialPort/qextserialbase.cpp \
-    ../lib/QExtSerialPort/qextserialport.cpp \
     RenderArea.cpp \
     plotter.cpp \
     2Dgraph.cpp \
@@ -89,51 +90,40 @@ SOURCES += qt4application.cpp \
     QInjectorTest.cpp \
     qt4applicationCREATETHINGS.cpp \
     commthread.cpp \
-    commCore_FreeEMS.cpp
-win32 {
-	SOURCES += ../lib/QExtSerialPort/win_qextserialport.cpp
-	HEADERS += ../lib/QExtSerialPort/win_qextserialport.h
-	}
-unix {
-     SOURCES += ../lib/QExtSerialPort/posix_qextserialport.cpp
-     HEADERS += ../lib/QExtSerialPort/posix_qextserialport.h
-	}
-INCPATH += ../lib/QExtSerialPort ../lib/qwtplot3d
+	commCore_FreeEMS.cpp
+
+INCLUDEPATH += ../lib/QExtSerialPort \
+    ../lib/qwtplot3d
+QMAKE_LIBDIR += ../lib/QExtSerialPort/build/
 RESOURCES = application.qrc
 TARGET = ecumanager
 DESTDIR = ../bin/
 CONFIG += warn_on \
     thread \
     qt
-unix {
-   CONFIG += debug
+unix { 
+    CONFIG += debug
+    
     # Prefix: base instalation directory
-    isEmpty( PREFIX ){
-        PREFIX = /usr/
-    }
-
+    isEmpty( PREFIX ):PREFIX = /usr/
     DEB_BUILD = $$system(echo \$DEB_BUILD_OPTIONS)
-    contains(DEB_BUILD, nostrip){
-        QMAKE_STRIP =:
-    }
-
+    contains(DEB_BUILD, nostrip):QMAKE_STRIP = :
     DEFINES += PREFIX=\\\"$${PREFIX}\\\"
     target.path = $${PREFIX}/bin
     INSTALLS = target
     
-       # Menu entry
+    # Menu entry
     MENU_ENTRY_PATH = $${PREFIX}/share/applications
     menu_entry.path = $${MENU_ENTRY_PATH}
     menu_entry.files = ecumanager.desktop
     INSTALLS += menu_entry
-
-       # ECUmanager Icon
+    
+    # ECUmanager Icon
     ICON_PATH = $${PREFIX}/share/pixmaps
     ecum_icon.path = $${ICON_PATH}
     ecum_icon.files = ecumanager-icon.png
     INSTALLS += ecum_icon
 }
-
-
 LIBS += -L/usr/lib
+LIBS  += -lqextserialport
 QT += opengl

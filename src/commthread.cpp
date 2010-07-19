@@ -42,7 +42,7 @@ void commThread::run()
 
 bool commThread::openPort()
 {
-	mutex.lock();
+	//mutex.lock();
 
 	timer = new QTimer(this);
 	connect(timer, SIGNAL(timeout()), this, SLOT(readSerialPort()));
@@ -52,14 +52,21 @@ bool commThread::openPort()
 	online = false;
 
 	serial = new QextSerialPort(serialPort.name);
-	serial->setBaudRate( (BaudRateType)serialPort.serialPortBaudRate);
+/*	serial->setBaudRate( (BaudRateType)serialPort.serialPortBaudRate);
 	serial->setParity( (ParityType)serialPort.serialPortParity);
 	serial->setDataBits( (DataBitsType)serialPort.dataBits);
 	serial->setStopBits( (StopBitsType)serialPort.stopBits);
-	serial->setFlowControl(FLOW_OFF);
-	serial->setTimeout(0,20);
+	*/
+	serial->setBaudRate(BAUD19200);
+	serial->setParity(PAR_NONE);
+	serial->setDataBits(DATA_8);
+	serial->setStopBits(STOP_1);
 
-	if(serial->open(QIODevice::ReadWrite))
+	serial->setFlowControl(FLOW_OFF);
+	serial->setTimeout(20);
+	//mutex.unlock();
+
+	if(serial->open(QIODevice::ReadWrite))//|QIODevice::Unbuffered))
 	{
 		timer->start();
 		online = true;
@@ -73,7 +80,6 @@ bool commThread::openPort()
 			tr("Application"),
 			tr("Cannot open file %1:\n%2.").arg(serialPort.name).arg(serial->errorString()));
 	}
-	mutex.unlock();
 
 	return online;
 }
