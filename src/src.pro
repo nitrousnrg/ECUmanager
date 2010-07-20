@@ -14,35 +14,6 @@ HEADERS += qt4application.h \
     firm_updater.h \
     QViewer.h \
     QSubViewer.h \
-    ../lib/qwtplot3d/qwt3d_autoptr.h \
-    ../lib/qwtplot3d/qwt3d_autoscaler.h \
-    ../lib/qwtplot3d/qwt3d_axis.h \
-    ../lib/qwtplot3d/qwt3d_color.h \
-    ../lib/qwtplot3d/qwt3d_colorlegend.h \
-    ../lib/qwtplot3d/qwt3d_coordsys.h \
-    ../lib/qwtplot3d/qwt3d_drawable.h \
-    ../lib/qwtplot3d/qwt3d_enrichment.h \
-    ../lib/qwtplot3d/qwt3d_enrichment_std.h \
-    ../lib/qwtplot3d/qwt3d_function.h \
-    ../lib/qwtplot3d/qwt3d_global.h \
-    ../lib/qwtplot3d/qwt3d_graphplot.h \
-    ../lib/qwtplot3d/qwt3d_gridmapping.h \
-    ../lib/qwtplot3d/qwt3d_helper.h \
-    ../lib/qwtplot3d/qwt3d_io_gl2ps.h \
-    ../lib/qwtplot3d/qwt3d_io.h \
-    ../lib/qwtplot3d/qwt3d_io_reader.h \
-    ../lib/qwtplot3d/qwt3d_label.h \
-    ../lib/qwtplot3d/qwt3d_mapping.h \
-    ../lib/qwtplot3d/qwt3d_multiplot.h \
-    ../lib/qwtplot3d/qwt3d_openglhelper.h \
-    ../lib/qwtplot3d/qwt3d_parametricsurface.h \
-    ../lib/qwtplot3d/qwt3d_plot.h \
-    ../lib/qwtplot3d/qwt3d_portability.h \
-    ../lib/qwtplot3d/qwt3d_scale.h \
-    ../lib/qwtplot3d/qwt3d_surfaceplot.h \
-    ../lib/qwtplot3d/qwt3d_types.h \
-    ../lib/qwtplot3d/qwt3d_volumeplot.h \
-    ../lib/qwtplot3d/gl2ps.h \
     QMap3D.h \
     QuickTune.h \
     QPlayer.h \
@@ -59,31 +30,6 @@ SOURCES += qt4application.cpp \
     QViewer.cpp \
     QSubViewer.cpp \
     qt4applicationEXTRAS.cpp \
-    ../lib/qwtplot3d/qwt3d_autoscaler.cpp \
-    ../lib/qwtplot3d/qwt3d_axis.cpp \
-    ../lib/qwtplot3d/qwt3d_color.cpp \
-    ../lib/qwtplot3d/qwt3d_colorlegend.cpp \
-    ../lib/qwtplot3d/qwt3d_coordsys.cpp \
-    ../lib/qwtplot3d/qwt3d_dataviews.cpp \
-    ../lib/qwtplot3d/qwt3d_drawable.cpp \
-    ../lib/qwtplot3d/qwt3d_enrichment_std.cpp \
-    ../lib/qwtplot3d/qwt3d_function.cpp \
-    ../lib/qwtplot3d/qwt3d_gridmapping.cpp \
-    ../lib/qwtplot3d/qwt3d_gridplot.cpp \
-    ../lib/qwtplot3d/qwt3d_io.cpp \
-    ../lib/qwtplot3d/qwt3d_io_gl2ps.cpp \
-    ../lib/qwtplot3d/qwt3d_io_reader.cpp \
-    ../lib/qwtplot3d/qwt3d_label.cpp \
-    ../lib/qwtplot3d/qwt3d_lighting.cpp \
-    ../lib/qwtplot3d/qwt3d_meshplot.cpp \
-    ../lib/qwtplot3d/qwt3d_mousekeyboard.cpp \
-    ../lib/qwtplot3d/qwt3d_movements.cpp \
-    ../lib/qwtplot3d/qwt3d_parametricsurface.cpp \
-    ../lib/qwtplot3d/qwt3d_plot.cpp \
-    ../lib/qwtplot3d/qwt3d_scale.cpp \
-    ../lib/qwtplot3d/qwt3d_surfaceplot.cpp \
-    ../lib/qwtplot3d/qwt3d_types.cpp \
-    ../lib/qwtplot3d/gl2ps.c \
     QMap3D.cpp \
     QuickTune.cpp \
     QPlayer.cpp \
@@ -93,8 +39,9 @@ SOURCES += qt4application.cpp \
 	commCore_FreeEMS.cpp
 
 INCLUDEPATH += ../lib/QExtSerialPort \
-    ../lib/qwtplot3d
-QMAKE_LIBDIR += ../lib/QExtSerialPort/build/
+				/usr/include/qwtplot3d-qt4
+QMAKE_LIBDIR += ../lib/QExtSerialPort/build \
+				/usr/lib/
 RESOURCES = application.qrc
 TARGET = ecumanager
 DESTDIR = ../bin/
@@ -132,6 +79,6 @@ unix {
 	ecum_icon.files = icons/ecumanager-icon.png
     INSTALLS += ecum_icon
 }
-LIBS += -L/usr/lib
-LIBS  += -lqextserialport
+LIBS += -lqextserialport \
+		-lqwtplot3d-qt4
 QT += opengl
