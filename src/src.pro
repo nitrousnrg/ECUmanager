@@ -5,8 +5,8 @@
 PROJECT = ecumanager
 TEMPLATE = app
 DEPENDPATH += .
-OBJECTS_DIR             = tmp
-MOC_DIR                 = tmp
+OBJECTS_DIR = tmp
+MOC_DIR = tmp
 HEADERS += qt4application.h \
 	renderarea.h \
     plotter.h \
@@ -38,10 +38,9 @@ SOURCES += qt4application.cpp \
     commthread.cpp \
 	commCore_FreeEMS.cpp
 
-INCLUDEPATH += ../lib/QExtSerialPort \
-				/usr/include/qwtplot3d-qt4
-QMAKE_LIBDIR += ../lib/QExtSerialPort/build \
-				/usr/lib/
+INCLUDEPATH +=	/usr/include/qwtplot3d-qt4 \
+				/usr/include/qextserialport
+QMAKE_LIBDIR += /usr/lib/
 RESOURCES = application.qrc
 TARGET = ecumanager
 DESTDIR = ../bin/

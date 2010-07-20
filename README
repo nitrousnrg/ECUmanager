@@ -1,20 +1,23 @@
-To install ECUmanager in a x86 debian/ubuntu box, use the deb package available in the Downloads section.
+To install ECUmanager in a x86 debian/ubuntu box:
+aptitude install libqt4-gui qwtplot3d-qt4-0
+install libqextserialport and ecumanager (check downloads section!)
 
-ECUmanager uses Qt4, so you need to have installed libqt4-dev in order to compile it under gnu/linux.
+ECUmanager uses Qt4, so you need to resolve more dependencies to compile it under gnu/linux.
 
-apt-get install libqt4-dev
+apt-get install libqt4-dev qwtplot3d-qt4-dev
+and libqextserialport-dev (also in downloads section)
 
-If you use QtCreator, just open qt4application.pro, and enjoy.
+compile with:
+qmake-qt4 qt4application.pro -spec linux-g++ -r && make
+
+If you use QtCreator, just open qt4application.pro.
 To give it a try:
 apt-get install qtcreator
 
-For a command line compiling, you are a "make" away.
-
-For windows users, install Qt Creator and open qt4application.pro with it. Then, build it.
+For Windows users:
+install Qt Creator and open qt4application.pro with it. Then, build it.
 http://qt.nokia.com/downloads
-
-In both cases, make some coffe, or take a shower... it will be compiling for a while the first time (2-5 min).
-Tip: Parallelize the compilation through N threads using "make -jN" ;-)
+It will compile if you provide the qwtplot3d and qextserialport dll
 
 /DataExamples/Fiat Palio FIRE lean.cfg is the config file I use in my car. Try it (File->Open)
 

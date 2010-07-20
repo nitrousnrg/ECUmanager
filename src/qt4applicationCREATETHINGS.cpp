@@ -454,7 +454,7 @@ void qt4application::createActions()
 	sendDatalogRequestAct = new QAction(tr("Request &Datalog"),this);
 	sendDatalogRequestAct->setStatusTip(tr("Start the data logging of all EMS variables"));
 	sendDatalogRequestAct->setDisabled(true);
-	connect(sendDatalogRequestAct, SIGNAL(triggered()), this, SLOT(sendFreeEMSDatalogRequest()));
+	//connect(sendDatalogRequestAct, SIGNAL(triggered()), this, SLOT(sendFreeEMSDatalogRequest()));
 
 
 	openDebugWindowAct = new QAction(tr("De&bug"), this);

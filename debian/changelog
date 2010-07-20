@@ -1,9 +1,10 @@
 ecumanager (0.6.1) UNRELEASED; urgency=low
 
-  * New serial port library version, Now is using shared libraries instead of built in code.
+  * New serial port library version (now is using shared libraries).
   * Interface improvements.
+  * Removed all extra source code, it totally depends on shared libs.
 
- -- Marcos Ariel Chaparro <marcus.chaparro@gmail.com>  Mon, 19 Jul 2010 12:19:55 -0300
+ -- Marcos Ariel Chaparro <marcus.chaparro@gmail.com>  Tue, 20 Jul 2010 12:25:35 -0300
 
 ecumanager (0.6) UNRELEASED; urgency=low
 
