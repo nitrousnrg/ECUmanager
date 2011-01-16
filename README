@@ -1,10 +1,10 @@
 To install ECUmanager in a x86 debian/ubuntu box:
 aptitude install libqt4-gui qwtplot3d-qt4-0
-install libqextserialport and ecumanager (check downloads section!)
+install libqextserialport and ecumanager (check download section!: github.com/nitrousnrg/ECUmanager/archives/master)
 
 ECUmanager uses Qt4, so you need to resolve more dependencies to compile it under gnu/linux.
 
-apt-get install libqt4-dev qwtplot3d-qt4-dev
+apt-get install libqt4-dev libqwtplot3d-qt4-dev
 and libqextserialport-dev (also in downloads section)
 
 compile with:
