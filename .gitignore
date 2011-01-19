@@ -16,6 +16,9 @@ moc_*
 #my config file
 qt4application.pro.*
 
+#automatically created files
+Makefile
+
 #Ignore the following directories
 screenshots/
 .pc/
