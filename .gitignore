@@ -17,7 +17,10 @@ moc_*
 qt4application.pro.*
 
 #automatically created files
-Makefile
+/src/qrc_application.cpp
+/Makefile
+/src/Makefile
+*.log
 
 #Ignore the following directories
 screenshots/

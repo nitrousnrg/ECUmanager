@@ -24,11 +24,6 @@ int aPacket::setPacket(QByteArray newPacket)
 	payloadID = (unsigned char)fullPacket[1]*256 + (unsigned char)fullPacket.at(2);
 
 	unsigned int index = 3;
-	if( headerFlags & HEADER_HAS_ADDRS )
-	{
-		payloadAddress = (unsigned char)fullPacket[index]*256 + (unsigned char)fullPacket[index+1];
-		index += 2;
-	}
 	if( headerFlags & HEADER_HAS_LENGTH )
 	{
 		payloadLength = (unsigned char)fullPacket[index]*256 + (unsigned char)fullPacket[index+1];
@@ -46,30 +41,17 @@ QByteArray aPacket::getPacket()
 {	return fullPacket;	}
 
 
-void aPacket::setHeaderAckFlag(bool bit)
-{
-	if(bit)
-		headerFlags |= 0x40;
-	else
-		headerFlags &= ~0x40;
-}
-
-
-bool aPacket::hasHeaderAckFlag()
-{	return headerFlags &= 0x40;	}
-
-
 void aPacket::setHeaderLengthFlag(bool bit)
 {
 	if(bit)
-		headerFlags |= 0x10;
+                headerFlags |= HEADER_HAS_LENGTH;
 	else
-		headerFlags &= ~0x10;
+                headerFlags &= ~HEADER_HAS_LENGTH;
 }
 
 
 bool aPacket::hasHeaderLengthFlag()
-{	return headerFlags &= 0x10;	}
+{	return headerFlags &= HEADER_HAS_LENGTH;	}
 
 
 unsigned int aPacket::getPayloadID()
@@ -97,8 +79,6 @@ unsigned int aPacket::getPayloadLength()
 	if( hasHeaderLengthFlag() )	 //flag must be set to extract the length
 	{
 		int n = 4;
-		if( hasHeaderAckFlag() ) //check for optional bytes
-			++n;
 		payloadLength = fullPacket[n]*256 + fullPacket[n+1];
 		return payloadLength;
 	}
@@ -227,7 +207,6 @@ void qt4application::sendReset()
 {
 	qDebug("Send Soft System Reset");
 	aPacket packet;
-	packet.setHeaderAckFlag(false);
 	packet.setHeaderLengthFlag(true);
 	packet.setPayloadID(requestSoftSystemReset);
 	packet.buildPacket();
@@ -242,7 +221,6 @@ void qt4application::sendReset()
 void commThread::getInterfaceVersion()
 {
 	aPacket packet;
-	packet.setHeaderAckFlag(false);
 	packet.setHeaderLengthFlag(false);
 	packet.setPayloadID(requestInterfaceVersion);
 	packet.buildPacket();
@@ -255,7 +233,6 @@ void commThread::getInterfaceVersion()
 void commThread::getFirmwareVersion()
 {
 	aPacket packet;
-	packet.setHeaderAckFlag(false);
 	packet.setHeaderLengthFlag(false);
 	packet.setPayloadID(requestFirmwareVersion);
 	packet.buildPacket();
@@ -286,10 +263,6 @@ void qt4application::showPacket(QByteArray dataArray)
 		packetTable->setItem(0,0,newItem );
 
 		QString headerFlags;
-		if( data.hasHeaderAckFlag() )
-			headerFlags.append("A ");
-		else
-			headerFlags.append("- ");
 		if( data.hasHeaderLengthFlag() )
 			headerFlags.append("F");
 		else

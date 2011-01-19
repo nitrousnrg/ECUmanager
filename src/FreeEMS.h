@@ -7,14 +7,14 @@
 /* Always has payload ID so no flag		*/
 /* Always has checksum, so no flag		*/
 
-#define HEADER_HAS_ACK		1
+#define HEADER_HAS_LENGTH	1
 #define HEADER_IS_NACK		(1<<1)
-#define HEADER_HAS_ADDRS	(1<<2)
-#define HEADER_HAS_LENGTH	(1<<3)
-#define HEADER_RESERVED_A	(1<<4)
-#define HEADER_RESERVED_B	(1<<5)
-#define HEADER_RESERVED_C	(1<<6)
-#define HEADER_RESERVED_D	(1<<7)
+#define HEADER_HAS_SEQUENCE	(1<<2)
+#define HEADER_RESERVED_E	(1<<3)
+#define HEADER_RESERVED_D	(1<<4)
+#define HEADER_RESERVED_C	(1<<5)
+#define HEADER_RESERVED_B	(1<<6)
+#define HEADER_RESERVED_A	(1<<7)
 
 /*&&&&&&&&&&&&&&&&&&&&  Payload Type ID Name Value Pairs  &&&&&&&&&&&&&&&&&&&&*/
 

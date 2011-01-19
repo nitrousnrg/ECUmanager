@@ -34,13 +34,10 @@ commThread::commThread()//QObject* parent) : QThread(parent)
 	communicationStatistics.bad_checksum = 0;
 	communicationStatistics.payload_size_inconsistency = 0;
         readTimer = new QTimer(this);
-
-        qDebug("commThread initialized");
 }
 
 void commThread::run()
 {
-        qDebug("comm thread started");
         openPort();
         exec();
 }
