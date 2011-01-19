@@ -263,7 +263,7 @@ void qt4application::createActions()
 
 	refreshTimer = new QTimer(this);
 	connect(refreshTimer, SIGNAL(timeout()), this, SLOT(refresh()));
-	refreshTimer->setInterval(80);
+        refreshTimer->setInterval(80);
 
 	connectAct = new QAction(QIcon(":/icons/network-wired.png"),tr("&Connect ECU"), this);
 	connectAct->setStatusTip(tr("Starts communication with ECU"));

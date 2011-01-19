@@ -91,7 +91,7 @@ class commThread : public QThread
 {
 	Q_OBJECT
 		public:
-		commThread();
+                commThread();//QObject* parent = 0);
 		bool openPort();
 		void run();
 								 //needed before run()
@@ -116,6 +116,7 @@ class commThread : public QThread
 		enum channelList{RPM,MAP,VE,FUEL,DUTY,FuelAdvance,IgnAdvance,waterTemp,airTemp,DWELL,THROTTLE,LAMBDA};
 
 	public slots:
+                
 		void readSerialPort();
 		void sendFile();
 		//	bool burnAcachoOfFlash();
@@ -141,7 +142,7 @@ class commThread : public QThread
 		serialPorts serialPort;
 		QextSerialPort *serial;
 		QFile *logFile;
-		QTimer *timer;
+                QTimer *readTimer;
 		QTimer *sendTimer;
 		QMutex mutex;
 		QFile *tempLogFile;

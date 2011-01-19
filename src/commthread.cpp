@@ -22,7 +22,7 @@
 /* write down here all communications protocols.
 los datos deben salir por algn lado hacia qt4application. TODO: send 'U' when escaping */
 
-commThread::commThread()
+commThread::commThread()//QObject* parent) : QThread(parent)
 {
 	/* Initialize variables */
 	serial=0;
@@ -33,44 +33,49 @@ commThread::commThread()
 	communicationStatistics.escape_byte_inconsistency = 0;
 	communicationStatistics.bad_checksum = 0;
 	communicationStatistics.payload_size_inconsistency = 0;
+        readTimer = new QTimer(this);
+
+        qDebug("commThread initialized");
 }
 
 void commThread::run()
 {
-	exec();
+        qDebug("comm thread started");
+        openPort();
+        exec();
 }
 
 bool commThread::openPort()
 {
 	//mutex.lock();
 
-	timer = new QTimer(this);
-	connect(timer, SIGNAL(timeout()), this, SLOT(readSerialPort()));
-	timer->setInterval(80);		 //as fast as you want. 20 works well with the PIC version
+        connect(readTimer, SIGNAL(timeout()), this, SLOT(readSerialPort()));
+        readTimer->setInterval(80);		 //as fast as you want. 20 works well with the PIC version
 	bytes_to_int.entero = 0;
 
 	online = false;
 
 	serial = new QextSerialPort(serialPort.name);
-/*	serial->setBaudRate( (BaudRateType)serialPort.serialPortBaudRate);
+        serial->setBaudRate( (BaudRateType)serialPort.serialPortBaudRate);
 	serial->setParity( (ParityType)serialPort.serialPortParity);
 	serial->setDataBits( (DataBitsType)serialPort.dataBits);
-	serial->setStopBits( (StopBitsType)serialPort.stopBits);
-	*/
-	serial->setBaudRate(BAUD19200);
+        serial->setStopBits( (StopBitsType)serialPort.stopBits);
+        /*
+        serial->setBaudRate(BAUD115200);
 	serial->setParity(PAR_NONE);
 	serial->setDataBits(DATA_8);
 	serial->setStopBits(STOP_1);
-
-	serial->setFlowControl(FLOW_OFF);
-	serial->setTimeout(20);
+*/
+        serial->setFlowControl(FLOW_OFF);
+        serial->setTimeout(40);
 	//mutex.unlock();
 
-	if(serial->open(QIODevice::ReadWrite))//|QIODevice::Unbuffered))
+        if(serial->open(QIODevice::ReadWrite))//|QIODevice::Unbuffered))
 	{
-		timer->start();
+                serial->flush();
+                readTimer->start();
 		online = true;
-		//	serial->write("C",1);		//PC is connected!!
+                qDebug() << "Listening 2 ";
 
 	}
 	else
@@ -133,7 +138,7 @@ void commThread::replayLog(QString fileName)
 	{
 		serial->close();
 		serial = 0;
-		timer->stop();
+                readTimer->stop();
 	}
 
 	binaryFileName = fileName;
@@ -141,7 +146,7 @@ void commThread::replayLog(QString fileName)
 	logFile = new QFile(fileName);
 	if (logFile->open(QFile::ReadOnly ))
 	{
-		timer->start();
+                readTimer->start();
 	}
 	else
 		qDebug("wrong file");
@@ -189,7 +194,7 @@ void commThread::read_PIC_data()
 		{
 			available = 0;
 
-			timer->stop();
+                        readTimer->stop();
 			logFile->close();
 		}
 		else
@@ -296,7 +301,8 @@ void commThread::read_PIC_data()
 
 void commThread::read_FreeEMS_data()
 {
-	if( serial->bytesAvailable() > 700)
+    qDebug() << serial->bytesAvailable();
+        if( serial->bytesAvailable() > 700)
 	{
 		buffer = serial->read(serial->bytesAvailable());
 		int index;
@@ -307,20 +313,21 @@ void commThread::read_FreeEMS_data()
 		buffer = datalogFile.readAll();
 		datalogFile.close();
 */
+  //              qDebug()<<"holaa";
 
 		/* search occurrences of the end character (0xCC) from the beggining. */
-		while( (index = buffer.indexOf(0xCC, 0) ) != -1)
-		{
+                while( (index = buffer.indexOf(0xCC, 0) ) != -1)
+                {
 			/*Start from the end byte. Extract from the last occurence of a start byte, to the first occurence of the end byte
 			and pass that string to decodeFreeEMSPacket() */
-			int packetStart = buffer.lastIndexOf(0xAA,index);
+                        int packetStart = buffer.lastIndexOf(0xAA,index);
 			if(packetStart == -1)
 				packetStart = 0;
 			decodeFreeEMSPacket(buffer.mid(packetStart, index + 1 - packetStart));
-//			qDebug()<<"buffer = "<<buffer.mid(packetStart, index + 1 - packetStart).toHex();
+                        qDebug()<<"buffer = "<<buffer.mid(packetStart, index + 1 - packetStart).toHex();
 			buffer.remove(0,index+1);		//extract the decoded packet from the buffer.
-		}
-	}
+                }
+        }
 }
 
 void commThread::decodeFreeEMSPacket(QByteArray buffer)
@@ -384,12 +391,15 @@ void commThread::decodeFreeEMSPacket(QByteArray buffer)
 
 void commThread::sendFreeEMSDatalogRequest()
 {
-/*	aPacket packet;
-	packet.setHeader(HEADER_HAS_LENGTH);
+        aPacket packet;
+        //packet.setHeader(HEADER_HAS_LENGTH);
 	packet.setPayloadID(requestBasicDatalog);
 	packet.setChecksum();
 	packet.addEscape();
-	serial->write(packet.getPacket());*/
+        serial->write(packet.getPacket());
+       // qDebug()<<"HELLO";
+        qDebug()<<"write = "<<packet.getPacket().toHex();
+
 }
 
 
