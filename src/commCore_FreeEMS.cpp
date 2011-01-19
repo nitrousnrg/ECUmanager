@@ -187,10 +187,10 @@ int aPacket::check()
 		sum += fullPacket.at(i);
 
 	if(sum == (unsigned char)fullPacket.at(i))
-		return 0;		/*Correct checksum*/
+            return 0;		/*Correct checksum*/
 	else
 	{
-		qDebug("bad checksum:\ncalculated: %x\tgot:%x",sum,fullPacket.at(i));
+                qDebug("bad checksum:\ncalculated: %x\tgot:%x \n Check serial port settings. \n\n",sum,fullPacket.at(i));
 		return bad_checksum_error;		/*Bad Checksum*/
 	}
 }

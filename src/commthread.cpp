@@ -57,12 +57,6 @@ bool commThread::openPort()
 	serial->setParity( (ParityType)serialPort.serialPortParity);
 	serial->setDataBits( (DataBitsType)serialPort.dataBits);
         serial->setStopBits( (StopBitsType)serialPort.stopBits);
-        /*
-        serial->setBaudRate(BAUD115200);
-	serial->setParity(PAR_NONE);
-	serial->setDataBits(DATA_8);
-	serial->setStopBits(STOP_1);
-*/
         serial->setFlowControl(FLOW_OFF);
         serial->setTimeout(40);
 	//mutex.unlock();
@@ -72,8 +66,6 @@ bool commThread::openPort()
                 serial->flush();
                 readTimer->start();
 		online = true;
-                qDebug() << "Listening 2 ";
-
 	}
 	else
 	{
@@ -298,7 +290,6 @@ void commThread::read_PIC_data()
 
 void commThread::read_FreeEMS_data()
 {
-    qDebug() << serial->bytesAvailable();
         if( serial->bytesAvailable() > 700)
 	{
 		buffer = serial->read(serial->bytesAvailable());
@@ -310,7 +301,6 @@ void commThread::read_FreeEMS_data()
 		buffer = datalogFile.readAll();
 		datalogFile.close();
 */
-  //              qDebug()<<"holaa";
 
 		/* search occurrences of the end character (0xCC) from the beggining. */
                 while( (index = buffer.indexOf(0xCC, 0) ) != -1)
@@ -321,7 +311,7 @@ void commThread::read_FreeEMS_data()
 			if(packetStart == -1)
 				packetStart = 0;
 			decodeFreeEMSPacket(buffer.mid(packetStart, index + 1 - packetStart));
-                        qDebug()<<"buffer = "<<buffer.mid(packetStart, index + 1 - packetStart).toHex();
+                     //   qDebug()<<"buffer = "<<buffer.mid(packetStart, index + 1 - packetStart).toHex();
 			buffer.remove(0,index+1);		//extract the decoded packet from the buffer.
                 }
         }
@@ -389,12 +379,10 @@ void commThread::decodeFreeEMSPacket(QByteArray buffer)
 void commThread::sendFreeEMSDatalogRequest()
 {
         aPacket packet;
-        //packet.setHeader(HEADER_HAS_LENGTH);
 	packet.setPayloadID(requestBasicDatalog);
 	packet.setChecksum();
 	packet.addEscape();
         serial->write(packet.getPacket());
-       // qDebug()<<"HELLO";
         qDebug()<<"write = "<<packet.getPacket().toHex();
 
 }
