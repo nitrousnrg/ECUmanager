@@ -38,18 +38,19 @@ SOURCES += qt4application.cpp \
     commthread.cpp \
 	commCore_FreeEMS.cpp
 
-INCLUDEPATH +=	/usr/include/qwtplot3d-qt4 \
-				/usr/include/qextserialport
 QMAKE_LIBDIR += /usr/lib/
 RESOURCES = application.qrc
 TARGET = ecumanager
 DESTDIR = ../bin/
 CONFIG += warn_on \
-    thread \
+ #   thread \
     qt
 unix { 
     CONFIG += debug
-    
+
+    INCLUDEPATH +=	/usr/include/qwtplot3d-qt4 \
+                                /usr/include/qextserialport
+
     # Prefix: base instalation directory
     isEmpty( PREFIX ):PREFIX = /usr/
     DEB_BUILD = $$system(echo \$DEB_BUILD_OPTIONS)
@@ -58,13 +59,13 @@ unix {
     target.path = $${PREFIX}/bin
     INSTALLS = target
     
-	# Shared library installation
-	SHLIBS_PATH = $${PREFIX}/lib
-	shlibs_path.path = $${SHLIBS_PATH}
-	shlibs_path.files =	libqextserialport.so \
-						libqextserialport.so.1 \
-						libqextserialport.so.1.2 \
-						libqextserialport.so.1.2.0
+    # Shared library installation
+    SHLIBS_PATH = $${PREFIX}/lib
+    shlibs_path.path = $${SHLIBS_PATH}
+    shlibs_path.files =	libqextserialport.so \
+                        libqextserialport.so.1 \
+                        libqextserialport.so.1.2 \
+                        libqextserialport.so.1.2.0
 
     # Menu entry
     MENU_ENTRY_PATH = $${PREFIX}/share/applications
@@ -80,4 +81,3 @@ unix {
 }
 LIBS += -lqextserialport \
 		-lqwtplot3d-qt4
-QT += opengl
