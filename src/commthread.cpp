@@ -68,12 +68,7 @@ bool commThread::openPort()
 		online = true;
 	}
 	else
-	{
-		qDebug("Cannot open serial port");
-		QMessageBox::warning(   0,
-			tr("Application"),
-			tr("Cannot open file %1:\n%2.").arg(serialPort.name).arg(serial->errorString()));
-	}
+                online = false;
 
 	return online;
 }

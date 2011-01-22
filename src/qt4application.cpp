@@ -335,8 +335,7 @@ void qt4application::connectECU()
         serialThread = new commThread();
 	serialThread->setPort(serialPort);
 	serialThread->setTarget(hardwareTarget);
-        //serialThread->openPort();
-	//	serialThread->setPort(serialPort);
+        serialThread->start();
 
 	/* FreeEMS stuff */
 	//connect the signal emitted when a packet is sent or received
@@ -344,6 +343,7 @@ void qt4application::connectECU()
 
         connect(getInterfaceVersionAct, SIGNAL(triggered()), serialThread, SLOT(getInterfaceVersion()));
 	connect(getFirmwareVersionAct,  SIGNAL(triggered()), serialThread, SLOT(getFirmwareVersion()));
+
         if(serialThread->isOnline())
 	{
 		sendfileAct->setDisabled(false);
@@ -355,14 +355,11 @@ void qt4application::connectECU()
 		disconnectAct->setDisabled(false);
 		openDebugWindowAct->setDisabled(false);
 
-
 		//FreeEMS:
 		sendResetAct->setDisabled(false);
 		getFirmwareVersionAct->setDisabled(false);
 		getInterfaceVersionAct->setDisabled(false);
 		sendDatalogRequestAct->setDisabled(false);
-
-
 
 		connectedECU = TRUE;
                 refreshTimer->start();
@@ -373,10 +370,13 @@ void qt4application::connectECU()
 		startLogAct->setDisabled(false);
 		fetchAct->setDisabled(false);
 		injectorTestAct->setDisabled(false);
-
-                serialThread->start();
-                qDebug() << "Listening 1 ";
 	}
+        else
+        {
+                QMessageBox::warning( 0, tr("ECUmanager"),
+                                      tr("Cannot open serial port %1:\n%2.").arg(serialPort.name).arg("Unavailable"));
+                delete serialThread;
+        }
 }
 
 

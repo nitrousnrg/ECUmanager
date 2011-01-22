@@ -36,15 +36,14 @@ SOURCES += qt4application.cpp \
     QInjectorTest.cpp \
     qt4applicationCREATETHINGS.cpp \
     commthread.cpp \
-	commCore_FreeEMS.cpp
+    commCore_FreeEMS.cpp
 
 QMAKE_LIBDIR += /usr/lib/
 RESOURCES = application.qrc
 TARGET = ecumanager
 DESTDIR = ../bin/
 CONFIG += warn_on \
- #   thread \
-    qt
+            qt
 unix { 
     CONFIG += debug
 
